@@ -1,3 +1,5 @@
+var ipfs = require("../../../ipfs-api/ipfs_api");
+
 module.exports = {
 
   friendlyName: 'Post a medical file',
@@ -17,6 +19,10 @@ module.exports = {
       responseType: 'bad-combo',
       description: 'Los parámetros proporcionados son inválidos.'
     },
+    upload: {
+      responseType: 'error-upload',
+      description: 'Error subiendo la imagen'
+    }
   },
 
   fn: async function (inputs, exits) {
@@ -32,8 +38,17 @@ module.exports = {
       if (err) return res.serverError(err);
 
       //IPFS
-
-      return exits.success({ success: true, message: 'Uploaded successfully', hash: 'QmWmyoMoctfbAaiEs2G46gpeUmhqFRDW6KWo64y5r581Vz' });
+      ipfs.upload('assets/images/medical/'+imageFile+'.png',(err,hashFile) => {
+        if ( err ) {
+          console.log(err);
+          throw 'upload'
+        }
+        return exits.success(
+          { success: true, 
+            message: 'Uploaded successfully', 
+            hash: hashFile
+          });
+      });
     });
 
   }

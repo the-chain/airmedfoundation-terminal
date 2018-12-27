@@ -14,10 +14,8 @@ module.exports = {
     upload: function(imagePath, cb) {
         fs.readFile(imagePath, (err,image) => {
             // Error reading the image
-            if (err) {
-                cb(err, null);
-                return;
-            }
+            if (err)
+                return cb(err, null);
             // Creating object image
             let data = {
                 path: imagePath,
@@ -26,13 +24,10 @@ module.exports = {
             // Upload to ipfs
             ipfs.add(data, (err, file) => {
                 // Error uploading the image
-                if (err){
-                    cb(err, null);
-                    return;
-                }
+                if (err)
+                    return cb(err, null);
                 // Done.
-                cb(null,file[0].hash);
-                return;
+                return cb(null,file[0].hash);
             });
         });
     },
@@ -44,9 +39,8 @@ module.exports = {
      */
     download: function(imageHash,cb){
         ipfs.get(imageHash, (err,file) =>{
-            if ( err ) {
+            if ( err )
                 return cb(err, null);
-            }
             return cb(null, file[0].content);
         })
     }
