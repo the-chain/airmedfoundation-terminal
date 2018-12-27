@@ -10,7 +10,7 @@ module.exports = function internalError() {
 
     result = {
         status: 500,
-        message: 'Error interno.'
+        message: 'Internal Error'
     };
   
     return res.status(500).json(result);

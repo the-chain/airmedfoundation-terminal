@@ -1,4 +1,4 @@
-/* DOWNLOAD */
+/* INIT DOWNLOAD */
 $(function() {
     $('#search-image').keypress(function(e) {
         if(e.which == 10 || e.which == 13)
@@ -17,9 +17,11 @@ function getImage(hash) {
 		data: sendInfo,
 		error: function (xhr, ajaxOptions, thrownError)
 		{
-			console.log(xhr.status);
-			console.log(thrownError);
-			console.log(ajaxOptions);
+			console.log(xhr);
+			$('#custom-search-input').removeClass('d-none');
+			$('#search-image').val('');
+			$('#wait-response').addClass('d-none');
+			alert(xhr.responseJSON.message)
 		},
 		success: function(result)
 		{
@@ -44,9 +46,9 @@ $('#btn-download').click(function() {
 	$('#search-image').val('');
 	$('#custom-search-input').removeClass('d-none');
 });
-/* DOWNLOAD */
+/* END DOWNLOAD */
 
-/* UPLOAD */
+/* INIT UPLOAD */
 var isAdvancedUpload = function() {
 	var div = document.createElement('div');
 	return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
@@ -89,6 +91,9 @@ if (isAdvancedUpload) {
 }
 
 $('#btn-upload').click(function() {
+	if (!droppedFile && $('input[type=file]')[0].files[0] == undefined) 
+		return alert('No file dragged');
+
 	if ($dropZone.hasClass('is-uploading')) return false;
 	  
 	$('#custom-upload-input').addClass('d-none');
@@ -100,7 +105,7 @@ $('#btn-upload').click(function() {
 
 	if (isAdvancedUpload && droppedFile) formData.append('imagefile', droppedFile);
 	else formData.append('imagefile', $('input[type=file]')[0].files[0]);
-
+	
 	$.ajax({
 		url: $form.attr('action'),
 		type: $form.attr('method'),
@@ -114,9 +119,10 @@ $('#btn-upload').click(function() {
 		},
 		error: function (xhr, ajaxOptions, thrownError)
 		{
-			console.log(xhr.status);
-			console.log(thrownError);
-			console.log(ajaxOptions);
+			console.log(xhr);
+			alert(xhr.responseJSON.message)
+			$('#custom-upload-input').removeClass('d-none');
+			$('#wait-response').addClass('d-none');
 		},
 		success: function(result) {
 			if (result.success){
@@ -145,4 +151,4 @@ $('#file-hidden').change(function()
 	showFiles(this.files[0]);
 });
 
-/* UPLOAD */
+/* END UPLOAD */

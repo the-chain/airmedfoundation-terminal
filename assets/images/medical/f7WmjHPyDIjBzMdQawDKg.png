@@ -1,0 +1,11 @@
+FROM node:8.9.4
+
+RUN npm i -g sails@1.0.2
+
+COPY ./api-server/ /home/root/api-server/
+
+WORKDIR /home/root/api-server/
+
+RUN npm install
+
+CMD ["sails", "l", "--drop"]

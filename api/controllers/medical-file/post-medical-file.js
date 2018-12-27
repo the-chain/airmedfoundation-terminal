@@ -22,13 +22,17 @@ module.exports = {
     upload: {
       responseType: 'error-upload',
       description: 'Error subiendo la imagen'
+    },
+    ipfs: {
+      responseType: 'ipfs-error2',
+      description: 'Error subiendo la imagen'
     }
   },
 
   fn: async function (inputs, exits) {
     // If one of required parameters is missing
     if(!inputs.imagefile) 
-      throw 'invalid';
+      return exits.invalid();
     
     // Generate the new name of file
     let imageFile = await sails.helpers.strings.random('url-friendly');
@@ -39,12 +43,12 @@ module.exports = {
 
       //IPFS
       ipfs.upload('assets/images/medical/'+imageFile+'.png',(err,hashFile) => {
-        if ( err ) {
-          console.log(err);
-          throw 'upload'
-        }
+        if ( err )
+          return exits.ipfs();
+
         return exits.success(
-          { success: true, 
+          { 
+            success: true, 
             message: 'Uploaded successfully', 
             hash: hashFile
           });

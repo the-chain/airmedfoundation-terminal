@@ -10,7 +10,7 @@ module.exports = function badCombo() {
 
     result = {
         status: 400,
-        message: 'Los datos proporcionados son erróneos.'
+        message: 'Invalid data provided'
     };
   
     return res.status(400).json(result);

@@ -23,7 +23,7 @@ module.exports = {
       description: 'Los parámetros proporcionados son inválidos.'
     },
     write: {
-      responseType: 'write-error',
+      responseType: 'internal-error',
       description: 'Error escribiendo el archivo'
     },
     ipfs: {
@@ -39,19 +39,16 @@ module.exports = {
 
     // If one of required parameters is missing
     if(!inputs.hash) 
-      throw 'invalid';
+      return exits.invalid();
 
     // Search the Image
     ipfs.download(inputs.hash, (err,file) => {
-      if (err) {
-        console.log(err);
-        throw 'ipfs';
-      }
+      if (err) 
+        return exits.ipfs();
+      
       fs.writeFile(path,file,'binary', (err)=>{
-        if (err) {
-          console.log (err);
-          throw 'write';
-        }
+        if (err) 
+          return exits.write();
         return exits.success({ success: true, message: 'IPFS hash match with the following image', image: 'images/'+inputs.hash + '.png', imageName: 'hash.png' });
       });
     });
