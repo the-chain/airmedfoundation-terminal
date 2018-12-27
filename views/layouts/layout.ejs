@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Medical Chain</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--STYLES-->
+    <link rel="stylesheet" href="/dependencies/bootstrap-4/bootstrap-4.css">
+    <link rel="stylesheet" href="/dependencies/font-awesome-4/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <!--STYLES END-->
+  </head>
+
+  <body class="d-flex align-items-center">
+
+    <nav class="navbar fixed-top navbar-expand-sm bg-light navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="/">Medical <span>Chain</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/upload"><i class="fas fa-upload"></i> Upload</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/download"><i class="fas fa-download"></i> Download</a>
+            </li>
+          </ul>
+        </div>
+      </div>  
+    </nav>
+
+    <%- body %>
+    
+    <footer class="footer">
+      <div class="container text-center">
+        <span class="text-muted">The Chain © - 2019</span>
+      </div>
+    </footer>
+
+    <!--SCRIPTS-->
+    <script src="/dependencies/sails.io.js"></script>
+    <script src="/dependencies/lodash.js"></script>
+    <script src="/dependencies/jquery.min.js"></script>
+    <script src="/dependencies/bowser.js"></script>
+    <script src="/dependencies/vue.js"></script>
+    <script src="/dependencies/bootstrap-4/bootstrap-4.bundle.js"></script>
+    <script src="/dependencies/cloud.js"></script>
+    <script src="/dependencies/parasails.js"></script>
+    <script src="/js/pages/general.js"></script>
+    <!--SCRIPTS END-->
+
+  </body>
+</html>

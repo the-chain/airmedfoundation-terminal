@@ -1,0 +1,22 @@
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <% include ../layouts/flash-message %>
+            <% include ../layouts/wait %>
+            <div id="custom-upload-input">
+                <div class="box-input upload-drop-zone text-center">
+                    <form class="box-form" method="POST" action="/medical-file" enctype="multipart/form-data">
+                        <img src="images/upload.png" class="image-src img-thumbnail" id="image-preview">
+                        <span id="file-name"></span>
+                        <input class="box-file d-none" type="file" name="imagefile" id="file-hidden"/>
+                        <p id="file-label"><strong id="file-preview">Choose a file</strong><span class="box-dragndrop"> or drag it here</span></p>
+                        <button id="btn-upload" class="box-button btn btn-primary" type="button">Upload</button>
+                    </form>
+                </div>		
+            </div>
+            <div id="image-hash-box" class="d-none text-center">
+                <p><strong>IPFS hash: </strong><span id="image-hash"></span></p>
+            </div>
+        </div>
+    </div>
+</main>

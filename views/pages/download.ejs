@@ -1,0 +1,24 @@
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <% include ../layouts/wait %>
+            <% include ../layouts/flash-message %>
+            <div id="custom-search-input">
+                <div class="input-group">
+                    <input id="search-image" type="text" class="search-query form-control" placeholder="Search" />
+                    <span class="input-group-btn">
+                        <button type="button" disabled>
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div id="custom-search-image" class="d-none">
+                <div class="text-center">
+                    <img id="medical-image" src="" class="med-image-preview img-thumbnail" id="medical-image-preview"/>
+                    <a id="btn-download" class="box-button btn btn-primary" href="" role="button" download="">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
