@@ -1,5 +1,6 @@
 var ipfs = require("../../../ipfs-api/ipfs_api");
 const fs = require('fs');
+const sleep = require('sleep');
 module.exports = {
 
   friendlyName: 'Get medical file',
@@ -49,6 +50,7 @@ module.exports = {
       fs.writeFile(path,file,'binary', (err)=>{
         if (err) 
           return exits.write();
+        await sleep.sleep(2);
         return exits.success({ success: true, message: 'IPFS hash match with the following image', image: 'images/'+inputs.hash + '.png', imageName: 'hash.png' });
       });
     });
