@@ -28,7 +28,9 @@ function getImage(hash) {
 			if(result.image) {
 				$('#btn-download').attr('href', result.image);
 				$('#btn-download').attr('download', result.imageName);
-				$('#medical-image').attr('src', result.image);
+				var img = new Image();
+				img.src = result.image;
+				img.onload = function() { $('#medical-image').attr('src', img.src); }
 				$('#message-success').removeClass('d-none');
 				$('#message-success-text').text(result.message);
 				$('#custom-search-image').removeClass('d-none');
