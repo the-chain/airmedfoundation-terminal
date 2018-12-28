@@ -41,11 +41,11 @@ module.exports = {
     let imageFile = await sails.helpers.strings.random('url-friendly');
 
     // Save the Image
-    inputs.imagefile.upload({ dirname: require('path').resolve(sails.config.appPath, 'assets/images/medical/'), saveAs: imageFile + '.png' }, function (err, uploadedFile){
+    inputs.imagefile.upload({ dirname: require('path').resolve(sails.config.appPath, 'assets/images/medical/'), saveAs: imageFile}, function (err, uploadedFile){
       if (err) return res.serverError(err);
 
       //IPFS
-      ipfs.upload('assets/images/medical/'+imageFile+'.png',(err,hashFile) => {
+      ipfs.upload('assets/images/medical/'+imageFile,(err,hashFile) => {
         if ( err )
           return exits.ipfs();
 
