@@ -102,9 +102,15 @@ $('#btn-upload').click(function() {
 	$dropZone.addClass('is-uploading').removeClass('is-error');
 
 	var formData = new FormData();
-
-	if (isAdvancedUpload && droppedFile) formData.append('imagefile', droppedFile);
-	else formData.append('imagefile', $('input[type=file]')[0].files[0]);
+	
+	if (isAdvancedUpload && droppedFile) {
+		formData.append('imagename', droppedFile.name);
+		formData.append('imagefile', droppedFile);
+	}
+	else {
+		formData.append('imagename', $('input[type=file]')[0].files[0].name);
+		formData.append('imagefile', $('input[type=file]')[0].files[0]);
+	}
 	
 	$.ajax({
 		url: $form.attr('action'),

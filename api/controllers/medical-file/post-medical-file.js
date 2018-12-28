@@ -11,6 +11,9 @@ module.exports = {
   inputs: {
     imagefile: {
       type: 'ref'
+    },
+    imagename:{
+      type: 'string'
     }
   },
 
@@ -49,7 +52,7 @@ module.exports = {
         return exits.success(
           { 
             success: true, 
-            message: 'Uploaded successfully', 
+            message: inputs.imagename + ' uploaded successfully to IPFS network. A search hash for this file has been generated.', 
             hash: hashFile
           });
       });
