@@ -59,7 +59,9 @@ module.exports = {
         return exits.success(
           { 
             success: true, 
-            message: 'IPFS hash match with the following image', 
+            message: 'IPFS hash match with the following image',
+            ipfsMessage: 'The file is publicly available from: ',
+            ipfsUrl: 'https://gateway.ipfs.io/ipfs/' + inputs.hash,
             image: 'images/'+ inputs.hash + '.' + type.ext, 
             imageName: datetime + '.' + type.ext 
           });

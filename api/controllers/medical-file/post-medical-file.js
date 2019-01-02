@@ -53,6 +53,8 @@ module.exports = {
           { 
             success: true, 
             message: inputs.imagename + ' uploaded successfully to IPFS network. A search hash for this file has been generated.', 
+            ipfsMessage: 'The file is now publicly available from: ',
+            ipfsUrl: 'https://gateway.ipfs.io/ipfs/' + hashFile,
             hash: hashFile
           });
       });

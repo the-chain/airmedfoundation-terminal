@@ -33,6 +33,8 @@ function getImage(hash) {
 				img.onload = function() { $('#medical-image').attr('src', img.src); }
 				$('#message-success').removeClass('d-none');
 				$('#message-success-text').text(result.message);
+				$('#message-info').removeClass('d-none');
+				$('#message-info-text').html(result.ipfsMessage + '<a href="'+result.ipfsUrl+'" target="_blank">'+result.ipfsUrl+'</a>');
 				$('#custom-search-image').removeClass('d-none');
 			} else {
 				$('#custom-search-input').removeClass('d-none');
@@ -142,6 +144,8 @@ $('#btn-upload').click(function() {
 				$('#image-hash-box').removeClass('d-none');
 				$('#message-success').removeClass('d-none');
 				$('#message-success-text').text(result.message);
+				$('#message-info').removeClass('d-none');
+				$('#message-info-text').html(result.ipfsMessage + '<a href="'+result.ipfsUrl+'" target="_blank">'+result.ipfsUrl+'</a>');
 				$('#image-hash').text(result.hash);
 			}
 		}
