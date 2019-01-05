@@ -4,15 +4,29 @@
             <% include ../layouts/wait %>
             <% include ../layouts/flash-message %>
             <div id="custom-search-input">
-                <div class="input-group">
-                    <input id="search-image" type="text" class="search-query form-control" placeholder="Paste file's hash here for IPFS search" />
-                    <span class="input-group-btn">
-                        <button type="button" disabled>
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
+                <form id="form-download">
+                    <div class="input-group">
+                        <h6>IPFS hash</h6>
+                        <input id="ipfs-hash" type="text" name="ipfsHash" class="search-query form-control" placeholder="Paste file's hash here for IPFS search" />
+                    </div>
+                    <div id="radio-button-input" class="margin-custom-radio">
+                        <h6>The file is encrypted?</h6>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" name="encrypted" class="custom-control-input" value="Yes">
+                            <label class="custom-control-label" for="customRadio1">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="encrypted" class="custom-control-input" value="No">
+                            <label class="custom-control-label" for="customRadio2">No</label>
+                        </div>
+                    </div>
+                    <div id="public-key-text-box" class="input-group margin-custom-radio d-none">
+                        <h6>Public Key</h6>
+                        <input id="public-key" type="text" name="publicKey" class="search-query form-control" placeholder="Paste Public Key here for decrypt the file" />
+                    </div>
+                    <button id="btn-find-image" class="btn btn-primary margin-custom-radio float-right" type="button"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                </form>
+            </div>                  
             <div id="custom-search-image" class="d-none">
                 <div class="text-center">
                     <img id="medical-image" src="" class="med-image-preview img-thumbnail" id="medical-image-preview"/>

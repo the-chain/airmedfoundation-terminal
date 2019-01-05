@@ -28,6 +28,18 @@ body {
     margin-bottom: 20px;
 }
 
+.margin-custom-radio
+{
+    margin-top: 30px;
+}
+
+.custom-radio .custom-control-input:checked~.custom-control-label::before,
+.custom-radio .custom-control-input:checked~.custom-control-label::after {
+    background-color: #30a5ff; 
+    border-radius: 50%;
+}
+
+
 .the-chain-link
 {
     text-decoration: none;
@@ -65,6 +77,19 @@ p { word-break: break-all }
     min-height: 100%;
 }
 
+.btn {
+    background:#30a5ff;
+}
+
+.btn:hover {
+    background:#2d99ed;
+}
+
+.tag_error
+{
+    color: #ff305c !important;
+}
+
 #custom-search-input {
     margin:0;
     padding: 0;
@@ -81,19 +106,7 @@ p { word-break: break-all }
 }
 
 #custom-search-input button {
-    border: 0;
-    background: none;
-    padding: 5px 8px;
-    margin-top: 2px;
-    position: absolute;
-    right:0;
-    margin-bottom: 0;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    color:#30a5ff;
-    cursor: unset;
-    z-index: 2;
+    font-size: 14px;
 }
 
 .search-query:focus{

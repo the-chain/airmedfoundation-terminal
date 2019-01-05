@@ -10,7 +10,13 @@ module.exports = {
   description:  'Get a specific IPFS medical file.',
 
   inputs: {
-    hash: {
+    ipfsHash: {
+      type: 'string'
+    },
+		encrypted: {
+      type: 'boolean'
+    },
+		publicKey: {
       type: 'string'
     },
   },
@@ -39,17 +45,17 @@ module.exports = {
   fn: async function (inputs, exits) {
 
     // If one of required parameters is missing
-    if(!inputs.hash) 
+    if(!inputs.ipfsHash && !inputs.encrypted) 
       return exits.invalid();
-
+      
     // Get image from ipfs
-    ipfs.download(inputs.hash, (err,file) => {
+    ipfs.download(inputs.ipfsHash, (err,file) => {
       if (err) 
         return exits.ipfs();
 
       // Save file
       var type = fileType(file);
-      var path = 'assets/images/'+ inputs.hash + '.' + type.ext;
+      var path = 'assets/images/'+ inputs.ipfsHash + '.' + type.ext;
       fs.writeFile(path,file,'binary', (err)=>{
         if (err) 
           return exits.write();
@@ -61,8 +67,8 @@ module.exports = {
             success: true, 
             message: 'IPFS hash match with the following image',
             ipfsMessage: 'The file is publicly available from: ',
-            ipfsUrl: 'https://gateway.ipfs.io/ipfs/' + inputs.hash,
-            image: 'images/'+ inputs.hash + '.' + type.ext, 
+            ipfsUrl: 'https://gateway.ipfs.io/ipfs/' + inputs.ipfsHash,
+            image: 'images/'+ inputs.ipfsHash + '.' + type.ext, 
             imageName: datetime + '.' + type.ext 
           });
       });

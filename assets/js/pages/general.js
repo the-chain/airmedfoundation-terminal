@@ -1,15 +1,68 @@
 /* INIT DOWNLOAD */
-$(function() {
-    $('#search-image').keypress(function(e) {
-        if(e.which == 10 || e.which == 13)
-            getImage(this.value);
-    });
+var validator = $('#form-download').validate({
+	rules: {
+		ipfsHash: {
+			required: true,
+			maxlength: 46
+		},
+		encrypted: {
+			required: true
+		},
+		publicKey: {
+			required: true,
+			minlength: 44,
+		}
+	},
+	errorPlacement: function(error,element) {
+		return true;
+	},
+	highlight: function(element) {
+		if ($(element).attr('type') == 'radio')
+			$(element).parent().prev('h6').addClass('tag_error');
+		else
+			$(element).prev('h6').addClass('tag_error');
+	},
+	unhighlight: function(element) {
+		if ($(element).attr('type') == 'radio')
+			$(element).parent().prev('h6').removeClass('tag_error');
+		else
+			$(element).prev('h6').removeClass('tag_error');
+	}
 });
 
-function getImage(hash) {
-	var sendInfo = { 'hash': hash };
+$('#btn-find-image').click(function() {
+	if ($('#form-download').valid())
+		getImage();
+	else
+		validator.focusInvalid();
+});
+
+function getImage() {
+	var sendInfo, encrypted;
+
+	switch ($('input[name=encrypted]:checked').val()) {
+		case 'Yes':
+			encrypted = true;
+			break;
+		case 'No':
+			encrypted = false;
+			break;
+		default:
+			encrypted = false;
+			break;
+	}
+	
+	sendInfo = {
+		'ipfsHash': $('#ipfs-hash').val(),
+		'encrypted': encrypted
+	};
+	
+	if (encrypted)
+		sendInfo.publicKey = $('#public-key').val();
+	
 	$('#wait-response').removeClass('d-none');
-    $('#custom-search-input').addClass('d-none');
+	$('#custom-search-input').addClass('d-none');
+	
 	$.ajax({
 		type: 'GET',
 		url: '/medical-file',
@@ -18,8 +71,11 @@ function getImage(hash) {
 		error: function (xhr, ajaxOptions, thrownError)
 		{
 			console.log(xhr);
+			$('#ipfs-hash').val('');
+			$('#public-key').val('');
+			$('#public-key-text-box').addClass('d-none');
+			$("input:radio").prop("checked", false);
 			$('#custom-search-input').removeClass('d-none');
-			$('#search-image').val('');
 			$('#wait-response').addClass('d-none');
 			alert(xhr.responseJSON.message)
 		},
@@ -37,8 +93,11 @@ function getImage(hash) {
 				$('#message-info-text').html(result.ipfsMessage + '<a href="'+result.ipfsUrl+'" target="_blank">'+result.ipfsUrl+'</a>');
 				$('#custom-search-image').removeClass('d-none');
 			} else {
+				$('#ipfs-hash').val('');
+				$('#public-key').val('');
+				$('#public-key-text-box').addClass('d-none');
+				$("input:radio").prop("checked", false);
 				$('#custom-search-input').removeClass('d-none');
-				$('#search-image').val('');
 			}
 			$('#wait-response').addClass('d-none');
 		}
@@ -50,6 +109,16 @@ $('#btn-download').click(function() {
 	$('#search-image').val('');
 	$('#custom-search-input').removeClass('d-none');
 });
+
+$(function() {
+    $('input[name="encrypted"]').on('click', function() {
+        if ($(this).val() == 'Yes')
+            $('#public-key-text-box').removeClass('d-none');
+        else
+            $('#public-key-text-box').addClass('d-none');
+    });
+});
+
 /* END DOWNLOAD */
 
 /* INIT UPLOAD */
@@ -166,7 +235,7 @@ $('#file-hidden').change(function()
 /* END UPLOAD */
 
 
-/* START IDENTITY */
+/* INIT IDENTITY */
 $('#btn-new-keys').click(function() {
 	$('#custom-new-identity').addClass('d-none');
 	$('#wait-response').removeClass('d-none');
