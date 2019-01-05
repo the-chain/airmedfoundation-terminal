@@ -1,4 +1,4 @@
-# Medical Chain - Interplanetary File System Client
+# Airmed Foundation - Interplanetary File System Client
 
 a [Sails v1](https://sailsjs.com) application that uploads/download files to Interplanetary File System (IPFS). 
 
