@@ -22,10 +22,18 @@ body {
     background-color: #f5f5f5;
 }
 
+.margin-keys
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .the-chain-link
 {
     text-decoration: none;
 }
+
+p { word-break: break-all }
 
 .the-chain-link:visited, .the-chain-link:hover, .the-chain-link:active, .the-chain-link:focus
 {
@@ -122,6 +130,13 @@ body {
     max-width: 100px;
 }
 
+.image-src-key {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80px;
+}
+
 .med-image-preview {
     display: block;
     margin-left: auto;
@@ -147,29 +162,47 @@ body {
     font-size: 18px;
 }
 
-@media (max-width: 768px) {
-    #image-hash {
+#new-identity-keys {
+    font-size: 16px;
+}
+
+@media (max-width: 1000px) {
+    #new-identity-keys {
         font-size: 14px;
     }
+}
+
+@media (max-width: 768px) {
+    .ajax-text-message {
+        font-size: 14px;
+    }
+
+    #new-identity-keys .ajax-text-message {
+        font-size: 12px !important;
+    }
+
     #file-label .btn, #btn-upload {
         font-size: 12px;
     }
 }
 
-@media (max-width: 500px) {
-    #image-hash {
+@media (max-width: 520px) {
+    .ajax-text-message {
         font-size: 12px;
     }
 }
 
 @media (max-width: 400px) {
-    #image-hash {
+    .ajax-text-message {
         font-size: 11px;
+    }
+
+    #new-identity-keys .ajax-text-message {
+        font-size: 9px !important;
     }
 }
 
 /* UPLOAD */
-
 
 .sk-fading-circle {
     width: 40px;

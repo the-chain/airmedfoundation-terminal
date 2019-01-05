@@ -164,3 +164,32 @@ $('#file-hidden').change(function()
 });
 
 /* END UPLOAD */
+
+
+/* START IDENTITY */
+$('#btn-new-keys').click(function() {
+	$('#custom-new-identity').addClass('d-none');
+	$('#wait-response').removeClass('d-none');
+	$.ajax({
+		type: 'GET',
+		url: '/identity',
+		error: function (xhr, ajaxOptions, thrownError)
+		{
+			console.log(xhr);
+			alert(xhr.responseJSON.message)
+			$('#custom-new-identity').removeClass('d-none');
+			$('#wait-response').addClass('d-none');
+		},
+		success: function(result) {
+			if (result.success){
+				$('#message-success-text').text(result.message);
+				$('#secret-key').text(result.secretKey);
+				$('#public-key').text(result.publicKey);
+				$('#wait-response').addClass('d-none');
+				$('#new-identity-keys').removeClass('d-none');
+				$('#message-success').removeClass('d-none');
+			}
+		}
+	});
+});
+/* END IDENTITY */

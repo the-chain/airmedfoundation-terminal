@@ -1,0 +1,22 @@
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <% include ../layouts/wait %>
+            <% include ../layouts/flash-message %>
+            <div id="custom-new-identity">
+                <div class="text-center">
+                    <img id="keys-image" src="images/keys.png" class="image-src-key img-thumbnail" id="keys-img"/>
+                    <h4 class="margin-keys">Generate new key pair</h4>
+                    <button id="btn-new-keys" class="btn btn-primary" type="button">Go!</button>
+                </div>
+            </div>
+            <div id="new-identity-keys" class="d-none">
+                <p><strong><i class="fa fa-user-secret" aria-hidden="true"></i> Secret Key </strong></p>
+                <p><span id="secret-key" class="ajax-text-message"></span></p>
+                <br>
+                <p><strong><i class="fa fa-key" aria-hidden="true"></i> Public Key </strong></p>
+                <p><span id="public-key" class="ajax-text-message"></span></p>
+            </div>
+        </div>
+    </div>
+</main>
