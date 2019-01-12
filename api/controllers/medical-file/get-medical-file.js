@@ -47,7 +47,7 @@ module.exports = {
     // If one of required parameters is missing
     if(!inputs.ipfsHash && !inputs.encrypted) 
       return exits.invalid();
-      
+    
     // Get image from ipfs
     ipfs.download(inputs.ipfsHash, (err,file) => {
       if (err) 

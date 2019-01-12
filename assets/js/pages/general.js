@@ -1,5 +1,38 @@
+/* INIT GENERAL */
+$('.js-tooltip').tooltip();
+
+function copyToClipboard(text, el) {
+	var copyTest, elOriginalText;
+	copyTest = document.queryCommandSupported('copy');
+	elOriginalText = el.attr('data-original-title');
+	if (copyTest === true) {
+		var $temp = $('<input>');
+		$('body').append($temp);
+		$temp.val(text).select();
+		try {
+			var successful = document.execCommand('copy');
+			var msg = successful ? 'Copied!' : 'Whoops, not copied!';
+			el.attr('data-original-title', msg).tooltip('show');
+		} catch (err) {
+			console.log('Oops, unable to copy');
+		}
+		$temp.remove();
+		el.attr('data-original-title', elOriginalText);
+	} else
+		alert(xhr.responseJSON.message);
+}
+
+$('.js-copy').click(function() {
+	var text, el;
+	text = $(this).attr('data-copy');
+	el = $(this);
+	copyToClipboard(text, el);
+});
+/* END GENERAL */
+
+
 /* INIT DOWNLOAD */
-var validator = $('#form-download').validate({
+var downloadValidator = $('#form-download').validate({
 	rules: {
 		ipfsHash: {
 			required: true,
@@ -34,23 +67,13 @@ $('#btn-find-image').click(function() {
 	if ($('#form-download').valid())
 		getImage();
 	else
-		validator.focusInvalid();
+		downloadValidator.focusInvalid();
 });
 
 function getImage() {
 	var sendInfo, encrypted;
 
-	switch ($('input[name=encrypted]:checked').val()) {
-		case 'Yes':
-			encrypted = true;
-			break;
-		case 'No':
-			encrypted = false;
-			break;
-		default:
-			encrypted = false;
-			break;
-	}
+	encrypted = ($('input[name=encrypted]:checked').val() === 'true');
 	
 	sendInfo = {
 		'ipfsHash': $('#ipfs-hash').val(),
@@ -77,7 +100,7 @@ function getImage() {
 			$("input:radio").prop("checked", false);
 			$('#custom-search-input').removeClass('d-none');
 			$('#wait-response').addClass('d-none');
-			alert(xhr.responseJSON.message)
+			alert(xhr.responseJSON.message);
 		},
 		success: function(result)
 		{
@@ -112,13 +135,12 @@ $('#btn-download').click(function() {
 
 $(function() {
     $('input[name="encrypted"]').on('click', function() {
-        if ($(this).val() == 'Yes')
+        if ($(this).val() == 'true')
             $('#public-key-text-box').removeClass('d-none');
         else
             $('#public-key-text-box').addClass('d-none');
     });
 });
-
 /* END DOWNLOAD */
 
 /* INIT UPLOAD */
@@ -186,8 +208,8 @@ $('#btn-upload').click(function() {
 	}
 	
 	$.ajax({
-		url: $form.attr('action'),
-		type: $form.attr('method'),
+		type: 'POST',
+		url: '/medical-file',
 		data: formData,
 		dataType: 'json',
 		cache: false,
@@ -232,6 +254,14 @@ $('#file-hidden').change(function()
 	showFiles(this.files[0]);
 });
 
+$(function() {
+    $('input[name="encrypt"]').on('click', function() {
+        if ($(this).val() == 'true')
+            $('#secret-key-text-box').removeClass('d-none');
+        else
+            $('#secret-key-text-box').addClass('d-none');
+    });
+});
 /* END UPLOAD */
 
 
@@ -252,7 +282,9 @@ $('#btn-new-keys').click(function() {
 		success: function(result) {
 			if (result.success){
 				$('#message-success-text').text(result.message);
+				$('#secret-btn').attr('data-copy', result.secretKey);
 				$('#secret-key').text(result.secretKey);
+				$('#public-btn').attr('data-copy', result.publicKey);
 				$('#public-key').text(result.publicKey);
 				$('#wait-response').addClass('d-none');
 				$('#new-identity-keys').removeClass('d-none');

@@ -4,15 +4,33 @@
             <% include ../layouts/flash-message %>
             <% include ../layouts/wait %>
             <div id="custom-upload-input">
-                <div class="box-input upload-drop-zone text-center">
-                    <form class="box-form" method="POST" action="/medical-file" enctype="multipart/form-data">
-                        <img src="images/upload.png" class="image-src img-thumbnail" id="image-preview">
-                        <span id="file-name"></span>
-                        <input class="box-file d-none" type="file" name="imagefile" id="file-hidden"/>
-                        <p id="file-label"><button id="file-preview" class="box-button btn btn-primary" type="button">Choose a file</button><strong class="box-dragndrop"> or drag it here</strong></p>
-                        <button id="btn-upload" class="box-button btn btn-primary" type="button">Upload</button>
-                    </form>
-                </div>		
+                <form id="upload-form">
+                    <h6>IPFS File</h6>
+                    <div class="box-input upload-drop-zone text-center">
+                        <div class="box-form">
+                            <img src="images/upload.png" class="image-src img-thumbnail" id="image-preview">
+                            <span id="file-name"></span>
+                            <input class="box-file d-none" type="file" name="imagefile" id="file-hidden"/>
+                            <p id="file-label"><button id="file-preview" class="box-button btn btn-primary" type="button"><i class="far fa-image"></i>  Choose a file</button><strong class="box-dragndrop"> or drag it here</strong></p>
+                        </div>
+                    </div>
+                    <div id="radio-button-input" class="margin-custom-radio">
+                        <h6>Encrypt file?</h6>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" name="encrypt" class="custom-control-input" value="true">
+                            <label class="custom-control-label" for="customRadio1">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="encrypt" class="custom-control-input" value="false">
+                            <label class="custom-control-label" for="customRadio2">No</label>
+                        </div>
+                    </div>
+                    <div id="secret-key-text-box" class="input-group margin-custom-radio d-none">
+                        <h6>Secret Key</h6>
+                        <input id="secret-key" type="text" name="secretKey" class="search-query form-control" placeholder="Paste your secret key here for encrypt the file" />
+                    </div>
+                    <button id="btn-upload" class="box-button btn btn-primary margin-custom-radio float-right" type="button"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                </form>	
             </div>
             <div id="image-hash-box" class="d-none text-center">
                 <p><strong>IPFS hash: </strong><span id="image-hash" class="ajax-text-message"></span></p>

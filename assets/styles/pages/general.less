@@ -5,8 +5,8 @@ html {
   
 body {
     min-height: 100vh;
-    padding-top: 60px;
-    padding-bottom: 60px;
+    padding-top: 80px;
+    padding-bottom: 80px;
     background: #fff;
     font-size: 14px;
     color: #444444;
@@ -77,12 +77,21 @@ p { word-break: break-all }
     min-height: 100%;
 }
 
-.btn {
+.btn-primary {
+    font-size: 14px;
     background:#30a5ff;
 }
 
-.btn:hover {
+.js-copy {
+    margin-left: 15px; 
+}
+
+.btn-primary:hover {
     background:#2d99ed;
+}
+
+.js-copy:hover {
+    cursor: pointer;
 }
 
 .tag_error
@@ -90,12 +99,12 @@ p { word-break: break-all }
     color: #ff305c !important;
 }
 
-#custom-search-input {
+#custom-search-input, #custom-upload-input {
     margin:0;
     padding: 0;
 }
 
-#custom-search-input .search-query {
+#custom-search-input .search-query, #custom-upload-input .search-query {
     width:100%;
     padding-right: 3px;
     padding-left: 15px;
@@ -190,11 +199,15 @@ p { word-break: break-all }
         font-size: 14px;
     }
 
+    .search-query, .alert {
+        font-size: 12px;
+    }
+    
     #new-identity-keys .ajax-text-message {
         font-size: 12px !important;
     }
 
-    #file-label .btn, #btn-upload {
+    #file-label .btn-primary, #btn-upload {
         font-size: 12px;
     }
 }
@@ -203,11 +216,18 @@ p { word-break: break-all }
     .ajax-text-message {
         font-size: 12px;
     }
+    .btn-outline-primary {
+        font-size: 11px;
+    }
 }
 
 @media (max-width: 400px) {
     .ajax-text-message {
         font-size: 11px;
+    }
+
+    .btn-outline-primary {
+        font-size: 10px;
     }
 
     #new-identity-keys .ajax-text-message {
