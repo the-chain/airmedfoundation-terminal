@@ -45,7 +45,7 @@ module.exports = {
   fn: async function (inputs, exits) {
 
     // If one of required parameters is missing
-    if(!inputs.ipfsHash && !inputs.encrypted) 
+    if(!inputs.ipfsHash)
       return exits.invalid();
     
     // Get image from ipfs
@@ -55,8 +55,8 @@ module.exports = {
 
       // Save file
       var type = fileType(file);
-      var path = 'assets/images/'+ inputs.ipfsHash + '.' + type.ext;
-      fs.writeFile(path,file,'binary', (err)=>{
+      var path = 'assets/images/' + inputs.ipfsHash + '.' + type.ext;
+      fs.writeFile(path, file, 'binary', (err)=>{
         if (err) 
           return exits.write();
         
@@ -68,7 +68,7 @@ module.exports = {
             message: 'IPFS hash match with the following image',
             ipfsMessage: 'The file is publicly available from: ',
             ipfsUrl: 'https://gateway.ipfs.io/ipfs/' + inputs.ipfsHash,
-            image: 'images/'+ inputs.ipfsHash + '.' + type.ext, 
+            image: 'images/' + inputs.ipfsHash + '.' + type.ext, 
             imageName: datetime + '.' + type.ext 
           });
       });

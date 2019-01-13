@@ -4,13 +4,13 @@
             <% include ../layouts/flash-message %>
             <% include ../layouts/wait %>
             <div id="custom-upload-input">
-                <form id="upload-form">
-                    <h6>IPFS File</h6>
+                <form id="form-upload">
+                    <h6 id="ipfsFile">IPFS File</h6>
                     <div class="box-input upload-drop-zone text-center">
                         <div class="box-form">
                             <img src="images/upload.png" class="image-src img-thumbnail" id="image-preview">
-                            <span id="file-name"></span>
-                            <input class="box-file d-none" type="file" name="imagefile" id="file-hidden"/>
+                            <p><span id="file-name"></span></p>
+                            <input class="box-file invisible" type="file" name="imageFile" id="file-hidden"/>
                             <p id="file-label"><button id="file-preview" class="box-button btn btn-primary" type="button"><i class="far fa-image"></i>  Choose a file</button><strong class="box-dragndrop"> or drag it here</strong></p>
                         </div>
                     </div>
@@ -32,8 +32,9 @@
                     <button id="btn-upload" class="box-button btn btn-primary margin-custom-radio float-right" type="button"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
                 </form>	
             </div>
-            <div id="image-hash-box" class="d-none text-center">
-                <p><strong>IPFS hash: </strong><span id="image-hash" class="ajax-text-message"></span></p>
+            <div id="image-hash-box" class="d-none">
+                <p><strong> IPFS hash </strong><i id="ipfs-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></strong></p>
+                <p><span id="image-hash" class="ajax-text-message"></span></p>
             </div>
         </div>
     </div>

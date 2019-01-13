@@ -6,15 +6,21 @@ module.exports = {
 
   description: 'Post in IPFS a medical file',
 
-  files: ['imagefile'],
+  files: ['imageFile'],
 
   inputs: {
-    imagefile: {
+    imageFile: {
       type: 'ref'
     },
-    imagename:{
+    imageName:{
       type: 'string'
-    }
+    },
+    encrypt:{
+      type: 'boolean'
+    },
+    secretKey: {
+      type: 'string'
+    },
   },
 
   exits: {
@@ -34,25 +40,25 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // If one of required parameters is missing
-    if(!inputs.imagefile) 
+    if(!inputs.imageFile || !inputs.imageName) 
       return exits.invalid();
-    
+
     // Generate the new name of file
-    let imageFile = await sails.helpers.strings.random('url-friendly');
+    let imageFileName = await sails.helpers.strings.random('url-friendly') + '.' + inputs.imageName.split('.').pop();
 
     // Save the Image
-    inputs.imagefile.upload({ dirname: require('path').resolve(sails.config.appPath, 'assets/images/medical/'), saveAs: imageFile}, function (err, uploadedFile){
+    inputs.imageFile.upload({ dirname: require('path').resolve(sails.config.appPath, 'assets/images/medical/'), saveAs: imageFileName }, function (err, uploadedFile){
       if (err) return res.serverError(err);
 
       //IPFS
-      ipfs.upload('assets/images/medical/'+imageFile,(err,hashFile) => {
-        if ( err )
+      ipfs.upload('assets/images/medical/'+imageFileName,(err, hashFile) => {
+        if (err)
           return exits.ipfs();
 
         return exits.success(
           { 
             success: true, 
-            message: inputs.imagename + ' uploaded successfully to IPFS network. A search hash for this file has been generated.', 
+            message: inputs.imageName + ' uploaded successfully to IPFS network. A search hash for this file has been generated.', 
             ipfsMessage: 'The file is now publicly available from: ',
             ipfsUrl: 'https://gateway.ipfs.io/ipfs/' + hashFile,
             hash: hashFile

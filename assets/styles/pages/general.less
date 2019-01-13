@@ -94,9 +94,14 @@ p { word-break: break-all }
     cursor: pointer;
 }
 
-.tag_error
+.tag-error
 {
     color: #ff305c !important;
+}
+
+.box-error
+{
+    border-color: #ff305c !important;
 }
 
 #custom-search-input, #custom-upload-input {
@@ -136,10 +141,14 @@ p { word-break: break-all }
     border-color: #c6c6c6;
 }
 
-#file-label {
-    padding-top: 20px;
+input[type='file']{
+    height: 0px !important;
 }
-  
+
+input[type='file']::-webkit-file-upload-button{
+    height: 0px !important;
+}
+
 #file-preview:hover
 {
     cursor: pointer;
