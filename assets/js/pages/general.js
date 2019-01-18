@@ -110,11 +110,13 @@ function getImage() {
 				var img = new Image();
 				img.src = result.image;
 				img.onload = function() { $('#medical-image').attr('src', img.src); }
-				$('#message-success').removeClass('d-none');
 				$('#message-success-text').text(result.message);
-				$('#message-info').removeClass('d-none');
 				$('#message-info-text').html(result.ipfsMessage + '<a href="'+result.ipfsUrl+'" target="_blank">'+result.ipfsUrl+'</a>');
+				$('#message-success').removeClass('d-none');
+				$('#message-info').removeClass('d-none');
 				$('#custom-search-image').removeClass('d-none');
+				$('#message-success').show();
+				$('#message-info').show();
 			} else {
 				$('#ipfs-hash').val('');
 				$('#public-key').val('');
@@ -224,10 +226,18 @@ if (isAdvancedUpload) {
 		$dropZone.removeClass('is-dragover');
 	})
 	.on('drop', function(e) {
-		$('input[type=file]')[0].files = e.originalEvent.dataTransfer.files;
-		showFiles($('input[type=file]')[0].files[0]);
-		$('#ipfsFile').removeClass('tag-error');
-		$('.upload-drop-zone').removeClass('box-error');
+		if(e.originalEvent.dataTransfer.files[0].size < 8000000){
+			$('input[type=file]')[0].files = e.originalEvent.dataTransfer.files;
+			showFiles($('input[type=file]')[0].files[0]);
+			$('#ipfsFile').removeClass('tag-error');
+			$('.upload-drop-zone').removeClass('box-error');
+		}
+		else {
+			$('#message-error-text').text('File is too big (max size 15MB). Please, try again with other file.');
+			$('#message-error').removeClass('d-none');
+			$('#message-error').show();
+			this.value = '';
+		}
 	});
 }
 
@@ -281,13 +291,15 @@ function postImage() {
 				$('#file-name').text('');
 				$('input[type=file]')[0].files[0] = null;
 				$('#wait-response').addClass('d-none');
-				$('#image-hash-box').removeClass('d-none');
-				$('#message-success').removeClass('d-none');
-				$('#message-success-text').text(result.message);
-				$('#message-info').removeClass('d-none');
-				$('#message-info-text').html(result.ipfsMessage + '<a href="'+result.ipfsUrl+'" target="_blank">'+result.ipfsUrl+'</a>');
 				$('#image-hash').text(result.hash);
 				$('#ipfs-btn').attr('data-copy', result.hash);
+				$('#message-success-text').text(result.message);
+				$('#message-info-text').html(result.ipfsMessage + '<a href="'+result.ipfsUrl+'" target="_blank">'+result.ipfsUrl+'</a>');
+				$('#image-hash-box').removeClass('d-none');
+				$('#message-success').removeClass('d-none');
+				$('#message-info').removeClass('d-none');
+				$('#message-success').show();
+				$('#message-info').show();
 			}
 		}
 	});
@@ -300,9 +312,17 @@ $('#file-preview').click(function()
 
 $('#file-hidden').change(function()
 {
-	showFiles(this.files[0]);
-	$('#ipfsFile').removeClass('tag-error');
-	$('.upload-drop-zone').removeClass('box-error');
+	if(this.files[0].size < 15000000){
+		showFiles(this.files[0]);
+		$('#ipfsFile').removeClass('tag-error');
+		$('.upload-drop-zone').removeClass('box-error');
+	}
+	else {
+		$('#message-error-text').text('File is too big (max size 15MB). Please, try again with other file.');
+		$('#message-error').removeClass('d-none');
+		$('#message-error').show();
+		this.value = '';
+	}
 });
 
 $(function() {
@@ -340,6 +360,7 @@ $('#btn-new-keys').click(function() {
 				$('#wait-response').addClass('d-none');
 				$('#new-identity-keys').removeClass('d-none');
 				$('#message-success').removeClass('d-none');
+				$('#message-success').show();
 			}
 		}
 	});
