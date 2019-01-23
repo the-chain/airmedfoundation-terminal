@@ -69,7 +69,8 @@ module.exports = {
             ipfsMessage: 'The file is publicly available from: ',
             ipfsUrl: 'https://gateway.ipfs.io/ipfs/' + inputs.ipfsHash,
             image: 'images/' + inputs.ipfsHash + '.' + type.ext, 
-            imageName: datetime + '.' + type.ext 
+            imageName: datetime + '.' + type.ext,
+            imageType: type.mime
           });
       });
     });

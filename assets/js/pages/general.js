@@ -107,9 +107,11 @@ function getImage() {
 			if(result.image) {
 				$('#btn-download').attr('href', result.image);
 				$('#btn-download').attr('download', result.imageName);
-				var img = new Image();
-				img.src = result.image;
-				img.onload = function() { $('#medical-image').attr('src', img.src); }
+				if (result.imageType.match('image.*')) {
+					var img = new Image();
+					img.src = result.image;
+					img.onload = function() { $('#medical-image').attr('src', img.src).fadeIn('slow'); }
+				}
 				$('#message-success-text').text(result.message);
 				$('#message-info-text').html(result.ipfsMessage + '<a href="'+result.ipfsUrl+'" target="_blank">'+result.ipfsUrl+'</a>');
 				$('#message-success').removeClass('d-none');
@@ -203,12 +205,15 @@ var $image = $('#image-preview');
 
 showFiles = function(file) {
   	$('#file-name').text(file.name);
-  	var reader = new FileReader();
-
-    reader.onload = function (e) {
-        $image.attr('src', e.target.result).fadeIn('slow');
+	if (file.type.match('image.*')) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$image.attr('src', e.target.result).fadeIn('slow');
+		}
+		reader.readAsDataURL(file);
 	}
-    reader.readAsDataURL(file);
+	else
+		$image.attr('src', './images/file.png');
 };
 
 if (isAdvancedUpload) {
