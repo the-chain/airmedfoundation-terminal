@@ -54,6 +54,12 @@ module.exports = {
 
       // Save file
       var type = fileType(file);
+      if ( !type ) {
+        type = {
+          ext: 'unknownType',
+          mime: 'file/unknownType'
+        }
+      }
       var path = 'assets/images/' + inputs.ipfsHash + '.' + type.ext;
       fs.writeFile(path, file, 'binary', (err)=>{
         if (err) 
