@@ -1,3 +1,5 @@
+const crypto = require('asymmetric-crypto');
+
 module.exports = {
 
   friendlyName: 'Generate new identity',
@@ -5,8 +7,6 @@ module.exports = {
   description: 'Generate new identity',
 
   fn: async function (inputs, exits) {
-    const crypto = require('asymmetric-crypto');
- 
     // Generate a key pair
     const keyPair = crypto.keyPair();
     

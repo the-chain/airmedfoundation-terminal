@@ -26,7 +26,6 @@ module.exports = {
       responseType: 'not-found',
       description: 'No se pudo encontrar la imagen.'
     },
-
     invalid: {
       responseType: 'bad-combo',
       description: 'Los parámetros proporcionados son inválidos.'

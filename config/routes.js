@@ -17,7 +17,10 @@ module.exports.routes = {
   'GET  /medical-file':        { action: 'medical-file/get-medical-file' },
   'POST /medical-file':        { action: 'medical-file/post-medical-file' },
 
-  'GET  /identity':            { action: 'identity/get-identity' },
-  'GET  /new-identity':        { view: 'pages/new-identity' },
+  'GET  /new-identity':        { action: 'identity/get-identity' },
+  'GET  /identity':            { view:   'pages/identity' },
+
+  'GET  /get-files':           { action: 'files/get-files' },
+  'GET  /files':               { view:   'pages/files' },
 
 };

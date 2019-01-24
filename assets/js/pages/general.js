@@ -1,6 +1,16 @@
 /* INIT GENERAL */
 $('.js-tooltip').tooltip();
 
+var hashSentTable = $('#hash-sent-table').DataTable({
+    'bLengthChange': false,
+	'bInfo': false,
+});
+
+var hashReceivedTable = $('#hash-received-table').DataTable({
+    'bLengthChange': false,
+    'bInfo': false,
+});
+
 function copyToClipboard(text, el) {
 	var copyTest, elOriginalText;
 	copyTest = document.queryCommandSupported('copy');
@@ -97,7 +107,7 @@ function getImage() {
 			$('#ipfs-hash').val('');
 			$('#public-key').val('');
 			$('#public-key-text-box').addClass('d-none');
-			$("input:radio").prop("checked", false);
+			$('input:radio').prop('checked', false);
 			$('#custom-search-input').removeClass('d-none');
 			$('#wait-response').addClass('d-none');
 			alert(xhr.responseJSON.message);
@@ -123,7 +133,7 @@ function getImage() {
 				$('#ipfs-hash').val('');
 				$('#public-key').val('');
 				$('#public-key-text-box').addClass('d-none');
-				$("input:radio").prop("checked", false);
+				$('input:radio').prop('checked', false);
 				$('#custom-search-input').removeClass('d-none');
 			}
 			$('#wait-response').addClass('d-none');
@@ -340,6 +350,79 @@ $(function() {
 });
 /* END UPLOAD */
 
+/* INIT FILES */
+var filesValidator = $('#form-get-files').validate({
+	rules: {
+		publicKey: {
+			required: true,
+			minlength: 44
+		}
+	},
+	errorPlacement: function(error,element) {
+		return true;
+	},
+	highlight: function(element) {
+		$(element).prev('h6').addClass('tag-error');
+	},
+	unhighlight: function(element) {
+		$(element).prev('h6').removeClass('tag-error');
+	}
+});
+
+$('#btn-find-files').click(function() {
+	if ($('#form-get-files').valid())
+		getFiles();
+	else
+		filesValidator.focusInvalid();
+});
+
+function getFiles() {
+	var sendInfo = {
+		'publicKey': $('#public-key').val()
+	};
+
+	$('#custom-files-search-input').addClass('d-none');
+	$('#wait-response').removeClass('d-none');
+
+	$.ajax({
+		type: 'GET',
+		url: '/get-files',
+		data: sendInfo,
+		dataType: 'json',
+		error: function (xhr, ajaxOptions, thrownError)
+		{
+			console.log(xhr);
+			alert(xhr.responseJSON.message)
+			$('#custom-files-search-input').removeClass('d-none');
+			$('#wait-response').addClass('d-none');
+		},
+		success: function(result) {
+			if (result.success){
+				var userSender = result.userSender;
+				if (Object.keys(userSender).length > 0) {
+					userSender['hashSet'].forEach(function (item) {
+						hashSentTable.row.add({ 
+							'0': item['to'],
+                            '1': item['hash'],
+                        }).draw().node();
+					});
+					
+					userSender['hashReceived'].forEach(function (item) {
+						hashReceivedTable.row.add({ 
+							'0': item['from'],
+                            '1': item['hash'],
+                        }).draw().node();
+					});
+				}
+				$('#wait-response').addClass('d-none');
+				$('#hash-tables').removeClass('d-none');
+				hashSentTable.responsive.recalc();
+				hashReceivedTable.responsive.recalc();
+			}
+		}
+	});
+}
+/* END FILES */
 
 /* INIT IDENTITY */
 $('#btn-new-keys').click(function() {
@@ -347,7 +430,7 @@ $('#btn-new-keys').click(function() {
 	$('#wait-response').removeClass('d-none');
 	$.ajax({
 		type: 'GET',
-		url: '/identity',
+		url: '/new-identity',
 		error: function (xhr, ajaxOptions, thrownError)
 		{
 			console.log(xhr);

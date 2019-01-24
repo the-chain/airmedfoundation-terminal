@@ -1,0 +1,44 @@
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <% include ../layouts/wait %>
+            <div id="custom-files-search-input" class="custom-input">
+                <form id="form-get-files">
+                    <div id="public-key-text-box" class="input-group margin-custom-radio">
+                        <h6>Public Key</h6>
+                        <input id="public-key" type="text" name="publicKey" class="search-query form-control" placeholder="Paste your public key here for search your files" />
+                    </div>
+                    <button id="btn-find-files" class="btn btn-primary margin-custom-radio float-right" type="button"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                </form>
+            </div>      
+            <div id="hash-tables" class="d-none">
+                <div id="sent-table" class="hash-table-div">
+                    <h6 class="hash-title"><i class="fa fa-paper-plane" aria-hidden="true"></i> Hash Sent</h6>
+                    <table id="hash-sent-table" class="table hash-table dt-responsive" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>To</th>
+                                <th>Hash</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="received-table" class="hash-table-div">
+                    <h6 class="hash-title"><i class="fab fa-get-pocket"></i> Hash Received</h6>
+                    <table id="hash-received-table" class="table hash-table dt-responsive" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>From</th>
+                                <th>Hash</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
