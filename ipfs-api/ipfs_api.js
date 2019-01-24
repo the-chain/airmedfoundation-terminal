@@ -6,6 +6,20 @@ var ipfs = ipfsClient( config.host, config.port, { protocol: 'http' });
 
 module.exports = {
     /**
+     * @param {string} data Buffer image
+     * @description Upload fie to ipfs
+     */
+    uploadFromBuffer: async function(data){
+        // Upload to ipfs
+        ipfs.add(data, (err, file) => {
+            // Error uploading the image
+            if (err)
+                throw new Error('Error uploading image');
+            // Done.
+            return file[0].hash;
+        });
+    },
+    /**
      * @param {string} imagePath Image path
      * @callback cb Callback function (err,data)
      * @returns {string} Returns the hash of the file uploaded
