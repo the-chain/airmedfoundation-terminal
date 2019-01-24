@@ -1,9 +1,8 @@
 var Client = require('fabric-client');
 var Channel = require('fabric-client').Channel;
 var client = Client.loadFromConfig("config/configfile.yaml");
-// example: 
-// oGsSCxDozNw/I4ViEl4GQ7guzQ7Mfab3YseRc6RvGQL/U5b1/nUY6I9I2pItM7uedca/R+jGGbjegKVGowZ+WQ==
-// /1OW9f51GOiPSNqSLTO7nnXGv0foxhm43oClRqMGflk=
+
+
 module.exports = {
     /**
      * 
