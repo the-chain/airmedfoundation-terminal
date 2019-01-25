@@ -18,7 +18,7 @@ module.exports = {
     encrypt:{
       type: 'boolean'
     },
-    secretKey: {
+    publicKey: {
       type: 'string'
     },
   },

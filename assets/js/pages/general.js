@@ -46,14 +46,14 @@ var downloadValidator = $('#form-download').validate({
 	rules: {
 		ipfsHash: {
 			required: true,
-			maxlength: 46
+			minlength: 46
 		},
 		encrypted: {
 			required: true
 		},
-		publicKey: {
+		secretKey: {
 			required: true,
-			minlength: 44,
+			minlength: 88,
 		}
 	},
 	errorPlacement: function(error,element) {
@@ -91,7 +91,7 @@ function getImage() {
 	};
 	
 	if (encrypted)
-		sendInfo.publicKey = $('#public-key').val();
+		sendInfo.secretKey = $('#secret-key').val();
 	
 	$('#wait-response').removeClass('d-none');
 	$('#custom-search-input').addClass('d-none');
@@ -105,8 +105,8 @@ function getImage() {
 		{
 			console.log(xhr);
 			$('#ipfs-hash').val('');
-			$('#public-key').val('');
-			$('#public-key-text-box').addClass('d-none');
+			$('#secret-key').val('');
+			$('#secret-key-text-box').addClass('d-none');
 			$('input:radio').prop('checked', false);
 			$('#custom-search-input').removeClass('d-none');
 			$('#wait-response').addClass('d-none');
@@ -131,8 +131,8 @@ function getImage() {
 				$('#message-info').show();
 			} else {
 				$('#ipfs-hash').val('');
-				$('#public-key').val('');
-				$('#public-key-text-box').addClass('d-none');
+				$('#secret-key').val('');
+				$('#secret-key-text-box').addClass('d-none');
 				$('input:radio').prop('checked', false);
 				$('#custom-search-input').removeClass('d-none');
 			}
@@ -149,9 +149,9 @@ $('#btn-download').click(function() {
 $(function() {
     $('input[name="encrypted"]').on('click', function() {
         if ($(this).val() == 'true')
-            $('#public-key-text-box').removeClass('d-none');
+            $('#secret-key-text-box').removeClass('d-none');
         else
-            $('#public-key-text-box').addClass('d-none');
+            $('#secret-key-text-box').addClass('d-none');
     });
 });
 /* END DOWNLOAD */
@@ -166,9 +166,9 @@ var uploadValidator = $('#form-upload').validate({
 		encrypt: {
 			required: true
 		},
-		secretKey: {
+		publicKey: {
 			required: true,
-			minlength: 88,
+			minlength: 44,
 		}
 	},
 	errorPlacement: function(error,element) {
@@ -278,7 +278,7 @@ function postImage() {
 	
 	formData.append('encrypt', encrypt);
 	if (encrypt)
-		formData.append('secretKey', $('#secret-key').val());
+		formData.append('publicKey', $('#public-key').val());
 	formData.append('imageName', $('input[type=file]')[0].files[0].name);
 	formData.append('imageFile', $('input[type=file]')[0].files[0]);
 	
@@ -343,9 +343,9 @@ $('#file-hidden').change(function()
 $(function() {
     $('input[name="encrypt"]').on('click', function() {
         if ($(this).val() == 'true')
-            $('#secret-key-text-box').removeClass('d-none');
+            $('#public-key-text-box').removeClass('d-none');
         else
-            $('#secret-key-text-box').addClass('d-none');
+            $('#public-key-text-box').addClass('d-none');
     });
 });
 /* END UPLOAD */
