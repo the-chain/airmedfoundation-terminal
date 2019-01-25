@@ -42,6 +42,10 @@ module.exports = {
     ursa: {
       responseType: 'ursa-error',
       description: 'Error en la clave enviada'
+    },
+    fabric: {
+      responseType: ' fabric-error',
+      description: ' Error en la plataforma de hyperledger fabric' 
     }
   },
 
@@ -58,23 +62,33 @@ module.exports = {
       if (err) return res.serverError(err);
       // Image path
       var path = 'assets/images/medical/'+imageFileName;
-      /* -------------------------------------- */
-      // Encrypt file
-      if ( inputs.encrypt ) {
-        try{
-          // Read public key
-          // var pubKey = ursa.createPublicKey(inputs.secretKey,'base64');
-        }catch(err){
-          return exits.ursa();
-        }
-      /* -------------------------------------- */
-      }else{
-        // No encrypt file
         //IPFS
-        ipfs.upload(path,(err, hashFile) => {
+        ipfs.upload(path, async (err, hashFile) => {
           if (err)
             return exits.ipfs();
-
+          // Encrypt file
+          if ( inputs.encrypt ) {
+            var msg,transactionHash, result;
+            try{
+              msg = await key.encryptIpfsHash(inputs.publicKey, hashFile);
+              let args = ["TEST",inputs.publicKey,msg];
+              result = await fabric.invokeTransaction('mychannel','Org1MSP','airmed4','sendHash',args);
+              if ( result['STATUS'] == 'SUCCESS' ){
+                transactionHash = result['hash'];
+              }else{
+                console.log(result);
+                return exits.fabric();
+              }
+            }catch(err){
+              return exits.ursa();
+            }
+          }
+          // LEER BIEN
+          // En la variable transactionHash, se encuentra el HASH DE LA TRANSACCIÓN DE FABRIC
+          // En la blockchain se esta guardando TEST, HASH_DESTINATARIO Y HASH_IPFS ENCIRPTADO
+          // En la variable msg se encuentra el hash de IPFS encriptado con la clave publica del destinatario
+          // Actualmente se guardara el string "TEST" para todo destinatario hasta que se agregue el input en el front
+          // Y lo mas importante, WINTER IS HERE.
           return exits.success(
             { 
               success: true, 
@@ -84,7 +98,6 @@ module.exports = {
               hash: hashFile
             });
         });
-      }
     });
   }
 };
