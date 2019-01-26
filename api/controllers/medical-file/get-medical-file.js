@@ -42,6 +42,10 @@ module.exports = {
     ursa:{
       responseType: 'ursa-error2',
       description: 'Error en la clave privada'
+    },
+    ursa2: {
+      responseType: 'ursa-error3',
+      description: 'Error en clave privada o invalido hash IPFS'
     }
   },
 
@@ -63,7 +67,11 @@ module.exports = {
       }catch(err){
         return exits.ursa();
       }
-      hash = await ursa.decryptIpfsHash(inputs.secretKey, inputs.ipfsHash);
+      try {
+        hash = await ursa.decryptIpfsHash(inputs.secretKey, inputs.ipfsHash);
+      }catch(err){
+        return exits.ursa2();
+      }
       customResponse.encrypted = true;
       customResponse.message = 'Encrypted IPFS hash match with the following file';
     }else{
