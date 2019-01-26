@@ -82,15 +82,20 @@ module.exports = {
           try{
             msg = await key.encryptIpfsHash(inputs.receiverPublicKey, hashFile); // ipfsHash encrypted
             await key.assertPublicKey(inputs.senderPublicKey);
-            let args = [inputs.senderPublicKey, inputs.receiverPublicKey, msg]; // in blockchain senderPublicKey, receiverPublicKey and ipfsHash encrypted
-            result = await fabric.invokeTransaction('mychannel', 'Org1MSP', 'airmed4', 'sendHash', args);
-            if (result['status'] == 'SUCCESS') {
-              customResponse.encrypted = true;
-              customResponse.transactionMessage = 'Hyperledger Transaction Hash: ';
-              customResponse.transactionHash = result['hash']; // hash of the fabric transaction
-              customResponse.hash = msg;
-            } else {
-              console.log(result);
+            try{
+              let args = [inputs.senderPublicKey, inputs.receiverPublicKey, msg]; // in blockchain senderPublicKey, receiverPublicKey and ipfsHash encrypted
+              result = await fabric.invokeTransaction('mychannel', 'Org1MSP', 'airmed4', 'sendHash', args);
+              if (result['status'] == 'SUCCESS') {
+                customResponse.encrypted = true;
+                customResponse.transactionMessage = 'Hyperledger Transaction Hash: ';
+                customResponse.transactionHash = result['hash']; // hash of the fabric transaction
+                customResponse.hash = msg;
+              } else {
+                console.log(result);
+                return exits.fabric();
+              }
+            }catch(err){
+              console.log(err);
               return exits.fabric();
             }
           }catch(err){
