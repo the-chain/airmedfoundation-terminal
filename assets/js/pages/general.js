@@ -46,14 +46,16 @@ var downloadValidator = $('#form-download').validate({
 	rules: {
 		ipfsHash: {
 			required: true,
-			minlength: 46
+			minlength: 46,
+			maxlength: 924
 		},
 		encrypted: {
 			required: true
 		},
 		secretKey: {
 			required: true,
-			minlength: 88,
+			minlength: 920,
+			maxlength: 924,
 		}
 	},
 	errorPlacement: function(error,element) {
@@ -385,7 +387,8 @@ var filesValidator = $('#form-get-files').validate({
 	rules: {
 		publicKey: {
 			required: true,
-			minlength: 44
+			minlength: 300,
+			maxlength: 924
 		}
 	},
 	errorPlacement: function(error,element) {
