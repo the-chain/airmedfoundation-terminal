@@ -51,7 +51,11 @@ module.exports = {
     // If one of required parameters is missing
     if(!inputs.ipfsHash)
       return exits.invalid();
-    var hash;
+    var hash, customResponse;
+    // Response
+    customResponse = { 
+      success: true
+    };
     // Encrypted
     if (inputs.encrypted) {
       try{
@@ -60,39 +64,37 @@ module.exports = {
         return exits.ursa();
       }
       hash = await ursa.decryptIpfsHash(inputs.secretKey, inputs.ipfsHash);
+      customResponse.encrypted = true;
+      customResponse.message = 'Encrypted IPFS hash match with the following file';
     }else{
       hash = inputs.ipfsHash;
+      customResponse.encrypted = false;
+      customResponse.message = 'IPFS hash match with the following file';
+      customResponse.ipfsMessage = 'The file is publicly available from: ';
+      customResponse.ipfsUrl  = 'https://gateway.ipfs.io/ipfs/' + hash;
     }
     // Get image from ipfs
-    ipfs.download(hash, (err,file) => {
+    ipfs.download(hash, (err, file) => {
       if (err) 
         return exits.ipfs();
-
       // Save file
       var type = fileType(file);
-      if ( !type ) {
+      if (!type) {
         type = {
           ext: 'unknownType',
           mime: 'file/unknownType'
         }
       }
       var path = 'assets/images/' + hash + '.' + type.ext;
+      customResponse.image = 'images/' + hash + '.' + type.ext;
+      customResponse.imageType = type.mime;
       fs.writeFile(path, file, 'binary', (err)=>{
         if (err) 
           return exits.write();
-        
         sleep.sleep(2);
         var datetime = new Date();
-        return exits.success(
-          { 
-            success: true, 
-            message: 'IPFS hash match with the following image',
-            ipfsMessage: 'The file is publicly available from: ',
-            ipfsUrl: 'https://gateway.ipfs.io/ipfs/' + hash,
-            image: 'images/' + hash + '.' + type.ext, 
-            imageName: datetime + '.' + type.ext,
-            imageType: type.mime
-          });
+        customResponse.imageName = datetime + '.' + type.ext;
+        return exits.success(customResponse);
       });
     });
   }

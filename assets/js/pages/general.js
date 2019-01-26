@@ -82,9 +82,15 @@ $('#btn-find-image').click(function() {
 		downloadValidator.focusInvalid();
 });
 
+function clearDownloadData() {
+	$('#ipfs-hash').val('');
+	$('#secret-key').val('');
+	$('input:radio').prop('checked', false);
+}
+
 function getImage() {
 	var sendInfo, encrypted;
-
+	
 	encrypted = ($('input[name=encrypted]:checked').val() === 'true');
 	
 	sendInfo = {
@@ -92,8 +98,7 @@ function getImage() {
 		'encrypted': encrypted
 	};
 	
-	if (encrypted)
-		sendInfo.secretKey = $('#secret-key').val();
+	if (encrypted) sendInfo.secretKey = $('#secret-key').val();
 	
 	$('#wait-response').removeClass('d-none');
 	$('#custom-search-input').addClass('d-none');
@@ -106,17 +111,15 @@ function getImage() {
 		error: function (xhr, ajaxOptions, thrownError)
 		{
 			console.log(xhr);
-			$('#ipfs-hash').val('');
-			$('#secret-key').val('');
+			clearDownloadData();
 			$('#secret-key-text-box').addClass('d-none');
-			$('input:radio').prop('checked', false);
 			$('#custom-search-input').removeClass('d-none');
 			$('#wait-response').addClass('d-none');
 			alert(xhr.responseJSON.message);
 		},
-		success: function(result)
-		{
-			if(result.image) {
+		success: function(result) {
+			if(result.success) {
+				clearDownloadData();
 				$('#btn-download').attr('href', result.image);
 				$('#btn-download').attr('download', result.imageName);
 				if (result.imageType.match('image.*')) {
@@ -124,21 +127,17 @@ function getImage() {
 					img.src = result.image;
 					img.onload = function() { $('#medical-image').attr('src', img.src).fadeIn('slow'); }
 				}
+				if (!result.encrypted) {
+					$('#message-info-text').html(result.ipfsMessage + '<a href="' + result.ipfsUrl + '" target="_blank">' + result.ipfsUrl + '</a>');
+					$('#message-info').removeClass('d-none');
+					$('#message-info').show();
+				}
 				$('#message-success-text').text(result.message);
-				$('#message-info-text').html(result.ipfsMessage + '<a href="'+result.ipfsUrl+'" target="_blank">'+result.ipfsUrl+'</a>');
 				$('#message-success').removeClass('d-none');
-				$('#message-info').removeClass('d-none');
 				$('#custom-search-image').removeClass('d-none');
+				$('#wait-response').addClass('d-none');
 				$('#message-success').show();
-				$('#message-info').show();
-			} else {
-				$('#ipfs-hash').val('');
-				$('#secret-key').val('');
-				$('#secret-key-text-box').addClass('d-none');
-				$('input:radio').prop('checked', false);
-				$('#custom-search-input').removeClass('d-none');
 			}
-			$('#wait-response').addClass('d-none');
 		}
 	});
 }
