@@ -1,4 +1,4 @@
-const crypto = require('ursa');
+const crypto = require('../../../crypto/keys');
 
 module.exports = {
 
@@ -8,16 +8,13 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // Generate a key pair
-    
-    const keys = crypto.generatePrivateKey(256+512, 65537);
-
-    
+    const keys = await crypto.generateKeys();
     return exits.success(
     { 
         success: true, 
         message: 'A new identity has been generated',
-        publicKey: keys.toPublicPem('base64'), 
-        secretKey: keys.toPrivatePem('base64')
+        publicKey: keys.publicKey, 
+        secretKey: keys.secretKey
     });
   }
 
