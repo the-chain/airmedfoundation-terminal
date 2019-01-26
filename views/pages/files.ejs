@@ -19,6 +19,7 @@
                             <tr>
                                 <th>To</th>
                                 <th>Hash</th>
+                                <th>View More</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,11 +33,64 @@
                             <tr>
                                 <th>From</th>
                                 <th>Hash</th>
+                                <th>View More</th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-keys" id="modal-viewed-received" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hash Received</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12"> 
+                            <div class="form-group">
+                                <label for="from">From</label>
+                                <textarea class="form-control textarea-keys" rows="5" id="from" disabled></textarea>
+                            </div>
+                            <div class="form-group margin-custom-radio">
+                                <label for="hash-received">Hash</label>
+                                <textarea class="form-control textarea-keys" rows="5" id="hash-received" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-keys" id="modal-viewed-sent" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hash Sent</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12"> 
+                            <div class="form-group">
+                                <label for="to">To</label>
+                                <textarea class="form-control textarea-keys" rows="5" id="to" disabled></textarea>
+                            </div>
+                            <div class="form-group margin-custom-radio">
+                                <label for="hash-sent">Hash</label>
+                                <textarea class="form-control textarea-keys" rows="5" id="hash-sent" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

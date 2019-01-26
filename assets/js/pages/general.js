@@ -4,12 +4,67 @@ $('.js-tooltip').tooltip();
 var hashSentTable = $('#hash-sent-table').DataTable({
     'bLengthChange': false,
 	'bInfo': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		},
+		{
+			'targets': 2,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block viewed-sent'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		}
+	]
 });
 
 var hashReceivedTable = $('#hash-received-table').DataTable({
     'bLengthChange': false,
     'bInfo': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		},
+		{
+			'targets': 2,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block viewed-received'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		}
+	]
 });
+
+$(document.body).on('click', '.viewed-received', function () {
+	var from, hash;
+	hashReceivedTable.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	from = hashReceivedTable.row('.selected').data()[0];
+	hash = hashReceivedTable.row('.selected').data()[1];
+	$('#from').text(from)
+	$('#hash-received').text(hash);
+	$('#modal-viewed-received').modal('show');
+});
+
+$(document.body).on('click', '.viewed-sent', function () {
+	var to, hash;
+	hashSentTable.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	to = hashSentTable.row('.selected').data()[0];
+	hash = hashSentTable.row('.selected').data()[1];
+	$('#to').text(to)
+	$('#hash-sent').text(hash);
+	$('#modal-viewed-sent').modal('show');
+});
+
 
 function copyToClipboard(text, el) {
 	var copyTest, elOriginalText;
@@ -47,7 +102,7 @@ var downloadValidator = $('#form-download').validate({
 		ipfsHash: {
 			required: true,
 			minlength: 46,
-			maxlength: 924
+			maxlength: 128
 		},
 		encrypted: {
 			required: true
@@ -432,7 +487,7 @@ function getFiles() {
 			if (result.success){
 				var userSender = result.userSender;
 				if (Object.keys(userSender).length > 0) {
-					userSender['hashSet'].forEach(function (item) {
+					userSender['hashSent'].forEach(function (item) {
 						hashSentTable.row.add({ 
 							'0': item['to'],
                             '1': item['hash'],
