@@ -69,7 +69,6 @@ module.exports = {
      * @param {String} pem 
      */
     async assertPublicKey(pem){
-        
         return ursa.assertPublicKey(ursa.createPublicKey(pem,'base64'));
     },
     /**
