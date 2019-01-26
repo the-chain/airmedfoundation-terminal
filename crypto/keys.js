@@ -10,6 +10,15 @@ module.exports = {
         return key;
     },
     /**
+     * @description Get public key from private key
+     * @param {String} pem Private key
+     * @returns Public key base64 (String)
+     */
+    async getPublicKey(pem){
+        var key = ursa.createPrivateKey(pem,undefined,'base64')
+        return key.toPublicPem('base64');
+    },
+    /**
      * @description Encrypt IPFS Hash
      * @param {String} pem PUBLIC KEY 
      * @param {String} hash IPFS HASH
@@ -35,7 +44,12 @@ module.exports = {
      * @returns Bool false/true
      */
     async isPublicKey(pem){
-        return ursa.isPublicKey(ursa.createPublicKey(pem,'base64'));
+        try {
+            await ursa.createPublicKey(pem,'base64');
+        }catch(err){
+            return false;
+        }
+        return true;
     },
     /**
      * @description Validate private key
@@ -43,13 +57,19 @@ module.exports = {
      * @returns Bool false/true
      */
     async isPrivateKey(pem){
-        return ursa.isPrivateKey(ursa.createPrivateKey(pem,undefined,'base64'));
+        try {
+            await ursa.createPrivateKey(pem,undefined,'base64');
+        }catch(err){
+            return false;
+        }
+        return true; 
     },
     /**
      * @description Validate public key, throw error on false
      * @param {String} pem 
      */
     async assertPublicKey(pem){
+        
         return ursa.assertPublicKey(ursa.createPublicKey(pem,'base64'));
     },
     /**
