@@ -1,6 +1,14 @@
 const ursa = require('ursa');
 
 module.exports = {
+    async generateKeys () {
+        keys = ursa.generatePrivateKey(256+512, 65537);
+        let key = {
+            publicKey: keys.toPublicPem('base64'), 
+            secretKey: keys.toPrivatePem('base64')
+        }
+        return key;
+    },
     /**
      * @description Encrypt IPFS Hash
      * @param {String} pem PUBLIC KEY 
