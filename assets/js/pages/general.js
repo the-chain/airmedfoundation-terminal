@@ -166,9 +166,15 @@ var uploadValidator = $('#form-upload').validate({
 		encrypt: {
 			required: true
 		},
-		publicKey: {
+		senderPublicKey: {
 			required: true,
-			minlength: 44,
+			minlength: 300,
+			maxlength: 300
+		},
+		receiverPublicKey: {
+			required: true,
+			minlength: 300,
+			maxlength: 300
 		}
 	},
 	errorPlacement: function(error,element) {
@@ -263,6 +269,15 @@ $('#btn-upload').click(function() {
 		uploadValidator.focusInvalid();
 });
 
+function clearUploadData() {
+	$image.attr('src', 'images/upload.png');
+	$('#file-name').text('');
+	$('#sender-public-key').val('');
+	$('#receiver-public-key').val('');
+	$('#file-hidden').val('');
+	$('input:radio').prop('checked', false);
+}
+
 function postImage() {
 	if ($dropZone.hasClass('is-uploading')) return false;
 	  
@@ -277,8 +292,10 @@ function postImage() {
 	encrypt = ($('input[name=encrypt]:checked').val() === 'true');
 	
 	formData.append('encrypt', encrypt);
-	if (encrypt)
-		formData.append('publicKey', $('#public-key').val());
+	if (encrypt) {
+		formData.append('senderPublicKey', $('#sender-public-key').val());
+		formData.append('receiverPublicKey', $('#receiver-public-key').val());
+	}
 	formData.append('imageName', $('input[type=file]')[0].files[0].name);
 	formData.append('imageFile', $('input[type=file]')[0].files[0]);
 	
@@ -295,21 +312,25 @@ function postImage() {
 		},
 		error: function (xhr, ajaxOptions, thrownError)
 		{
-			console.log(xhr);
-			alert(xhr.responseJSON.message)
+			clearUploadData();
 			$('#custom-upload-input').removeClass('d-none');
 			$('#wait-response').addClass('d-none');
+			alert(xhr.responseJSON.message);
 		},
 		success: function(result) {
 			if (result.success){
-				$image.attr('src', 'images/upload.png');
-				$('#file-name').text('');
-				$('input[type=file]')[0].files[0] = null;
+				clearUploadData();
 				$('#wait-response').addClass('d-none');
+				if (result.encrypted) {
+					$('#ipfs-label').html('Encrypted IPFS hash');
+					$('#message-info-text').html('<strong>' + result.transactionMessage + '</strong>' +  result.transactionHash);
+				} else {
+					$('#ipfs-label').html('IPFS hash');
+					$('#message-info-text').html(result.ipfsMessage + '<a href="' + result.ipfsUrl + '" target="_blank">' + result.ipfsUrl + '</a>');
+				}
 				$('#image-hash').text(result.hash);
 				$('#ipfs-btn').attr('data-copy', result.hash);
 				$('#message-success-text').text(result.message);
-				$('#message-info-text').html(result.ipfsMessage + '<a href="'+result.ipfsUrl+'" target="_blank">'+result.ipfsUrl+'</a>');
 				$('#image-hash-box').removeClass('d-none');
 				$('#message-success').removeClass('d-none');
 				$('#message-info').removeClass('d-none');
@@ -320,20 +341,29 @@ function postImage() {
 	});
 }
 
-$('#file-preview').click(function()
-{
+$('#file-preview').click(function() {
     $('#file-hidden').trigger('click');
 });
 
-$('#file-hidden').change(function()
-{
-	if(this.files[0].size < 15000000){
-		showFiles(this.files[0]);
-		$('#ipfsFile').removeClass('tag-error');
-		$('.upload-drop-zone').removeClass('box-error');
+$('#file-hidden').change(function() {
+	var files = this.files[0];
+	if (files != undefined && files != null) {
+		if(files.size < 15000000){
+			showFiles(files);
+			$('#ipfsFile').removeClass('tag-error');
+			$('.upload-drop-zone').removeClass('box-error');
+		}
+		else {
+			$('#message-error-text').text('File is too big (max size 15MB). Please, try again with other file.');
+			$('#message-error').removeClass('d-none');
+			$('#message-error').show();
+			this.value = '';
+		}
 	}
 	else {
-		$('#message-error-text').text('File is too big (max size 15MB). Please, try again with other file.');
+		$image.attr('src', 'images/upload.png');
+		$('#message-error-text').text('No file chosen');
+		$('#file-name').text('');
 		$('#message-error').removeClass('d-none');
 		$('#message-error').show();
 		this.value = '';

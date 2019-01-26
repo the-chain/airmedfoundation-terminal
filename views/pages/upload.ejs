@@ -25,15 +25,21 @@
                             <label class="custom-control-label" for="customRadio2">No</label>
                         </div>
                     </div>
-                    <div id="public-key-text-box" class="input-group margin-custom-radio d-none">
-                        <h6>Public Key</h6>
-                        <input id="public-key" type="text" name="publicKey" class="search-query form-control" placeholder="Paste your public key here for encrypt the file" />
+                    <div id="public-key-text-box" class="d-none">
+                        <div class="input-group margin-custom-radio">
+                            <h6>Sender Public Key</h6>
+                            <input id="sender-public-key" type="text" name="senderPublicKey" class="search-query form-control" placeholder="Paste the public key of sender" />
+                        </div>
+                        <div class="input-group margin-custom-radio">
+                            <h6>Receiver Public Key</h6>
+                            <input id="receiver-public-key" type="text" name="receiverPublicKey" class="search-query form-control" placeholder="Paste the public key of receiver for encrypt the file" />
+                        </div>
                     </div>
                     <button id="btn-upload" class="box-button btn btn-primary margin-custom-radio float-right" type="button"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
                 </form>	
             </div>
             <div id="image-hash-box" class="d-none">
-                <p><strong> IPFS hash </strong><i id="ipfs-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></strong></p>
+                <p><strong id="ipfs-label">  </strong><i id="ipfs-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></strong></p>
                 <p><span id="image-hash" class="ajax-text-message"></span></p>
             </div>
         </div>

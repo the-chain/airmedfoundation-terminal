@@ -21,7 +21,10 @@ module.exports = {
     encrypt:{
       type: 'boolean'
     },
-    publicKey: {
+    receiverPublicKey: {
+      type: 'string'
+    },
+    senderPublicKey: {
       type: 'string'
     },
   },
@@ -44,14 +47,14 @@ module.exports = {
       description: 'Error en la clave enviada'
     },
     fabric: {
-      responseType: ' fabric-error',
-      description: ' Error en la plataforma de hyperledger fabric' 
+      responseType: 'fabric-error',
+      description: 'Error en la plataforma de hyperledger fabric' 
     }
   },
 
   fn: async function (inputs, exits) {
     // If one of required parameters is missing
-    if(!inputs.imageFile || !inputs.imageName) 
+    if(!inputs.imageFile || !inputs.imageName || (inputs.encrypt && (!inputs.receiverPublicKey || !inputs.senderPublicKey))) 
       return exits.invalid();
     
     // Generate the new name of file
@@ -61,43 +64,47 @@ module.exports = {
     inputs.imageFile.upload({ dirname: require('path').resolve(sails.config.appPath, 'assets/images/medical/'), saveAs: imageFileName }, function (err, uploadedFile){
       if (err) return res.serverError(err);
       // Image path
-      var path = 'assets/images/medical/'+imageFileName;
-        //IPFS
-        ipfs.upload(path, async (err, hashFile) => {
-          if (err)
-            return exits.ipfs();
-          // Encrypt file
-          if ( inputs.encrypt ) {
-            var msg,transactionHash, result;
-            try{
-              msg = await key.encryptIpfsHash(inputs.publicKey, hashFile);
-              let args = ["TEST",inputs.publicKey,msg];
-              result = await fabric.invokeTransaction('mychannel','Org1MSP','airmed4','sendHash',args);
-              if ( result['STATUS'] == 'SUCCESS' ){
-                transactionHash = result['hash'];
-              }else{
-                console.log(result);
-                return exits.fabric();
-              }
-            }catch(err){
-              return exits.ursa();
+      var path = 'assets/images/medical/' + imageFileName;
+      // IPFS
+      ipfs.upload(path, async (err, hashFile) => {
+        if (err)
+          return exits.ipfs();
+        
+        // Response
+        var customResponse = { 
+          success: true, 
+          message: inputs.imageName + ' uploaded successfully to IPFS network. A search hash for this file has been generated.',
+        };
+        
+        // Encrypt file
+        if (inputs.encrypt) {
+          var msg, result;
+          try{
+            msg = await key.encryptIpfsHash(inputs.receiverPublicKey, hashFile); // ipfsHash encrypted
+            let args = [inputs.senderPublicKey, inputs.receiverPublicKey, msg]; // in blockchain senderPublicKey, receiverPublicKey and ipfsHash encrypted
+            result = await fabric.invokeTransaction('mychannel', 'Org1MSP', 'airmed4', 'sendHash', args);
+            if (result['STATUS'] == 'SUCCESS') {
+              customResponse.encrypted = true;
+              customResponse.transactionMessage = 'Hyperledger Transaction Hash: ';
+              customResponse.transactionHash = result['hash']; // hash of the fabric transaction
+              customResponse.hash = msg;
+            } else {
+              console.log(result);
+              return exits.fabric();
             }
+          }catch(err){
+            return exits.ursa();
           }
-          // LEER BIEN
-          // En la variable transactionHash, se encuentra el HASH DE LA TRANSACCIÓN DE FABRIC
-          // En la blockchain se esta guardando TEST, HASH_DESTINATARIO Y HASH_IPFS ENCIRPTADO
-          // En la variable msg se encuentra el hash de IPFS encriptado con la clave publica del destinatario
-          // Actualmente se guardara el string "TEST" para todo destinatario hasta que se agregue el input en el front
-          // Y lo mas importante, WINTER IS HERE.
-          return exits.success(
-            { 
-              success: true, 
-              message: inputs.imageName + ' uploaded successfully to IPFS network. A search hash for this file has been generated.', 
-              ipfsMessage: 'The file is now publicly available from: ',
-              ipfsUrl: 'https://gateway.ipfs.io/ipfs/' + hashFile,
-              hash: hashFile
-            });
-        });
+        } else {
+          customResponse.encrypted = false;
+          customResponse.ipfsMessage = 'The file is now publicly available from: ';
+          customResponse.ipfsUrl = 'https://gateway.ipfs.io/ipfs/' + hashFile;
+          customResponse.hash = hashFile;
+        }
+        // FALTA
+        // CONFIRMAR LOS INPUTS DEL FROM, PARA NO ACEPTAR CUALQUIER COSA
+        return exits.success(customResponse);
+      });
     });
   }
 };
