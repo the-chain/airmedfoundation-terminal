@@ -73,7 +73,7 @@ module.exports = {
         // Response
         var customResponse = { 
           success: true, 
-          message: inputs.imageName + ' uploaded successfully to IPFS network. A search hash for this file has been generated.',
+          message: inputs.imageName + ' uploaded successfully to IPFS network. <p>A search hash for this file has been generated.</p>',
         };
         
         // Encrypt file
@@ -107,8 +107,6 @@ module.exports = {
           customResponse.ipfsUrl = 'https://gateway.ipfs.io/ipfs/' + hashFile;
           customResponse.hash = hashFile;
         }
-        // FALTA
-        // CONFIRMAR LOS INPUTS DEL FROM, PARA NO ACEPTAR CUALQUIER COSA
         return exits.success(customResponse);
       });
     });

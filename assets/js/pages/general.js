@@ -386,7 +386,7 @@ function postImage() {
 				}
 				$('#image-hash').text(result.hash);
 				$('#ipfs-btn').attr('data-copy', result.hash);
-				$('#message-success-text').text(result.message);
+				$('#message-success-text').html(result.message);
 				$('#image-hash-box').removeClass('d-none');
 				$('#message-success').removeClass('d-none');
 				$('#message-info').removeClass('d-none');
