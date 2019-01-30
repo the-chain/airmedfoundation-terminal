@@ -24,7 +24,7 @@ module.exports = {
     receiverPublicKey: {
       type: 'string'
     },
-    senderPublicKey: {
+    senderPrivateKey: {
       type: 'string'
     },
   },
@@ -54,7 +54,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // If one of required parameters is missing
-    if(!inputs.imageFile || !inputs.imageName || (inputs.encrypt && (!inputs.receiverPublicKey || !inputs.senderPublicKey))) 
+    if(!inputs.imageFile || !inputs.imageName || (inputs.encrypt && (!inputs.receiverPublicKey || !inputs.senderPrivateKey))) 
       return exits.invalid();
     
     // Generate the new name of file
@@ -81,9 +81,9 @@ module.exports = {
           var msg, result;
           try{
             msg = await key.encryptIpfsHash(inputs.receiverPublicKey, hashFile); // ipfsHash encrypted
-            await key.assertPublicKey(inputs.senderPublicKey);
+            await key.assertPublicKey(inputs.senderPrivateKey);
             try{
-              let args = [inputs.senderPublicKey, inputs.receiverPublicKey, msg]; // in blockchain senderPublicKey, receiverPublicKey and ipfsHash encrypted
+              let args = [inputs.senderPrivateKey, inputs.receiverPublicKey, msg]; // in blockchain senderPrivateKey, receiverPublicKey and ipfsHash encrypted
               result = await fabric.invokeTransaction('mychannel', 'Org1MSP', 'airmed4', 'sendHash', args);
               if (result['status'] == 'SUCCESS') {
                 customResponse.encrypted = true;

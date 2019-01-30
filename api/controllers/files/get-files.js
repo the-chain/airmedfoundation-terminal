@@ -8,7 +8,7 @@ module.exports = {
   description: 'Get all files related with a public key',
 
   inputs: {
-    publicKey: {
+    key: {
       type: 'string'
     },
   },
@@ -30,15 +30,15 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // If one of required parameters is missing
-    if(!inputs.publicKey)
+    if(!inputs.key)
       return exits.invalid();
     var response, resp1, resp2;
     // Check private/public key
-    if (await ursa.isPrivateKey(inputs.publicKey)) {
-      var arg = await ursa.getPublicKey(inputs.publicKey);
+    if (await ursa.isPrivateKey(inputs.key)) {
+      var arg = await ursa.getPublicKey(inputs.key);
       response = await fabric.queryChaincode('mychannel','Org1MSP','airmed4','query',[arg]);
-    }else if (await ursa.isPublicKey(inputs.publicKey)) {
-      response = await fabric.queryChaincode('mychannel','Org1MSP','airmed4','query',[inputs.publicKey]);
+    }else if (await ursa.isPublicKey(inputs.key)) {
+      response = await fabric.queryChaincode('mychannel','Org1MSP','airmed4','query',[inputs.key]);
     }else{
       return exits.ursa();
     }

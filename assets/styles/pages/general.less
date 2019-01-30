@@ -85,7 +85,7 @@ textarea {
 }
 
 p { 
-    word-break: break-all 
+    word-break: break-all; 
 }
 
 .the-chain-link:visited, .the-chain-link:hover, .the-chain-link:active, .the-chain-link:focus {
@@ -105,11 +105,15 @@ p {
     font-size: 16px;
 }
 
+.dropdown-item {
+    font-size: 14px;
+}
+
 .navbar {
     border-bottom: 1px solid #e5e5e5;
 }
 
-.navbar-brand span {
+.navbar-brand span, .blue-word {
     color: #30a5ff; 
 }
 
@@ -195,6 +199,79 @@ p {
     background-image: linear-gradient(7deg, #30a5ff, #30a5ff);
 }
 
+.home-title {
+    margin-bottom: 15px;
+}
+
+.home-title-image {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.margin-image {
+    margin-bottom: 25px;
+}
+
+.home-paragraph {
+    word-break: normal;
+    text-align: justify;
+}
+
+#hyperleger-logo {
+    max-width: 250px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+
+#ipfs-logo {
+    max-width: 100px;
+}
+
+#guide-logo {
+    max-width: 175px;
+}
+
+.margin-first{
+    margin-top: 25px;
+}
+
+.margin-top-section {
+    margin-top: 75px;
+}
+
+@media (max-width: 1000px) {
+    .home-paragraph {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .home-title {
+        font-size: 16px;
+    }
+    #hyperleger-logo {
+        max-width: 200px;
+    }
+    #ipfs-logo {
+        max-width: 80px;
+    }
+}
+
+@media (max-width: 520px) {
+    .home-title {
+        font-size: 14px;
+    }
+    .home-paragraph {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 400px) {
+    .home-title {
+        font-size: 12px;
+    }
+}
+
 /* UPLOAD */
 .upload-drop-zone {
     padding-top: 65px;
@@ -261,22 +338,12 @@ input[type='file']::-webkit-file-upload-button{
     font-size: 18px;
 }
 
-#new-identity-keys {
-    font-size: 16px;
-}
-
-@media (max-width: 1000px) {
-    #new-identity-keys {
-        font-size: 14px;
-    }
-}
-
 @media (max-width: 768px) {
     .navbar-brand {
         font-size: 14px;
     }
 
-    .nav-link {
+    .nav-link, .dropdown-item {
         font-size: 12px;
     }
 
@@ -308,6 +375,14 @@ input[type='file']::-webkit-file-upload-button{
 
     .hash-table td {
         font-size: 11px;
+    }
+
+    h4 {
+        font-size: 16px;
+    }
+
+    .image-src-key {
+        max-width: 50px;
     }
 }
 

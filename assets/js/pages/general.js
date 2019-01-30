@@ -222,10 +222,10 @@ var uploadValidator = $('#form-upload').validate({
 		encrypt: {
 			required: true
 		},
-		senderPublicKey: {
+		senderPrivateKey: {
 			required: true,
 			minlength: 300,
-			maxlength: 300
+			maxlength: 924
 		},
 		receiverPublicKey: {
 			required: true,
@@ -328,7 +328,7 @@ $('#btn-upload').click(function() {
 function clearUploadData() {
 	$image.attr('src', 'images/upload.png');
 	$('#file-name').text('');
-	$('#sender-public-key').val('');
+	$('#sender-private-key').val('');
 	$('#receiver-public-key').val('');
 	$('#file-hidden').val('');
 	$('input:radio').prop('checked', false);
@@ -349,7 +349,7 @@ function postImage() {
 	
 	formData.append('encrypt', encrypt);
 	if (encrypt) {
-		formData.append('senderPublicKey', $('#sender-public-key').val());
+		formData.append('senderPrivateKey', $('#sender-private-key').val());
 		formData.append('receiverPublicKey', $('#receiver-public-key').val());
 	}
 	formData.append('imageName', $('input[type=file]')[0].files[0].name);
@@ -429,9 +429,9 @@ $('#file-hidden').change(function() {
 $(function() {
     $('input[name="encrypt"]').on('click', function() {
         if ($(this).val() == 'true')
-            $('#public-key-text-box').removeClass('d-none');
+            $('#keys-text-box').removeClass('d-none');
         else
-            $('#public-key-text-box').addClass('d-none');
+            $('#keys-text-box').addClass('d-none');
     });
 });
 /* END UPLOAD */
@@ -439,7 +439,7 @@ $(function() {
 /* INIT FILES */
 var filesValidator = $('#form-get-files').validate({
 	rules: {
-		publicKey: {
+		key: {
 			required: true,
 			minlength: 300,
 			maxlength: 924
@@ -465,7 +465,7 @@ $('#btn-find-files').click(function() {
 
 function getFiles() {
 	var sendInfo = {
-		'publicKey': $('#public-key').val()
+		'key': $('#key').val()
 	};
 
 	$('#custom-files-search-input').addClass('d-none');
@@ -479,7 +479,8 @@ function getFiles() {
 		error: function (xhr, ajaxOptions, thrownError)
 		{
 			console.log(xhr);
-			alert(xhr.responseJSON.message)
+			alert(xhr.responseJSON.message);
+			$('#key').val('');
 			$('#custom-files-search-input').removeClass('d-none');
 			$('#wait-response').addClass('d-none');
 		},
@@ -541,3 +542,65 @@ $('#btn-new-keys').click(function() {
 	});
 });
 /* END IDENTITY */
+
+/* INIT RECOVERY */
+var recoveryValidator = $('#form-recovery-key').validate({
+	rules: {
+		privateKey: {
+			required: true,
+			minlength: 920,
+			maxlength: 924
+		}
+	},
+	errorPlacement: function(error,element) {
+		return true;
+	},
+	highlight: function(element) {
+		$(element).prev('h6').addClass('tag-error');
+	},
+	unhighlight: function(element) {
+		$(element).prev('h6').removeClass('tag-error');
+	}
+});
+
+$('#btn-recovery-key').click(function() {
+	if ($('#form-recovery-key').valid())
+		recoveryKey();
+	else
+		recoveryValidator.focusInvalid();
+});
+
+function recoveryKey() {
+	var sendInfo = {
+		'privateKey': $('#private-key').val()
+	};
+
+	$('#custom-recovery-key-input').addClass('d-none');
+	$('#wait-response').removeClass('d-none');
+
+	$.ajax({
+		type: 'POST',
+		url: '/recovery-key',
+		data: sendInfo,
+		dataType: 'json',
+		error: function (xhr, ajaxOptions, thrownError)
+		{
+			console.log(xhr);
+			alert(xhr.responseJSON.message);
+			$('#private-key').val('');
+			$('#custom-recovery-key-input').removeClass('d-none');
+			$('#wait-response').addClass('d-none');
+		},
+		success: function(result) {
+			if (result.success) {
+				$('#message-success-text').text(result.message);
+				$('#public-key').text(result.publicKey);
+				$('#wait-response').addClass('d-none');
+				$('#identity-public-key').removeClass('d-none');
+				$('#message-success').removeClass('d-none');
+				$('#message-success').show();
+			}
+		}
+	});
+}
+/* END RECOVERY */

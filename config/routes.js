@@ -10,17 +10,22 @@
 
 module.exports.routes = {
 
-  'GET /':                     { view:   'pages/upload' },
+  'GET /':                     { view:   'home/index' },
   
-  'GET  /upload':              { view:   'pages/upload' },
-  'GET  /download':            { view:   'pages/download' },
+  'GET  /upload':              { view:   'file/upload' },
+  'GET  /download':            { view:   'file/download' },
   'GET  /medical-file':        { action: 'medical-file/get-medical-file' },
   'POST /medical-file':        { action: 'medical-file/post-medical-file' },
 
+  'GET  /identity':            { view:   'identity/new' },
   'GET  /new-identity':        { action: 'identity/get-identity' },
-  'GET  /identity':            { view:   'pages/identity' },
-
+  
+  'GET  /files':               { view:   'identity/files' },
   'GET  /get-files':           { action: 'files/get-files' },
-  'GET  /files':               { view:   'pages/files' },
+  
+  'GET  /recovery':            { view:   'identity/recovery' },
+  'POST /recovery-key':        { action: 'identity/recovery' },
+
+  'GET  /guide':               { view:   'guide/index' },
 
 };
