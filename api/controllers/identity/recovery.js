@@ -1,3 +1,5 @@
+const ursa = require('../../../crypto/keys');
+
 module.exports = {
 
   friendlyName: 'Recovery',
@@ -15,6 +17,10 @@ module.exports = {
       responseType: 'bad-combo',
       description: 'Los parámetros proporcionados son inválidos.'
     },
+    ursa: {
+      responseType: 'ursa-error',
+      description: ' Error con la clave privada'
+    }
   },
 
   fn: async function (inputs, exits) {
@@ -22,10 +28,17 @@ module.exports = {
     if(!inputs.privateKey)
       return exits.invalid();
     
+    try {
+      await ursa.assertPrivateKey(inputs.privateKey);
+      var key = await ursa.getPublicKey(inputs.privateKey);
+    }catch(err){
+      return exits.ursa();
+    }
+
     return exits.success({
       success: true, 
       message: 'Successful recovery, your public key is the following',
-      publicKey: 'LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUh3d0RRWUpLb1pJaHZjTkFRRUJCUUFEYXdBd2FBSmhBTDdwUmJVUThnNHM5T09iSUtYTkxhWkhlMTFGU2luYwovVkZjVUZnaDBRRHVpS3Z6NjcrU1dTS2E5eWtxV2tSbzhURTVoSmkzNWF6Yk9KVzZKZEg3blkrR1VVby9uSU9jCkpGOHppUVZoeXpGUXFhamh6MjBZWkJ4dXdCZ1FWTDluZndJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg=='
+      publicKey: key
     });
 
   }
