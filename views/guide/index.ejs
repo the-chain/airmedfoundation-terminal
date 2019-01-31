@@ -1,90 +1,127 @@
 <main class="container general-container">
     <div class="row h-100">
         <div class="col-12 my-auto">
-            <h4 class="guide-title"><i class="fa fa-user" aria-hidden="true"></i> Identity</h4>
-            <hr>
-            <h6 class="guide-subtitle"><i class="fa fa-plus" aria-hidden="true"></i> Create a new identity</h6>
-            <ol>
-                <li class="guide-number">
-                    <p class="guide-paragraph">Select the <strong>IDENTITY</strong> button at the top right of the navbar, this shows a drop-down menu select <strong>NEW</strong> option.</p>
-                    <img class="img-thumbnail" src="images/new_identity.png"/>
-                </li>
-                <li class="guide-number">
-                    <p class="guide-paragraph">Select the <strong>"Generate new key pair"</strong> button.</p>
-                    <img class="img-thumbnail margin-image" src="images/generate_btn.png"/>
-                    <p class="guide-paragraph">
-                        A new identity will have been created, consisting of a <strong>private key</strong> and a <strong>public key</strong>, these cryptographic keys are created using the <strong>RSA</strong> system. The private key is the most important, it will be used to verify the identity of the individual when performing operations such as encryption, while the public key is used to identify an individual. You can generate the public key from the private key. The private key is <strong>SECRET</strong>, the one that obtains your private key can usurp your identity and perform operations on your behalf.  
-                    </p>
-                </li>
-            </ol>
-            <h6 class="guide-subtitle"><i class="fa fa-key" aria-hidden="true"></i> Recover public key</h6>
-            <ol>
-                <li class="guide-number">
-                    <p class="guide-paragraph">Select the <strong>IDENTITY</strong> button at the top right of the navbar, this shows a drop-down menu select <strong>RECOVERY</strong> option.</p>
-                    <img class="img-thumbnail" src="images/identity_recovery.png"/>
-                </li>
-                <li class="guide-number">
-                    <p class="guide-paragraph">If you lose your public key for some reason you can recover it with this option, you must place your <strong>public key</strong> in the input and press the <strong>recover</strong> button.</p>
-                    <img class="img-thumbnail" src="images/recovery_btn.png"/>
-                </li>
-                <li class="guide-number">
-                    <p class="guide-paragraph">After pressing the button, your public key is displayed.</p>
-                    <img class="img-thumbnail" src="images/recovery_ie.png"/>
-                </li>
-            </ol>
-            <h6 class="guide-subtitle"><i class="fas fa-file" aria-hidden="true"></i> Files sent and received</h6>
-            <ol class="margin-divider">
-                <li class="guide-number">
-                    <p class="guide-paragraph">Select the <strong>IDENTITY</strong> button at the top right of the navbar, this shows a drop-down menu select <strong>FILES</strong> option.</p>
-                    <img class="img-thumbnail" src="images/identity_files.png"/>
-                </li>
-                <li class="guide-number">
-                    <p class="guide-paragraph">After selecting the <strong>FILES</strong> option, you will have to put your <strong>public or private key</strong> in the input and press the <strong>search</strong> button.</p>
-                    <img class="img-thumbnail margin-image" src="images/files_search.png"/>
-                    <p class="guide-paragraph">
-                        Two tables are displayed, one with the hashes of the files sent and another with the hashes of the files received.  
-                    </p>
-                </li>
-            </ol>
-            <h4 class="guide-title"><i class="fas fa-upload" aria-hidden="true"></i> Upload an encrypted file</h4>
-            <hr>
-            <ol class="margin-divider">
-                <li class="guide-number">
-                    <p class="guide-paragraph">Select the <strong>UPLOAD</strong> button at the top left of the navbar.</p>
-                    <img class="img-thumbnail" src="images/upload_btn.png"/>
-                </li>
-                <li class="guide-number">
-                    <p class="guide-paragraph">Select a file with the <strong>Choose a file button</strong> or <strong>dragging the file</strong> inside the box.</p>
-                    <img class="img-thumbnail" src="images/choose_file.png"/>
-                </li>
-                <li class="guide-number">
-                    <p class="guide-paragraph">After selecting the file, proceed to select the option <strong>ENCRYPT FILE</strong>. Then 2 inputs will be displayed, the first one must contain the <strong>private key</strong> of the user who is performing the operation (to validate the identity of the sender), the second input must contain the <strong>public key</strong> of the user who will receive the file.</p>
-                    <img class="img-thumbnail" src="images/upload_ie.png"/>
-                </li>
-                <li class="guide-number">
-                    <p class="guide-paragraph">At the end of filling the fields, we proceed to select the <strong>upload</strong> button.</p>
-                    <img class="img-thumbnail" src="images/press_upload.png"/>
-                </li>
-                <li class="guide-number">
-                    <p class="guide-paragraph">After uploading the file, you will be given the <strong>hash of the Blockchain transaction</strong> and the <strong>encrypted IPFS Hash</strong>.</p>
-                    <img class="img-thumbnail" src="images/encrypted_ipfs_hash.png"/>
-                </li>
-            </ol>
-            <h4 class="guide-title"><i class="fas fa-download" aria-hidden="true"></i> Download an encrypted file</h4>
-            <hr>
-            <ol>
-                <li class="guide-number">
-                    <p class="guide-paragraph">Select the <strong>DOWNLOAD</strong> button at the top left of the navbar.</p>
-                    <img class="img-thumbnail" src="images/download_btn.png"/>
-                </li>
-                <li class="guide-number">
-                    <p class="guide-paragraph">Once the button is pressed, you will have to put the <strong>encrypted hash</strong> generated when <strong>uploading the file</strong>, select the button that the file is encrypted and then put your <strong>private key</strong> in the input. After filling the fields press the <strong>search</strong> button.</p>
-                    <img class="img-thumbnail margin-image" src="images/download_ie.png"/>
-                    <p class="guide-paragraph">
-                        If the entered data is correct, the file ready to download will appear.
-                    </p>
-                </li>
-            </ol>
+            <section id="identity">
+                <h4 class="guide-title"><i class="fa fa-user" aria-hidden="true"></i> Identity</h4>
+                <hr>
+                <h6 class="guide-subtitle"><i class="fa fa-plus" aria-hidden="true"></i> Create a new identity</h6>
+                <ol>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">Select the <strong>IDENTITY</strong> button at the top right of the navbar, this shows a drop-down menu select <strong>NEW</strong> option.</p>
+                        <div class="text-center">
+                            <img id="new-identity" class="img-thumbnail" src="images/new_identity_lg.png"/>
+                        </div>
+                    </li>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">Select the <strong>"Generate new key pair"</strong> button.</p>
+                        <div class="text-center">
+                            <img id="generate-btn" class="img-thumbnail margin-image" src="images/generate_btn_lg.png"/>
+                        </div>
+                        <p class="guide-paragraph">
+                            A new identity will have been created, consisting of a <strong>private key</strong> and a <strong>public key</strong>, these cryptographic keys are created using the <strong>RSA</strong> system. The private key is the most important, it will be used to verify the identity of the individual when performing operations such as encryption, while the public key is used to identify an individual. You can generate the public key from the private key. The private key is <strong>SECRET</strong>, the one that obtains your private key can usurp your identity and perform operations on your behalf.  
+                        </p>
+                    </li>
+                </ol>
+                <h6 class="guide-subtitle"><i class="fa fa-key" aria-hidden="true"></i> Recover public key</h6>
+                <ol>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">Select the <strong>IDENTITY</strong> button at the top right of the navbar, this shows a drop-down menu select <strong>RECOVERY</strong> option.</p>
+                        <div class="text-center">
+                            <img id="identity-recovery" class="img-thumbnail" src="images/identity_recovery_lg.png"/>
+                        </div>
+                    </li>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">If you lose your public key for some reason you can recover it with this option, you must place your <strong>public key</strong> in the input and press the <strong>recover</strong> button.</p>
+                        <div class="text-center">
+                            <img id="recovery-btn" class="img-thumbnail" src="images/recovery_btn_lg.png"/>
+                        </div>
+                    </li>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">After pressing the button, your public key is displayed.</p>
+                        <div class="text-center">
+                            <img id="recovery-ie" class="img-thumbnail" src="images/recovery_ie_lg.png"/>
+                        </div>                        
+                    </li>
+                </ol>
+                <h6 class="guide-subtitle"><i class="fas fa-file" aria-hidden="true"></i> Files sent and received</h6>
+                <ol class="margin-divider">
+                    <li class="guide-number">
+                        <p class="guide-paragraph">Select the <strong>IDENTITY</strong> button at the top right of the navbar, this shows a drop-down menu select <strong>FILES</strong> option.</p>
+                        <div class="text-center">
+                            <img id="identity-files" class="img-thumbnail" src="images/identity_files_lg.png"/>
+                        </div>
+                    </li>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">After selecting the <strong>FILES</strong> option, you will have to put your <strong>public or private key</strong> in the input and press the <strong>search</strong> button.</p>
+                        <div class="text-center">
+                            <img id="files-search" class="img-thumbnail margin-image" src="images/files_search_lg.png"/>
+                        </div>
+                        <p class="guide-paragraph">
+                            Two tables are displayed, one with the hashes of the files sent and another with the hashes of the files received.  
+                        </p>
+                    </li>
+                </ol>
+            </section>
+            <section id="upload">
+                <h4 class="guide-title"><i class="fas fa-upload" aria-hidden="true"></i> Upload an encrypted file</h4>
+                <hr>
+                <ol class="margin-divider">
+                    <li class="guide-number">
+                        <p class="guide-paragraph">Select the <strong>UPLOAD</strong> button at the top left of the navbar.</p>
+                        <div class="text-center">
+                            <img id="upload-btn" class="img-thumbnail" src="images/upload_btn_lg.png"/>
+                        </div>
+                    </li>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">Select a file with the <strong>Choose a file button</strong> or <strong>dragging the file</strong> inside the box.</p>
+                        <div class="text-center">
+                            <img id="choose-file" class="img-thumbnail" src="images/choose_file_lg.png"/>
+                        </div>
+                    </li>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">After selecting the file, proceed to select the option <strong>ENCRYPT FILE</strong>. Then 2 inputs will be displayed, the first one must contain the <strong>private key</strong> of the user who is performing the operation (to validate the identity of the sender), the second input must contain the <strong>public key</strong> of the user who will receive the file.</p>
+                        <div class="text-center">
+                            <img id="upload-ie" class="img-thumbnail" src="images/upload_ie_lg.png"/>
+                        </div>
+                    </li>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">At the end of filling the fields, we proceed to select the <strong>upload</strong> button.</p>
+                        <div class="text-center">
+                            <img id="press-upload" class="img-thumbnail" src="images/press_upload_lg.png"/>
+                        </div>
+                    </li>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">After uploading the file, you will be given the <strong>hash of the Blockchain transaction</strong> and the <strong>encrypted IPFS Hash</strong>.</p>
+                        <div class="text-center">
+                            <img id="encrypted-ipfs-hash" class="img-thumbnail" src="images/encrypted_ipfs_hash_lg.png"/>
+                        </div>
+                    </li>
+                </ol>
+            </section>
+            <section id="download">
+                <h4 class="guide-title"><i class="fas fa-download" aria-hidden="true"></i> Download an encrypted file</h4>
+                <hr>
+                <ol>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">Select the <strong>DOWNLOAD</strong> button at the top left of the navbar.</p>
+                        <div class="text-center">
+                            <img id="download-btn" class="img-thumbnail" src="images/download_btn_lg.png"/>
+                        </div>
+                    </li>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">Once the button is pressed, you will have to put the <strong>encrypted hash</strong> generated when <strong>uploading the file</strong>, select the button that the file is encrypted and then put your <strong>private key</strong> in the input. After filling the fields press the <strong>search</strong> button.</p>
+                        <div class="text-center">
+                            <img id="download-ie" class="img-thumbnail margin-image" src="images/download_ie_lg.png"/>
+                        </div>
+                    </li>
+                    <li class="guide-number">
+                        <p class="guide-paragraph">If the entered data is correct, the file ready to download will appear, select <strong>download</strong> button.</p>
+                        <div class="text-center">
+                            <img id="download-btn" class="img-thumbnail" src="images/download_btn_lg.png"/>
+                        </div>
+                    </li>
+                </ol>
+            </section>
         </div>
     </div>
 </main>
