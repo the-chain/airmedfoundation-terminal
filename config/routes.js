@@ -26,6 +26,6 @@ module.exports.routes = {
   'GET  /recovery':            { view:   'identity/recovery' },
   'POST /recovery-key':        { action: 'identity/recovery' },
 
-  'GET  /guide':               { view:   'guide/index' },
+  'GET  /tutorial':            { view:   'tutorial/index' },
 
 };
