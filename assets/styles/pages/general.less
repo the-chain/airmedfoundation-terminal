@@ -212,7 +212,11 @@ p {
     margin-bottom: 25px;
 }
 
-.home-paragraph {
+.margin-divider {
+    margin-bottom: 65px;
+}
+
+.home-paragraph, .guide-paragraph {
     word-break: normal;
     text-align: justify;
 }
@@ -239,6 +243,15 @@ p {
     margin-top: 75px;
 }
 
+.guide-subtitle {
+    margin-top: 35px; 
+    margin-bottom: 20px;
+}
+
+.guide-number {
+    margin-bottom: 25px;
+}
+
 @media (max-width: 1000px) {
     .home-paragraph {
         font-size: 12px;
@@ -246,14 +259,23 @@ p {
 }
 
 @media (max-width: 768px) {
-    .home-title {
+    .home-title, .guide-title {
         font-size: 16px;
+    }
+    .guide-subtitle {
+        font-size: 14px;
+    }
+    .guide-paragraph {
+        font-size: 12px;
     }
     #hyperleger-logo {
         max-width: 200px;
     }
     #ipfs-logo {
         max-width: 80px;
+    }
+    #guide-logo {
+        max-width: 135px;
     }
 }
 
