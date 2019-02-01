@@ -175,6 +175,7 @@ function getImage() {
 		success: function(result) {
 			if(result.success) {
 				clearDownloadData();
+				$('#secret-key-text-box').addClass('d-none');
 				$('#btn-download').attr('href', result.image);
 				$('#btn-download').attr('download', result.imageName);
 				if (result.imageType.match('image.*')) {
@@ -199,6 +200,7 @@ function getImage() {
 
 $('#btn-download').click(function() {
 	$('#custom-search-image').addClass('d-none');
+	$('#message-success').hide();
 	$('#custom-search-input').removeClass('d-none');
 });
 
