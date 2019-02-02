@@ -3,24 +3,48 @@
         <div class="col-12 my-auto">
             <div class="row align-items-center margin-first">
                 <div class="col-sm-12 col-md-6">
-                    <h5 class="home-title">What is AirMed <span class="blue-word">Foundation</span>?</h5>
-                    <p class="home-paragraph">Airmed foundation is a secure way to transfer or share medical records (or any sensitive document) between pairs, uses <strong>InterPlanetary Filesystem</strong> technology for the transfer and storage of records and <strong>Hyperledger Fabric</strong> for the storage of encrypted transactions, both technologies guarantee the immutability of the data, allowing to register all kinds of modifications. This works totally decentralized.</p>
+                    <h5 class="home-title">Airmed <span class="blue-word">Foundation</span></h5>
+                    <hr>
+                    <p class="home-paragraph">The Airmed Foundation is an <strong>open source initiative</strong> working under the Apache License. We provide a <strong>secure channel to store and transfer medical records</strong>. We do this through the <strong>Interplanetary File System (IPFS)</strong> and <strong>Hyperledger Fabric</strong>. The conjunction of these technologies guarantees the immutability and availability of the data. We replicate all records through the IPFS network, using the <strong>Bitttorrent</strong> protocol. We achieve secure access to files through <strong>asymmetric cryptography</strong>. We protect and store access keys in the Hyperledger Fabric <strong>blockchain</strong>.</p>
                 </div>
                 <div class="col-sm-12 col-md-6 justify-content-center">
                     <div class="text-center">
-                        <img src="images/hyperledger.png" class="img-thumbnail" id="hyperleger-logo"/>
-                        <img src="images/ipfs.png" class="img-thumbnail" id="ipfs-logo"/>
+                        <a href="https://www.hyperledger.org/" target="_blank"><img src="images/hyperledger.png" id="hyperleger-logo"/></a>
+                        <a href="https://ipfs.io/" target="_blank"><img src="images/ipfs.png" id="ipfs-logo"/></a>
                     </div>
                 </div>
             </div>
             <div class="row align-items-center margin-top-section">
                 <div class="col-sm-12 col-md-6">
                     <h5 class="home-title">How does it work?</h5>
-                    <p class="home-paragraph">There are two ways to use Airmed, the first and easiest is to upload a file and share it through the hash address that returns the system, being able to download it to any <strong>InterPlanetary Filesystem</strong>  client that is connected to the public network. The second and more complex way is using identities to encrypt the file and restricting access by a specific person, for this process, we have created the following <a href="/guide">tutorial</a>.</p>
+                    <hr>
+                    <p class="home-paragraph">
+                        There are two ways to use Airmed.
+                    </p>
+                    <p class="home-paragraph">
+                        The first and easiest is to upload a file and share it publicly through the <strong>hash address</strong> that the system returns. This allows you to download it from any InterPlanetary Filesystem client that is connected to the public network. Files also become available through the <strong>IPFS gateway</strong>. Just attach the hash address to the IPFS url, as shown below.
+                    </p>
+                    <h6 class="home-title">Example</h6>
+                    <ul>
+                        <li class="guide-number">
+                            <p class="guide-paragraph">With a file with IPFS hash being</p>
+                            <p><strong>QmNdWbbe3jsHUUYZwq2w9eCkHD1JefV1oM7m4DkSJF4wzp</strong></p>
+                        </li>
+                        <li class="guide-number">
+                            <p class="guide-paragraph">https://gateway.ipfs.io/ipfs/<strong>&lt;the hash address goes here&gt;</strong></p>
+                        </li>
+                        <li class="guide-number">
+                            <p class="guide-paragraph"><strong>Like...</strong></p>
+                            <p><a href="https://gateway.ipfs.io/ipfs/QmNdWbbe3jsHUUYZwq2w9eCkHD1JefV1oM7m4DkSJF4wzp" target="_blank">https://gateway.ipfs.io/ipfs/QmNdWbbe3jsHUUYZwq2w9eCkHD1JefV1oM7m4DkSJF4wzp</a></p>
+                        </li>
+                    </ul>
+                    <p class="home-paragraph">
+                            The second and more private way is using <strong>asymmetric encryption</strong>. This stores keys in <strong>Hyperledger Fabric’s blockchain</strong> and allows <strong>restricting access to specific entities</strong>. For this process, we have created this <a href="/tutorial" target="_blank">tutorial</a>.
+                    </p>
                 </div>
                 <div class="col-sm-12 col-md-6 justify-content-center">
                     <div class="text-center">
-                        <img src="images/guide.png" class="img-thumbnail" id="guide-logo"/>
+                        <img src="images/guide.png" id="guide-logo"/>
                     </div>
                 </div>
             </div>
