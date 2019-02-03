@@ -1,4 +1,4 @@
-# Airmed Foundation - Interplanetary File System Client
+# Airmed Foundation - Node.js Terminal
 
 Node.js terminal to transfer files through the Interplanetary File System (IPFS). 
 
