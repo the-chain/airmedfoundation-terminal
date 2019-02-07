@@ -36,9 +36,9 @@ module.exports = {
     // Check private/public key
     if (await ursa.isPrivateKey(inputs.key)) {
       var arg = await ursa.getPublicKey(inputs.key);
-      response = await fabric.queryChaincode('mychannel','Org1MSP','airmed4','query',[arg]);
+      response = await fabric.queryChaincode('mychannel','Org1MSP','airmed10','query',[arg]);
     }else if (await ursa.isPublicKey(inputs.key)) {
-      response = await fabric.queryChaincode('mychannel','Org1MSP','airmed4','query',[inputs.key]);
+      response = await fabric.queryChaincode('mychannel','Org1MSP','airmed10','query',[inputs.key]);
     }else{
       return exits.ursa();
     }
