@@ -10,7 +10,7 @@ module.exports = function fabricError() {
 
     result = {
         status: 500,
-        message: 'SERVER ERROR - HYPERLEDGER FABRIC'
+        message: 'Internal server error. Peer connection timeout expired. Please try later'
     };
   
     return res.status(500).json(result);
