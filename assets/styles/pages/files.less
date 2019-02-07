@@ -1,0 +1,91 @@
+/* INIT MODALS FILES */
+.modal-keys .modal-header {
+    border-color: #30a5ff;
+}
+
+.modal-keys .modal-title
+{
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.modal-keys .modal-content, .modal-keys .modal-body {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.textarea-keys {
+    resize: none;
+    font-size: 12px !important;
+	overflow: auto;
+	overflow-x: hidden;
+}
+
+.textarea-keys::-webkit-scrollbar-track {
+	background-color: white;
+}
+
+.textarea-keys::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+.textarea-keys::-webkit-scrollbar-thumb {
+	border-radius: 100px;
+	background-color: #30a5ff;
+}
+/* END MODALS FILES */
+
+
+/* INIT TABLES FILES */
+.hash-title {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.hash-table-div {
+    margin-bottom: 75px;
+}
+
+.hash-table .even, .hash-table .odd { 
+    background-color: #ffffff 
+}
+
+.hash-table th, .dataTables_filter, .dataTables_length, .dataTables_info, .dataTables_paginate, .dtr-title {
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #444444;
+    line-height: 1.58;
+}
+
+.hash-table td {
+    font-size: 14px;
+    color: #444444;
+}
+
+.pagination > li.active > a, .pagination > li.active > span{
+    background-image: linear-gradient(7deg, #30a5ff, #30a5ff);
+}
+/* END TABLES FILES */
+
+
+@media (max-width: 768px) {
+    .hash-table th, .hash-table td, .dataTables_filter, .dataTables_length, .dataTables_info, .dataTables_paginate, .dtr-title {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 520px) {
+    .hash-table td {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 400px) {
+    .hash-table td {
+        font-size: 10px;
+    }
+}

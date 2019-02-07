@@ -1,3 +1,5 @@
+<% include ../layouts/navigation-bar %>
+
 <main class="container general-container">
     <div class="row h-100">
         <div class="col-12 my-auto">
@@ -5,12 +7,12 @@
                 <div class="col-sm-12 col-md-6">
                     <h5 class="home-title">Airmed <span class="blue-word">Foundation</span></h5>
                     <hr>
-                    <p class="home-paragraph">The Airmed Foundation is an <strong>open source initiative</strong> working under the Apache License. We provide a <strong>secure channel to store and transfer medical records</strong>. We do this through the <strong>Interplanetary File System (IPFS)</strong> and <strong>Hyperledger Fabric</strong>. The conjunction of these technologies guarantees the immutability and availability of the data. We replicate all records through the IPFS network, using the <strong>Bitttorrent</strong> protocol. We achieve secure access to files through <strong>asymmetric cryptography</strong>. We protect and store access keys in the Hyperledger Fabric <strong>blockchain</strong>.</p>
+                    <p class="home-paragraph">The Airmed Foundation is an <span class="font-weight-bold">open source initiative</span> working under the Apache License. We provide a <span class="font-weight-bold">secure channel to store and transfer medical records</span>. We do this through the <span class="font-weight-bold">Interplanetary File System (IPFS)</span> and <span class="font-weight-bold">Hyperledger Fabric</span>. The conjunction of these technologies guarantees the immutability and availability of the data. We replicate all records through the IPFS network, using the <span class="font-weight-bold">Bitttorrent</span> protocol. We achieve secure access to files through <span class="font-weight-bold">asymmetric cryptography</span>. We protect and store access keys in the Hyperledger Fabric <span class="font-weight-bold">blockchain</span>.</p>
                 </div>
                 <div class="col-sm-12 col-md-6 justify-content-center">
                     <div class="text-center">
-                        <a href="https://www.hyperledger.org/" target="_blank"><img src="images/hyperledger.png" id="hyperleger-logo"/></a>
-                        <a href="https://ipfs.io/" target="_blank"><img src="images/ipfs.png" id="ipfs-logo"/></a>
+                        <a href="https://www.hyperledger.org/" target="_blank"><img src="images/home/hyperledger.png" id="hyperleger-logo"/></a>
+                        <a href="https://ipfs.io/" target="_blank"><img src="images/home/ipfs.png" id="ipfs-logo"/></a>
                     </div>
                 </div>
             </div>
@@ -22,32 +24,34 @@
                         There are two ways to use Airmed.
                     </p>
                     <p class="home-paragraph">
-                        The first and easiest is to upload a file and share it publicly through the <strong>hash address</strong> that the system returns. This allows you to download it from any InterPlanetary Filesystem client that is connected to the public network. Files also become available through the <strong>IPFS gateway</strong>. Just attach the hash address to the IPFS url, as shown below.
+                        The first and easiest is to upload a file and share it publicly through the <span class="font-weight-bold">hash address</span> that the system returns. This allows you to download it from any InterPlanetary Filesystem client that is connected to the public network. Files also become available through the <span class="font-weight-bold">IPFS gateway</span>. Just attach the hash address to the IPFS url, as shown below.
                     </p>
                     <h6 class="home-title">Example</h6>
                     <ul>
                         <li class="guide-number">
                             <p class="guide-paragraph">With a file with IPFS hash being</p>
-                            <p><strong>QmNdWbbe3jsHUUYZwq2w9eCkHD1JefV1oM7m4DkSJF4wzp</strong></p>
+                            <p class="p-word-break guide-paragraph"><span class="font-weight-bold">QmNdWbbe3jsHUUYZwq2w9eCkHD1JefV1oM7m4DkSJF4wzp</span></p>
                         </li>
                         <li class="guide-number">
-                            <p class="guide-paragraph">https://gateway.ipfs.io/ipfs/<strong>&lt;the hash address goes here&gt;</strong></p>
+                            <p class="guide-paragraph">https://gateway.ipfs.io/ipfs/<span class="font-weight-bold">&lt;the hash address goes here&gt;</span></p>
                         </li>
                         <li class="guide-number">
-                            <p class="guide-paragraph"><strong>Like...</strong></p>
-                            <p><a href="https://gateway.ipfs.io/ipfs/QmNdWbbe3jsHUUYZwq2w9eCkHD1JefV1oM7m4DkSJF4wzp" target="_blank">https://gateway.ipfs.io/ipfs/QmNdWbbe3jsHUUYZwq2w9eCkHD1JefV1oM7m4DkSJF4wzp</a></p>
+                            <p class="guide-paragraph"><span class="font-weight-bold">Like...</span></p>
+                            <p class="p-word-break guide-paragraph"><a href="https://gateway.ipfs.io/ipfs/QmNdWbbe3jsHUUYZwq2w9eCkHD1JefV1oM7m4DkSJF4wzp" target="_blank">https://gateway.ipfs.io/ipfs/QmNdWbbe3jsHUUYZwq2w9eCkHD1JefV1oM7m4DkSJF4wzp</a></p>
                         </li>
                     </ul>
                     <p class="home-paragraph">
-                            The second and more private way is using <strong>asymmetric encryption</strong>. This stores keys in <strong>Hyperledger Fabric’s blockchain</strong> and allows <strong>restricting access to specific entities</strong>. For this process, we have created this <a href="/tutorial" target="_blank">tutorial</a>.
+                            The second and more private way is using <span class="font-weight-bold">asymmetric encryption</span>. This stores keys in <span class="font-weight-bold">Hyperledger Fabric’s blockchain</span> and allows <span class="font-weight-bold">restricting access to specific entities</span>. For this process, we have created this <a href="/tutorial" target="_blank">tutorial</a>.
                     </p>
                 </div>
                 <div class="col-sm-12 col-md-6 justify-content-center">
                     <div class="text-center">
-                        <img src="images/guide.png" id="guide-logo"/>
+                        <img src="images/home/guide.png" id="guide-logo"/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
+
+<% include ../layouts/footer %>

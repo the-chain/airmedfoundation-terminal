@@ -1,0 +1,117 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+  
+body {
+    min-height: 100vh;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    background: #fff;
+    font-size: 14px;
+    color: #444444;
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.p-word-break { 
+    word-break: break-all; 
+}
+
+.alert {
+    margin-bottom: 25px;
+}
+
+.blue-word {
+    color: #30a5ff; 
+}
+
+.general-container {
+    min-height: 100%;
+}
+
+.image-src {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100px;
+}
+
+/* INIT BUTTONS */
+.btn-primary {
+    font-size: 14px;
+    background:#30a5ff;
+}
+
+.btn-primary:hover {
+    background:#2d99ed;
+}
+/* END BUTTONS */
+
+
+/* INIT COPY */
+.js-copy {
+    margin-left: 15px; 
+}
+
+.js-copy:hover {
+    cursor: pointer;
+}
+/* END COPY */
+
+
+/* INIT ERROR */
+.tag-error {
+    color: #ff305c !important;
+}
+.box-error {
+    border-color: #ff305c !important;
+}
+/* END ERROR */
+
+
+/* INIT RADIO BUTTONS */
+.margin-custom-radio {
+    margin-top: 30px;
+}
+
+.custom-radio .custom-control-input:checked~.custom-control-label::before,
+.custom-radio .custom-control-input:checked~.custom-control-label::after {
+    background-color: #30a5ff; 
+    border-radius: 50%;
+}
+/* END RADIO BUTTONS */
+
+/* INIT INPUT */
+.custom-input {
+    margin:0;
+    padding: 0;
+}
+
+.custom-input .search-query {
+    width:100%;
+    padding-right: 3px;
+    padding-left: 15px;
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 0;
+}
+
+.custom-input button {
+    font-size: 14px;
+}
+/* END INPUT */
+
+@media (max-width: 768px) {
+    .home-title, .guide-title {
+        font-size: 16px;
+    }
+
+    .search-query, .alert {
+        font-size: 12px;
+    }
+
+    .btn-primary {
+        font-size: 12px !important;
+    }
+}

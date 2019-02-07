@@ -1,3 +1,5 @@
+<% include ../layouts/navigation-bar %>
+
 <main class="container general-container">
     <div class="row h-100">
         <div class="col-12 my-auto">
@@ -13,9 +15,11 @@
                 </form>
             </div>
             <div id="identity-public-key" class="d-none">
-                <p><strong><i class="fa fa-key" aria-hidden="true"></i> Public Key <i id="public-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></strong></p>
-                <p><span id="public-key" class="ajax-text-message"></span></p>
+                <p><span class="font-weight-bold"><i class="fa fa-key" aria-hidden="true"></i> Public Key <i id="public-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></span></p>
+                <p class="p-word-break"><span id="public-key" class="ajax-text-message"></span></p>
             </div>
         </div>
     </div>
 </main>
+
+<% include ../layouts/footer %>

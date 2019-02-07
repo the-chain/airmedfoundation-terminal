@@ -18,8 +18,8 @@ module.exports = {
       description: 'Los parámetros proporcionados son inválidos.'
     },
     ursa: {
-      responseType: 'ursa-error',
-      description: ' Error con la clave privada'
+      responseType: 'ursa-error2',
+      description: 'Error con la clave privada'
     }
   },
 

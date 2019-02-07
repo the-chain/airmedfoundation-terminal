@@ -165,12 +165,13 @@ function getImage() {
 		data: sendInfo,
 		error: function (xhr, ajaxOptions, thrownError)
 		{
-			console.log(xhr);
 			clearDownloadData();
 			$('#secret-key-text-box').addClass('d-none');
 			$('#custom-search-input').removeClass('d-none');
 			$('#wait-response').addClass('d-none');
-			alert(xhr.responseJSON.message);
+			$('#message-error-text').html(xhr.responseJSON.message);
+			$('#message-error').removeClass('d-none');
+			$('#message-error').show();
 		},
 		success: function(result) {
 			if(result.success) {
@@ -287,7 +288,7 @@ showFiles = function(file) {
 		reader.readAsDataURL(file);
 	}
 	else
-		$image.attr('src', './images/file.png');
+		$image.attr('src', './images/general/file.png');
 };
 
 if (isAdvancedUpload) {
@@ -328,7 +329,7 @@ $('#btn-upload').click(function() {
 });
 
 function clearUploadData() {
-	$image.attr('src', 'images/upload.png');
+	$image.attr('src', 'images/general/upload.png');
 	$('#file-name').text('');
 	$('#sender-private-key').val('');
 	$('#receiver-public-key').val('');
@@ -373,7 +374,9 @@ function postImage() {
 			clearUploadData();
 			$('#custom-upload-input').removeClass('d-none');
 			$('#wait-response').addClass('d-none');
-			alert(xhr.responseJSON.message);
+			$('#message-error-text').html(xhr.responseJSON.message);
+			$('#message-error').removeClass('d-none');
+			$('#message-error').show();
 		},
 		success: function(result) {
 			if (result.success){
@@ -419,7 +422,7 @@ $('#file-hidden').change(function() {
 		}
 	}
 	else {
-		$image.attr('src', 'images/upload.png');
+		$image.attr('src', 'images/general/upload.png');
 		$('#message-error-text').text('No file chosen');
 		$('#file-name').text('');
 		$('#message-error').removeClass('d-none');
@@ -480,8 +483,9 @@ function getFiles() {
 		dataType: 'json',
 		error: function (xhr, ajaxOptions, thrownError)
 		{
-			console.log(xhr);
-			alert(xhr.responseJSON.message);
+			$('#message-error-text').html(xhr.responseJSON.message);
+			$('#message-error').removeClass('d-none');
+			$('#message-error').show();
 			$('#key').val('');
 			$('#custom-files-search-input').removeClass('d-none');
 			$('#wait-response').addClass('d-none');
@@ -523,8 +527,9 @@ $('#btn-new-keys').click(function() {
 		url: '/new-identity',
 		error: function (xhr, ajaxOptions, thrownError)
 		{
-			console.log(xhr);
-			alert(xhr.responseJSON.message)
+			$('#message-error-text').html(xhr.responseJSON.message);
+			$('#message-error').removeClass('d-none');
+			$('#message-error').show();
 			$('#custom-new-identity').removeClass('d-none');
 			$('#wait-response').addClass('d-none');
 		},
@@ -587,8 +592,9 @@ function recoveryKey() {
 		dataType: 'json',
 		error: function (xhr, ajaxOptions, thrownError)
 		{
-			console.log(xhr);
-			alert(xhr.responseJSON.message);
+			$('#message-error-text').html(xhr.responseJSON.message);
+			$('#message-error').removeClass('d-none');
+			$('#message-error').show();
 			$('#private-key').val('');
 			$('#custom-recovery-key-input').removeClass('d-none');
 			$('#wait-response').addClass('d-none');

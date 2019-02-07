@@ -1,3 +1,5 @@
+<% include ../layouts/navigation-bar %>
+
 <main class="container general-container">
     <div class="row h-100">
         <div class="col-12 my-auto">
@@ -9,78 +11,78 @@
                 <hr>
                 <ol>
                     <li class="guide-number">
-                        <p class="guide-paragraph">Press the <strong>Identity</strong> button at the top right corner of the navigation bar. This shows a drop down menu. Select the <strong>New</strong> option.</p>
+                        <p class="guide-paragraph">Press the <span class="font-weight-bold">Identity</span> button at the top right corner of the navigation bar. This shows a drop down menu. Select the <span class="font-weight-bold">New</span> option.</p>
                         <div class="text-center">
-                            <img id="new-identity" class="img-thumbnail" src="images/new_identity_lg.png"/>
+                            <img id="new-identity" class="img-thumbnail" src="images/tutorial/new_identity_lg.png"/>
                         </div>
                     </li>
                     <li class="guide-number">
-                        <p class="guide-paragraph"> Press the <strong>Generate</strong> button to create a new key pair.</p>
+                        <p class="guide-paragraph"> Press the <span class="font-weight-bold">Generate</span> button to create a new key pair.</p>
                         <div class="text-center">
-                            <img id="generate-btn" class="img-thumbnail margin-image" src="images/generate_btn_lg.png"/>
+                            <img id="generate-btn" class="img-thumbnail margin-image" src="images/tutorial/generate_btn_lg.png"/>
                         </div>
                         <p class="guide-paragraph">
-                            A new identity within the Airmed Foundation network is then created. This identity consists of a <strong>private key</strong> and a <strong>public key</strong>. Both are <strong>cryptographic keys</strong> created using the RSA system. We use the private key to both encrypt and decrypt files associated with an individual. We use the public key to identify this person or entity. We can generate the public key from the private key. A private key is to be kept <strong>SECRET</strong>, as it is what allows a person to access encrypted files on the network.  
+                            A new identity within the Airmed Foundation network is then created. This identity consists of a <span class="font-weight-bold">private key</span> and a <span class="font-weight-bold">public key</span>. Both are <span class="font-weight-bold">cryptographic keys</span> created using the RSA system. We use the private key to both encrypt and decrypt files associated with an individual. We use the public key to identify this person or entity. We can generate the public key from the private key. A private key is to be kept <span class="font-weight-bold">SECRET</span>, as it is what allows a person to access encrypted files on the network.  
                         </p>
                     </li>
                 </ol>
             </section>
             <section id="upload">
-                <h6 class="guide-title">Upload an encrypted file</h6>
+                <h6 class="guide-subtitle">Upload an encrypted file</h6>
                 <hr>
                 <ol class="margin-divider">
                     <li class="guide-number">
-                        <p class="guide-paragraph">Select the <strong>Upload</strong> button at the top left of the navigation bar.</p>
+                        <p class="guide-paragraph">Select the <span class="font-weight-bold">Upload</span> button at the top left of the navigation bar.</p>
                         <div class="text-center">
-                            <img id="upload-btn" class="img-thumbnail" src="images/upload_btn_lg.png"/>
+                            <img id="upload-btn" class="img-thumbnail" src="images/tutorial/upload_btn_lg.png"/>
                         </div>
                     </li>
                     <li class="guide-number">
-                        <p class="guide-paragraph">Select a file with the <strong>Choose a file button</strong> or <strong>dragging the file</strong> to this area.</p>
+                        <p class="guide-paragraph">Select a file with the <span class="font-weight-bold">Choose a file button</span> or <span class="font-weight-bold">dragging the file</span> to this area.</p>
                         <div class="text-center">
-                            <img id="choose-file" class="img-thumbnail" src="images/choose_file_lg.png"/>
+                            <img id="choose-file" class="img-thumbnail" src="images/tutorial/choose_file_lg.png"/>
                         </div>
                     </li>
                     <li class="guide-number">
-                        <p class="guide-paragraph">Proceed to check the option <strong>Encrypt file</strong>. Then two inputs will be displayed, the first one mustpress contain the <strong>private key</strong> of the user who is uploading the file. This allows us to validate his identity.</p>
+                        <p class="guide-paragraph">Proceed to check the option <span class="font-weight-bold">Encrypt file</span>. Then two inputs will be displayed, the first one mustpress contain the <span class="font-weight-bold">private key</span> of the user who is uploading the file. This allows us to validate his identity.</p>
                         <div class="text-center">
-                            <img id="upload-ie" class="img-thumbnail" src="images/upload_ie_lg.png"/>
+                            <img id="upload-ie" class="img-thumbnail" src="images/tutorial/upload_ie_lg.png"/>
                         </div>
                     </li>
                     <li class="guide-number">
-                        <p class="guide-paragraph">After filling the fields, we select the <strong>Upload</strong> button.</p>
+                        <p class="guide-paragraph">After filling the fields, we select the <span class="font-weight-bold">Upload</span> button.</p>
                         <div class="text-center">
-                            <img id="press-upload" class="img-thumbnail" src="images/press_upload_lg.png"/>
+                            <img id="press-upload" class="img-thumbnail" src="images/tutorial/press_upload_lg.png"/>
                         </div>
                     </li>
                     <li class="guide-number">
-                        <p class="guide-paragraph">After uploading the file, you will be given the <strong>hash of the Blockchain transaction</strong> and the <strong>encrypted IPFS Hash</strong>. The IPFS hash will be needed to recover this file</p>
+                        <p class="guide-paragraph">After uploading the file, you will be given the <span class="font-weight-bold">hash of the Blockchain transaction</span> and the <span class="font-weight-bold">encrypted IPFS Hash</span>. The IPFS hash will be needed to recover this file</p>
                         <div class="text-center">
-                            <img id="encrypted-ipfs-hash" class="img-thumbnail" src="images/encrypted_ipfs_hash_lg.png"/>
+                            <img id="encrypted-ipfs-hash" class="img-thumbnail" src="images/tutorial/encrypted_ipfs_hash_lg.png"/>
                         </div>
                     </li>
                 </ol>
             </section>
             <section id="download">
-                <h6 class="guide-title">Download an encrypted file</h6>
+                <h6 class="guide-subtitle">Download an encrypted file</h6>
                 <hr>
                 <ol>
                     <li class="guide-number">
-                        <p class="guide-paragraph">Select the <strong>Download</strong> button at the top left of the navigation bar.</p>
+                        <p class="guide-paragraph">Select the <span class="font-weight-bold">Download</span> button at the top left of the navigation bar.</p>
                         <div class="text-center">
-                            <img id="download-btn" class="img-thumbnail" src="images/download_btn_lg.png"/>
+                            <img id="download-btn" class="img-thumbnail" src="images/tutorial/download_btn_lg.png"/>
                         </div>
                     </li>
                     <li class="guide-number">
-                        <p class="guide-paragraph">You will have to put the <strong>encrypted hash</strong> generated when <span class="font-italic">* uploading the file</span>. Specify that the file is encrypted and then put your <strong>private key</strong> in the input field. After filling the fields, press the <strong>search</strong> button.</p>
+                        <p class="guide-paragraph">You will have to put the <span class="font-weight-bold">encrypted hash</span> generated when <span class="font-italic">* uploading the file</span>. Specify that the file is encrypted and then put your <span class="font-weight-bold">private key</span> in the input field. After filling the fields, press the <span class="font-weight-bold">search</span> button.</p>
                         <div class="text-center">
-                            <img id="download-ie" class="img-thumbnail margin-image" src="images/download_ie_lg.png"/>
+                            <img id="download-ie" class="img-thumbnail margin-image" src="images/tutorial/download_ie_lg.png"/>
                         </div>
                     </li>
                     <li class="guide-number">
-                        <p class="guide-paragraph">If the entered data is correct, the file to download will appear listed. Select the <strong>download</strong> button.</p>
+                        <p class="guide-paragraph">If the entered data is correct, the file to download will appear listed. Select the <span class="font-weight-bold">download</span> button.</p>
                         <div class="text-center">
-                            <img id="download-finish-step" class="img-thumbnail" src="images/download_finish_step_lg.png"/>
+                            <img id="download-finish-step" class="img-thumbnail" src="images/tutorial/download_finish_step_lg.png"/>
                         </div>
                     </li>
                 </ol>
@@ -89,21 +91,21 @@
                 <h6 class="guide-subtitle">List all sent and received files</h6>
                 <ol class="margin-divider">
                     <li class="guide-number">
-                        <p class="guide-paragraph">Select the <strong>Identity</strong> button at the top right of the navigation bar. This shows a drop-down menu. Here select the <strong>Files</strong> option.</p>
+                        <p class="guide-paragraph">Select the <span class="font-weight-bold">Identity</span> button at the top right of the navigation bar. This shows a drop-down menu. Here select the <span class="font-weight-bold">Files</span> option.</p>
                         <div class="text-center">
-                            <img id="identity-files" class="img-thumbnail" src="images/identity_files_lg.png"/>
+                            <img id="identity-files" class="img-thumbnail" src="images/tutorial/identity_files_lg.png"/>
                         </div>
                     </li>
                     <li class="guide-number">
-                        <p class="guide-paragraph">After selecting the <strong>Files</strong> option, you will have to write your <strong>public or private key</strong> in the input field and press the <strong>search</strong> button.</p>
+                        <p class="guide-paragraph">After selecting the <span class="font-weight-bold">Files</span> option, you will have to write your <span class="font-weight-bold">public or private key</span> in the input field and press the <span class="font-weight-bold">search</span> button.</p>
                         <div class="text-center">
-                            <img id="files-search" class="img-thumbnail margin-image" src="images/files_search_lg.png"/>
+                            <img id="files-search" class="img-thumbnail margin-image" src="images/tutorial/files_search_lg.png"/>
                         </div>
                     </li>
                     <li class="guide-number">
                         <p class="guide-paragraph"> Then two tables are displayed. One has the hashes of the files sent and another has the hashes of the files received.</p>
                         <div class="text-center">
-                            <img id="tables-search" class="img-thumbnail margin-image" src="images/tables_search_lg.png"/>
+                            <img id="tables-search" class="img-thumbnail margin-image" src="images/tutorial/tables_search_lg.png"/>
                         </div>
                     </li>
                 </ol>
@@ -114,21 +116,21 @@
                 <p class="guide-paragraph">If, for any reason, you lose your public key you can recover it through your private key.</p>
                 <ol>
                     <li class="guide-number">
-                        <p class="guide-paragraph">Select the <strong>Identity</strong> button at the top right of the navigation bar, this shows a drop down menu. Here select the <strong>Recovery</strong> option.</p>
+                        <p class="guide-paragraph">Select the <span class="font-weight-bold">Identity</span> button at the top right of the navigation bar, this shows a drop down menu. Here select the <span class="font-weight-bold">Recovery</span> option.</p>
                         <div class="text-center">
-                            <img id="identity-recovery" class="img-thumbnail" src="images/identity_recovery_lg.png"/>
+                            <img id="identity-recovery" class="img-thumbnail" src="images/tutorial/identity_recovery_lg.png"/>
                         </div>
                     </li>
                     <li class="guide-number">
-                        <p class="guide-paragraph">You must place your <strong>private key</strong> in input and press the <strong>recover</strong> button.</p>
+                        <p class="guide-paragraph">You must place your <span class="font-weight-bold">private key</span> in input and press the <span class="font-weight-bold">recover</span> button.</p>
                         <div class="text-center">
-                            <img id="recovery-btn" class="img-thumbnail" src="images/recovery_btn_lg.png"/>
+                            <img id="recovery-btn" class="img-thumbnail" src="images/tutorial/recovery_btn_lg.png"/>
                         </div>
                     </li>
                     <li class="guide-number">
                         <p class="guide-paragraph">After pressing the button, your public key is then displayed.</p>
                         <div class="text-center">
-                            <img id="recovery-ie" class="img-thumbnail" src="images/recovery_ie_lg.png"/>
+                            <img id="recovery-ie" class="img-thumbnail" src="images/tutorial/recovery_ie_lg.png"/>
                         </div>                        
                     </li>
                 </ol>
@@ -136,3 +138,5 @@
         </div>
     </div>
 </main>
+
+<% include ../layouts/footer %>

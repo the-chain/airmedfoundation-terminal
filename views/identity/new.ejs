@@ -1,3 +1,5 @@
+<% include ../layouts/navigation-bar %>
+
 <main class="container general-container">
     <div class="row h-100">
         <div class="col-12 my-auto">
@@ -5,18 +7,20 @@
             <% include ../layouts/flash-message %>
             <div id="custom-new-identity">
                 <div class="text-center">
-                    <img id="keys-image" src="images/keys.png" class="image-src-key img-thumbnail" id="keys-img"/>
-                    <h4 class="margin-keys">Generate new key pair</h4>
+                    <img id="keys-image" src="images/general/keys.png" class="image-src-key img-thumbnail" id="keys-img"/>
+                    <h4 class="margin-keys new-keys-title">Generate new key pair</h4>
                     <button id="btn-new-keys" class="btn btn-primary" type="button"><i class="fas fa-plus"></i> Generate</button>
                 </div>
             </div>
             <div id="new-identity-keys" class="d-none">
-                <p><strong><i class="fa fa-user-secret" aria-hidden="true"></i> Private Key <i id="secret-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></strong></p>
-                <p><span id="secret-key" class="ajax-text-message"></span></p>
+                <p><span class="font-weight-bold"><i class="fa fa-user-secret" aria-hidden="true"></i> Private Key <i id="secret-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></span></p>
+                <p class="p-word-break"><span id="secret-key" class="ajax-text-message"></span></p>
                 <br>
-                <p><strong><i class="fa fa-key" aria-hidden="true"></i> Public Key <i id="public-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></strong></p>
-                <p><span id="public-key" class="ajax-text-message"></span></p>
+                <p><span class="font-weight-bold"><i class="fa fa-key" aria-hidden="true"></i> Public Key <i id="public-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></span></p>
+                <p class="p-word-break"><span id="public-key" class="ajax-text-message"></span></p>
             </div>
         </div>
     </div>
 </main>
+
+<% include ../layouts/footer %>

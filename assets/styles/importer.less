@@ -9,7 +9,24 @@
  *   https://sailsjs.com/anatomy/assets/styles/importer-less
  */
 
-@import 'fonts.less';
+ // general styles
+ @import 'general.less';
 
-// Per-page styles
-@import 'pages/general.less';
+ // pages styles
+@import 'pages/home.less';
+@import 'pages/upload.less';
+@import 'pages/download.less';
+@import 'pages/identity.less';
+@import 'pages/files.less';
+@import 'pages/tutorial.less';
+
+ // fonts styles
+@import 'fonts/Montserrat.less';
+
+// layouts styles
+@import 'layouts/navigation-bar.less';
+@import 'layouts/footer.less';
+@import 'layouts/wait.less';
+
+// errors styles
+@import 'errors/errors.less';
