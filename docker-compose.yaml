@@ -1,0 +1,18 @@
+version: '2'
+   
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "airmed"
+      MYSQL_USER: "airmed"
+      MYSQL_PASSWORD: "LYbAWCErGttRsP9y"
+      MYSQL_ROOT_PASSWORD: "LYbAWCErGttRsP9y"
+    volumes:
+      - data_sql:/var/lib/mysql
+volumes:
+  data_sql:
