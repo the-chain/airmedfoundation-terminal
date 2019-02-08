@@ -1,0 +1,1 @@
+node core/initProcess.js
