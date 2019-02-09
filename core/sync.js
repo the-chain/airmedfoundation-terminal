@@ -2,6 +2,8 @@ var Client = require('fabric-client');
 var Channel = require('fabric-client').Channel;
 var ledgerQuery = require('../fabric-api/queryLedger');
 var client = Client.loadFromConfig("./fabric-api/config/configfile.yaml");
+var httpClient = require('./api/httpApi');
+
 module.exports = {
     /**
      * @async
