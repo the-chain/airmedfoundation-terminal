@@ -28,13 +28,13 @@ var Chaincode = class {
       }
       // Get sender
       let userSender = await stub.getState(args[0]);
-      if ( !userSender.toString() ){
-        userSender = {
-            hashSent: [],
-            hashReceived: []
-        }
-      }else{
+      try{
           userSender = JSON.parse(userSender.toString());
+      }catch(err){
+        userSender = {
+          hashSent: [],
+          hashReceived: []
+        }
       }
       // Save sender info
       userSender.hashSent.push({to: args[1], hash: args[2]});
@@ -42,13 +42,13 @@ var Chaincode = class {
         await stub.putState(args[0], Buffer.from(JSON.stringify(userSender)));
         // Get receiver
         let userReceiver = await stub.getState(args[1]);
-        if ( !userReceiver.toString() ){
-          userReceiver = {
-              hashSent: [],
-              hashReceived: []
-          }
-        }else{
+        try{
           userReceiver = JSON.parse(userReceiver.toString());
+        }catch(err){
+          userReceiver = {
+            hashSent: [],
+            hashReceived: []
+          } 
         }
         // Save receiver info
         userReceiver.hashReceived.push({from: args[0], hash: args[2]});
