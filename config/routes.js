@@ -28,4 +28,6 @@ module.exports.routes = {
 
   'GET  /tutorial':            { action: 'tutorial/index' },
 
+  'GET  /explorer':            { action: 'explorer/index' },
+
 };

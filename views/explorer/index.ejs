@@ -1,0 +1,208 @@
+<% include ../layouts/navigation-bar %>
+
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <div class="row">
+                <div class="col-12 col-lg-5">
+                    <div class="card">
+                        <div class="card-header">
+                            Airmed Foundation Blockchain Explorer
+                        </div>
+                        <div class="card-body">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 offset-0 offset-lg-1">
+                    <div class="card">
+                        <div class="card-header">
+                           Airmed Transaction History
+                        </div>
+                        <div class="card-body">
+                            <div class="canvas-wrapper">
+                                <canvas class="main-chart" id="myChart" height="200" width="600"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-5">
+                    <div id="" class="card">
+                        <div class="card-header">
+                            <span class="custom-card-title"><i class="fas fa-cubes" aria-hidden="true"></i> Blocks</span>
+                            <a href="#" class="btn btn-primary float-right">View all</a>
+                        </div>
+                        <div id="block-list" class="explorer-list">
+                            <ul class="list-group list-group-flush d-flex">
+                                <li class="list-group-item align-items-center">
+                                    <div class="row h-100">
+                                        <div class="col-6 col-sm-5 my-auto text-center block">
+                                            <p class="block-p"><a href="">Block 7199885</a></p>
+                                            <p class="block-p">&gt; 1 min 7 secs ago</p>
+                                        </div>
+                                        <div class="col-6 col-sm-7 my-auto block-info">
+                                            <p class="block-p"><a href="">27 Txns</a> in 29 sec</p>
+                                            <p class="block-p">Block Reward 3.01942 Ether.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item align-items-center">
+                                    <div class="row h-100">
+                                        <div class="col-6 col-sm-5 my-auto text-center block">
+                                            <p class="block-p"><a href="">Block 7199885</a></p>
+                                            <p class="block-p">&gt; 1 min 7 secs ago</p>
+                                        </div>
+                                        <div class="col-6 col-sm-7 my-auto block-info">
+                                            <p class="block-p"><a href="">27 Txns</a> in 29 sec</p>
+                                            <p class="block-p">Block Reward 3.01942 Ether.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item align-items-center">
+                                    <div class="row h-100">
+                                        <div class="col-6 col-sm-5 my-auto text-center block">
+                                            <p class="block-p"><a href="">Block 7199885</a></p>
+                                            <p class="block-p">&gt; 1 min 7 secs ago</p>
+                                        </div>
+                                        <div class="col-6 col-sm-7 my-auto block-info">
+                                            <p class="block-p"><a href="">27 Txns</a> in 29 sec</p>
+                                            <p class="block-p">Block Reward 3.01942 Ether.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item align-items-center">
+                                    <div class="row h-100">
+                                        <div class="col-6 col-sm-5 my-auto text-center block">
+                                            <p class="block-p"><a href="">Block 7199885</a></p>
+                                            <p class="block-p">&gt; 1 min 7 secs ago</p>
+                                        </div>
+                                        <div class="col-6 col-sm-7 my-auto block-info">
+                                            <p class="block-p"><a href="">27 Txns</a> in 29 sec</p>
+                                            <p class="block-p">Block Reward 3.01942 Ether.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item align-items-center">
+                                    <div class="row h-100">
+                                        <div class="col-6 col-sm-5 my-auto text-center block">
+                                            <p class="block-p"><a href="">Block 7199885</a></p>
+                                            <p class="block-p">&gt; 1 min 7 secs ago</p>
+                                        </div>
+                                        <div class="col-6 col-sm-7 my-auto block-info">
+                                            <p class="block-p"><a href="">27 Txns</a> in 29 sec</p>
+                                            <p class="block-p">Block Reward 3.01942 Ether.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item align-items-center">
+                                    <div class="row h-100">
+                                        <div class="col-6 col-sm-5 my-auto text-center block">
+                                            <p class="block-p"><a href="">Block 7199885</a></p>
+                                            <p class="block-p">&gt; 1 min 7 secs ago</p>
+                                        </div>
+                                        <div class="col-6 col-sm-7 my-auto block-info">
+                                            <p class="block-p"><a href="">27 Txns</a> in 29 sec</p>
+                                            <p class="block-p">Block Reward 3.01942 Ether.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 offset-0 offset-lg-1">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="custom-card-title"><i class="fa fa-list-alt" aria-hidden="true"></i> Transactions</span>
+                            <a href="#" class="btn btn-primary float-right">View all</a>
+                        </div>
+                        <div id="transactions-list" class="explorer-list">
+                            <ul class="list-group list-group-flush d-flex">
+                                <li class="list-group-item align-items-center">
+                                    <div class="row h-100">
+                                        <div class="col-1 my-auto tx-icon">
+                                            <i class="fas fa-hdd" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-11 my-auto">
+                                            <span class="float-right">&gt;13 secs ago</span>
+                                            <p class="block-p">TX# <a href="">0X9998480DC80B745ED2D1F...</a></p>
+                                            <p class="block-p">From <a href="">0x3928aa539139e1b55a...</a> To <a href="">0x40b57339b01b6c8...</a></p>
+                                            <p class="block-p">Amount 0.0012 Ether</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item align-items-center">
+                                    <div class="row h-100">
+                                        <div class="col-1 my-auto tx-icon">
+                                            <i class="fas fa-hdd" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-11 my-auto">
+                                            <span class="float-right">&gt;13 secs ago</span>
+                                            <p class="block-p">TX# <a href="">0X9998480DC80B745ED2D1F...</a></p>
+                                            <p class="block-p">From <a href="">0x3928aa539139e1b55a...</a> To <a href="">0x40b57339b01b6c8...</a></p>
+                                            <p class="block-p">Amount 0.0012 Ether</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item align-items-center">
+                                    <div class="row h-100">
+                                        <div class="col-1 my-auto tx-icon">
+                                            <i class="fas fa-hdd" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-11 my-auto">
+                                            <span class="float-right">&gt;13 secs ago</span>
+                                            <p class="block-p">TX# <a href="">0X9998480DC80B745ED2D1F...</a></p>
+                                            <p class="block-p">From <a href="">0x3928aa539139e1b55a...</a> To <a href="">0x40b57339b01b6c8...</a></p>
+                                            <p class="block-p">Amount 0.0012 Ether</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item align-items-center">
+                                    <div class="row h-100">
+                                        <div class="col-1 my-auto tx-icon">
+                                            <i class="fas fa-hdd" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-11 my-auto">
+                                            <span class="float-right">&gt;13 secs ago</span>
+                                            <p class="block-p">TX# <a href="">0X9998480DC80B745ED2D1F...</a></p>
+                                            <p class="block-p">From <a href="">0x3928aa539139e1b55a...</a> To <a href="">0x40b57339b01b6c8...</a></p>
+                                            <p class="block-p">Amount 0.0012 Ether</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item align-items-center">
+                                    <div class="row h-100">
+                                        <div class="col-1 my-auto tx-icon">
+                                            <i class="fas fa-hdd" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-11 my-auto">
+                                            <span class="float-right">&gt;13 secs ago</span>
+                                            <p class="block-p">TX# <a href="">0X9998480DC80B745ED2D1F...</a></p>
+                                            <p class="block-p">From <a href="">0x3928aa539139e1b55a...</a> To <a href="">0x40b57339b01b6c8...</a></p>
+                                            <p class="block-p">Amount 0.0012 Ether</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item align-items-center">
+                                    <div class="row h-100">
+                                        <div class="col-1 my-auto tx-icon">
+                                            <i class="fas fa-hdd" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-11 my-auto">
+                                            <span class="float-right">&gt;13 secs ago</span>
+                                            <p class="block-p">TX# <a href="">0X9998480DC80B745ED2D1F...</a></p>
+                                            <p class="block-p">From <a href="">0x3928aa539139e1b55a...</a> To <a href="">0x40b57339b01b6c8...</a></p>
+                                            <p class="block-p">Amount 0.0012 Ether</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<% include ../layouts/footer %>
