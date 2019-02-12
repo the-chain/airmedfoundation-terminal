@@ -98,7 +98,24 @@ body {
 }
 
 .custom-input button {
-    font-size: 14px;
+    border: 0;
+    background:  rgba(52,152,219,.1);
+    position: absolute;
+    right:0;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 0;
+    height: 100%;
+    color:#30a5ff;
+    z-index: 2;
+}
+
+.custom-input button:hover {
+    cursor: pointer;
+}
+
+.search-query:focus{
+    z-index: 0;   
 }
 /* END INPUT */
 

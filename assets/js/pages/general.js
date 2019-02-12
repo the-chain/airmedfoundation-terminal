@@ -1,24 +1,34 @@
 /* INIT GENERAL */
 
+var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
+
 window.onload = function () {
-	var ctx = document.getElementById("myChart").getContext('2d');
-	var myChart = new Chart(ctx, {
+	var ctx = document.getElementById("tx-chart").getContext('2d');
+	var txChart = new Chart(ctx, {
 		type: 'line',
 		data: {
-			labels : ["January","February","March","April","May","June","July"],
+			labels : ["January","February", "March"],
 			datasets : [
 				{
-					label: "My First dataset",
-					fillColor : "rgba(220,220,220,0.2)",
-					strokeColor : "rgba(220,220,220,1)",
-					pointColor : "rgba(220,220,220,1)",
+					label: "Transactions",
+					backgroundColor: "rgba(48, 165, 255, 0.0)",
+					borderColor: "rgba(48, 165, 255, 0.6)",
+					pointColor: "rgba(48, 165, 255, 1.0)",
 					pointStrokeColor : "#fff",
 					pointHighlightFill : "#fff",
-					pointHighlightStroke : "rgba(220,220,220,1)",
-					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+					pointHighlightStroke : "rgba(48, 165, 255, 1.0)",
+					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
 				}
 			]
-		}
+		},
+		options: {
+			legend: {
+			   display: false
+			},
+			tooltips: {
+			   enabled: true
+			}
+	   }
 	});
 };
 
