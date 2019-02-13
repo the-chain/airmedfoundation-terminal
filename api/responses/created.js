@@ -10,7 +10,7 @@ module.exports = function created() {
 
     result = {
         status: 201,
-        message: 'El recurso se ha creado de manera correcta.'
+        message: 'The resource was created correctly.'
     };
   
     return res.json(result);

@@ -10,7 +10,7 @@ module.exports = function conflict() {
 
     result = {
         status: 409,
-        message: 'Los datos proporcionados tienen conflicto con el estado del recurso.'
+        message: 'The data provided conflicts with the status of the resource.'
     };
   
     return res.status(409).json(result);

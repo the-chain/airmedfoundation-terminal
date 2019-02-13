@@ -9,21 +9,10 @@ module.exports = {
 
   attributes: {
 
-    name: {
-      type: 'string',
+    keys: {
+      type: 'json',
       required: true,
     },
-
-    blockNumber: {
-      type: 'number',
-      required: true
-    },
-
-    transactionNumber: {
-      type: 'number',
-      required: true
-    },
-
 
     // reference to transaction
     read: {

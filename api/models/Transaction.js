@@ -47,12 +47,12 @@ module.exports = {
     },
 
     imputsArgs: {
-      type: 'string',
+      type: 'json',
       required: true
     },
 
     peerEndorsment: {
-      type: 'string',
+      type: 'json',
       required: true
     },
 
