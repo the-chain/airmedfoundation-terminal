@@ -9,7 +9,19 @@ module.exports = {
      */
     async createBlock(blockInfo){
         console.log("Creating block #"+blockInfo.number);
-        return 0;
+        var options = {
+            method: 'POST',
+            uri: host + '/block',
+            body: {
+                hash: blockInfo.hash,
+                previousHash: blockInfo.previous_hash,
+                dataHash: blockInfo.data_hash,
+                id: blockInfo.number,
+                timestamp: blockInfo.timestamp
+            },
+            json: true // Automatically stringifies the body to JSON
+        };
+        await rp(options);
     },
     /**
      * @async
