@@ -50,16 +50,18 @@ module.exports = {
         for ( i = blockNumber; i < ledgerHeight; i++ ){
             var block = await ledgerQuery.queryBlock(channelName,mspId,peerNumber,i);
             let blockInfo = {
-                hash: ledgerQuery.getBlockHash(block.header),
+                hash: await ledgerQuery.getBlockHash(block.header),
                 number: block.header.number,
+                timestamp: Date.parse(block.data.data[0].payload.header.channel_header.timestamp),
                 previous_hash: block.header.previous_hash,
                 data_hash: block.header.data_hash
             }
-            var result = await httpClient.createBlock(blockInfo);
+            // Create block
+            await httpClient.createBlock(blockInfo);
             var N = block.data.data.length;
             for ( j = 0; j < N; j++ ){
                 let Transaction = {};
-                Transaction.blockNumber = result;
+                Transaction.blockNumber = block.header.number;
                 Transaction.number = j;
                 Transaction.timestamp = Date.parse(block.data.data[j].payload.header.channel_header.timestamp);
                 Transaction.channel = block.data.data[j].payload.header.channel_header.channel_id;
@@ -101,7 +103,7 @@ module.exports = {
                 try{
                     Transaction.writes = block.data.data[j].payload.data.actions[0].payload.action.proposal_response_payload.extension.results.ns_rwset[0].rwset.writes;
                 }catch(err){Transaction.writes = null}
-                    console.log(Transaction);
+                //console.log(Transaction);
             }
         }
     },
