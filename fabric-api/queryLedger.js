@@ -1,7 +1,8 @@
 var Client = require('fabric-client');
 var Channel = require('fabric-client').Channel;
-var client = Client.loadFromConfig("./fabric-api/config/configfile.yaml");
-
+var client = Client.loadFromConfig("config/configfile.yaml");
+var sha = require('js-sha256');
+var asn = require('asn1.js');
 
 module.exports = {
     /**
@@ -79,5 +80,27 @@ module.exports = {
         var channel = new Channel ( channelName, client);
         var result = await channel.queryBlockByTxID(txId,client.getPeersForOrg(mspId)[peerNumber],true);
         return result;
-    }
+    },
+    /**
+     * @async
+     * @param {Object} header Block header
+     * @description Get current block hash
+     */
+    async getBlockHash(header) {
+        let headerAsn = asn.define('headerAsn', function() {
+          this.seq().obj(
+            this.key('Number').int(),
+            this.key('PreviousHash').octstr(),
+           this.key('DataHash').octstr()
+         );
+       });
+      
+        let output = headerAsn.encode({
+            Number: parseInt(header.number),
+            PreviousHash: Buffer.from(header.previous_hash, 'hex'),
+            DataHash: Buffer.from(header.data_hash, 'hex')
+          }, 'der');
+        let hash = sha.sha256(output);
+        return hash;
+      }
 }
