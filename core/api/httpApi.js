@@ -2,22 +2,17 @@ var http = require('http');
 // http.request
 
 module.exports = {
-    async createBlock(){
+    async createBlock(blockInfo){
+        console.log("Creating block #"+blockInfo.number);
 
     },
-    async createTransaction(){
+    async deleteBlock(blockNumber){
 
     },
-    async createKeys(){
+    async getBlockByNumber(blockNumber){
 
     },
-    async deleteBlock(){
-
-    },
-    async deleteTransaction(){
-
-    },
-    async deleteKeys(){
+    async getTotalBlocks(){
 
     }
 }
