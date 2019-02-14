@@ -19,6 +19,8 @@
     "https-proxy-agent": "^2.2.1",
     "ipfs-http-client": "^28.1.0",
     "js-sha256": "^0.9.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
     "sails": "^1.0.2",
     "sails-hook-flash": "^0.2.2",
     "sails-hook-grunt": "^3.0.2",
