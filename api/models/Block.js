@@ -6,6 +6,8 @@
  */
 
 module.exports = {
+  
+  primaryKey: 'hash',
 
   attributes: {
 
@@ -30,7 +32,7 @@ module.exports = {
       maxLength: 64
     },
 
-    blockId: {
+    id: {
       type: 'number',
       required: true,
       unique: true,
@@ -44,7 +46,7 @@ module.exports = {
     // reference to transactions
     transactions: {
       collection: 'transaction',
-      via: 'owner'
+      via: 'block'
     }
 
   },

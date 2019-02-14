@@ -20,7 +20,7 @@ module.exports = {
       maxLength: 64
     },
 
-    blockId: {
+    id: {
       type: 'number',
     },
 
@@ -43,7 +43,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // If one of required parameters is missing
-    if(inputs.hash === undefined || inputs.previousHash === undefined || inputs.dataHash === undefined || inputs.blockId === undefined || inputs.timestamp === undefined) 
+    if(inputs.hash === undefined || inputs.previousHash === undefined || inputs.dataHash === undefined || inputs.id === undefined || inputs.timestamp === undefined) 
       throw 'invalid';
 
     // Create the new block
@@ -51,7 +51,7 @@ module.exports = {
       hash: inputs.hash,
       previousHash: inputs.previousHash,
       dataHash: inputs.dataHash,
-      blockId: inputs.blockId,
+      id: inputs.id,
       timestamp: inputs.timestamp
     }))
     .intercept('E_UNIQUE', 'conflict')

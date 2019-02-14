@@ -20,10 +20,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // Search the block
-    let block = await Block.findOne({ 
-      select: ['hash', 'previousHash', 'dataHash', 'blockId', 'timestamp'],
-      where: { hash: inputs.hash }
-    });
+    let block = await Block.findOne({ hash: inputs.hash });
 
     if (!block) throw 'blockNotFound';
     

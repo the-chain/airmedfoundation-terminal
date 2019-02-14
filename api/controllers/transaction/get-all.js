@@ -13,7 +13,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // Search the transactions
-    let transactions = await Transaction.find().populate('owner');
+    let transactions = await Transaction.find().populate('block');
 
     if (!transactions) throw 'transactionsNotFound';
 

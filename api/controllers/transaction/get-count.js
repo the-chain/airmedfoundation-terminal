@@ -23,7 +23,7 @@ module.exports = {
   fn: async function (inputs, exits) {
     // Search the transactions
     let transactions = await Transaction.find()
-    .populate('owner')
+    .populate('block')
     .skip(inputs.skip)
     .limit(inputs.limit)
     .sort('timestamp DESC');

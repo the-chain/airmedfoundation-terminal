@@ -13,9 +13,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // Search the blocks
-    let blocks = await Block.find({
-      select: ['hash', 'previousHash', 'dataHash', 'blockId', 'timestamp']
-    });
+    let blocks = await Block.find();
 
     if (!blocks) throw 'blocksNotFound';
   

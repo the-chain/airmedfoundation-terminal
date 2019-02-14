@@ -9,13 +9,18 @@ module.exports = {
 
   attributes: {
 
+    id: { 
+      type: 'number', 
+      autoIncrement: true, 
+    },
+
     keys: {
       type: 'json',
       required: true,
     },
 
     // reference to transaction
-    write: {
+    transaction: {
       model: 'transaction'
     },
 

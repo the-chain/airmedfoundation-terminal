@@ -6,10 +6,10 @@
  */
 
 module.exports = {
-
+  
   attributes: {
 
-    transactionId: {
+    id: {
       type: 'string',
       required: true,
       unique: true,
@@ -58,26 +58,26 @@ module.exports = {
 
     
     // reference to block
-    owner: {
+    block: {
       model: 'block'
     },
 
     // reference to KeyIn
     read: {
       collection: 'keyIn',
-      via: 'read'
+      via: 'transaction'
     },
 
     // reference to KeyOut
     write: {
       collection: 'keyOut',
-      via: 'write'
+      via: 'transaction'
     },
 
-    // reference o-o to KeyIn
+    // reference to ReadChaincode
     readChaincode: {
-      collection: 'keyIn',
-      via: 'readChaincode'
+      collection: 'readChaincode',
+      via: 'transaction'
     }
 
   },

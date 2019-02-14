@@ -5,7 +5,7 @@ module.exports = {
   description: 'New transaction.',
 
   inputs: {
-    transactionId: {
+    id: {
       type: 'string',
       maxLength: 64
     },
@@ -42,8 +42,8 @@ module.exports = {
       type: 'json',
     },
 
-    owner: {
-      type: 'number'
+    block: {
+      type: 'string'
     },
   },
 
@@ -62,12 +62,12 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // If one of required parameters is missing
-    if(inputs.transactionId === undefined || inputs.timestamp === undefined || inputs.channel === undefined || inputs.type === undefined || inputs.creator === undefined || inputs.chaincodeName === undefined || inputs.chaincodeVersion === undefined || inputs.imputsArgs === undefined || inputs.peerEndorsment === undefined) 
+    if(inputs.id === undefined || inputs.timestamp === undefined || inputs.channel === undefined || inputs.type === undefined || inputs.creator === undefined || inputs.chaincodeName === undefined || inputs.chaincodeVersion === undefined || inputs.imputsArgs === undefined || inputs.peerEndorsment === undefined || inputs.block === undefined) 
       throw 'invalid';
 
     // Create the new transaction
     let newTransaction = await Transaction.create(Object.assign({
-      transactionId: inputs.transactionId,
+      id: inputs.id,
       timestamp: inputs.timestamp,
       channel: inputs.channel,
       type: inputs.type,
@@ -76,7 +76,7 @@ module.exports = {
       chaincodeVersion: inputs.chaincodeVersion,
       imputsArgs: inputs.imputsArgs,
       peerEndorsment: inputs.peerEndorsment,
-      owner: inputs.owner
+      block: inputs.block
     }))
     .intercept('E_UNIQUE', 'conflict')
     .intercept({name: 'UsageError'}, 'invalid')

@@ -5,7 +5,7 @@ module.exports = {
   description: 'Get all transaction of block.',
 
   inputs: {
-    id: {
+    hash: {
       type: 'string',
       maxLength: 64
     }
@@ -21,7 +21,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // Search the transactions
-    let transactions = await Transaction.find({ owner: inputs.id });
+    let transactions = await Transaction.find({ transaction: inputs.hash });
 
     if (!transactions) throw 'transactionsNotFound';
 

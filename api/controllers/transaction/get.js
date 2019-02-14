@@ -20,7 +20,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // Search the transaction
-    let transaction = await Transaction.findOne({ transactionId: inputs.hash }).populate('owner');
+    let transaction = await Transaction.findOne({ id: inputs.hash }).populate('block');
 
     if (!transaction) throw 'transactionNotFound';
 
