@@ -1,6 +1,6 @@
 var Client = require('fabric-client');
 var Channel = require('fabric-client').Channel;
-var client = Client.loadFromConfig("config/configfile.yaml");
+var client = Client.loadFromConfig('./fabric-api/config/configfile.yaml');
 var sha = require('js-sha256');
 var asn = require('asn1.js');
 
