@@ -33,8 +33,10 @@ module.exports.routes = {
   
   // Block model
   'GET    /block/:hash':              { action: 'block/get' },
+  'GET    /block/:id':                { action: 'block/getbyid' },
   'GET    /block':                    { action: 'block/get-count' },
   'GET    /blocks':                   { action: 'block/get-all' },
+  'GET    /gettotal':                 { action: 'block/gettotal' },
   'POST   /block':                    { action: 'block/new' },
   'DELETE /block/:hash':              { action: 'block/delete' },
 
