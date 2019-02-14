@@ -9,19 +9,18 @@ module.exports = {
 
   attributes: {
 
-    name: {
-      type: 'string',
+    id: { 
+      type: 'number', 
+      autoIncrement: true, 
+    },
+
+    keys: {
+      type: 'json',
       required: true,
     },
 
-    value: {
-      type: 'string',
-      required: true
-    },
-
-
     // reference to transaction
-    write: {
+    transaction: {
       model: 'transaction'
     },
 
