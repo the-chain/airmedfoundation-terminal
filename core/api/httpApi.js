@@ -1,5 +1,5 @@
-var http = require('http');
-// http.request
+var rp = require('request-promise');
+var host = "http://localhost"
 
 module.exports = {
     /**
@@ -9,7 +9,7 @@ module.exports = {
      */
     async createBlock(blockInfo){
         console.log("Creating block #"+blockInfo.number);
-
+        return 0;
     },
     /**
      * @async
@@ -18,7 +18,7 @@ module.exports = {
      */
     async createTransaction(transaction){
 
-    }
+    },
     /**
      * @async
      * @param {Number} blockNumber Block number
@@ -40,6 +40,10 @@ module.exports = {
      * @description Get number of blocks in the database
      */
     async getTotalBlocks(){
-
+        const options = {
+            uri: host+'/gettotal'
+        }
+        var result = await rp(options);
+        return result;
     }
 }
