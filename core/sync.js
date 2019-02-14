@@ -16,7 +16,7 @@ module.exports = {
         console.log("Start sync process");
         // Leer la cantidad de bloques de la base de datos y
         // la cantidad de bloques de la cadena. Si son iguales, no hacer nada.
-        const totalBlocks = 0 // Total de bloques que tiene la base de datos **CAMBIAR**
+        const totalBlocks = await httpClient.getTotalBlocks(); // Total de bloques que tiene la base de datos
         const ledgerHeight = await ledgerQuery.ledgerHeight(channelName,mspId,peerNumber);
         // Si son distintos, entonces verificar los hashes de cada bloque
         if (totalBlocks == 0) {
@@ -28,8 +28,8 @@ module.exports = {
             console.log("The database is updated.")
             return;
         }
-        // Ultimo bloque de la base de datos **CAMBIAR**
-        const lastBlockBD = "UltimoBloque" ;
+        // Ultimo bloque de la base de datos
+        const lastBlockBD = await httpClient.getBlockByNumber(totalBlocks);
         // Ultimo bloque de la cadena de bloques
         const lastBlockDBinLedger = await ledgerQuery.queryBlock(channelName,mspId,peerNumber,totalBlocks-1);
         if ( lastBlockBD.header.previous_hash == lastBlockDBinLedger.header.previous_hash &&
@@ -52,7 +52,6 @@ module.exports = {
                 
             }
             await httpClient.createBlock(blockInfo);
-            console.log('Saved block #'+i.toString()+' to the database');
         }
     },
     async dropDatabase(totalBlocks){
