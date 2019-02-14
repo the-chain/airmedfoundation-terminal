@@ -20,7 +20,6 @@ module.exports = {
 
     previousHash: {
       type: 'string',
-      required: true,
       unique: true,
       maxLength: 64
     },
