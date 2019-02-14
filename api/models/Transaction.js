@@ -15,6 +15,11 @@ module.exports = {
       unique: true,
       maxLength: 64
     },
+    
+    number: {
+      type: 'number',
+      required: true
+    },
 
     timestamp: {
       type: 'number',
