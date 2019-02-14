@@ -4,15 +4,16 @@ const slp = require('sleep');
 
 
 async function start() {
-    try {
-    await sync.startSync('mychannel','Org1MSP',0);
-    //await listen.startListener('mychannel');
-    }catch(err){
-        console.log(err);
-        console.log("Trying again in few second");
-        slp.sleep(5);
-        await this.start();
-        //await listen.startListener('mychannel');
+    while(true){
+        try {
+            await sync.startSync('mychannel','Org1MSP',0);
+            //await listen.startListener('mychannel');
+        }catch(err){
+            console.log(err);
+            console.log("Trying again in few second");
+            slp.sleep(10);
+            //await listen.startListener('mychannel');
+        }
     }
 }
 
