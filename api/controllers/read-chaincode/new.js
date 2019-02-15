@@ -29,9 +29,10 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // If one of required parameters is missing
-    if(inputs.keys === undefined || inputs.transaction === undefined) 
+    if(inputs.transaction === undefined) 
       throw 'invalid';
-
+    if (inputs.keys === undefined)
+      inputs.keys = {};
     // Create the new readChaincode
     let newReadChaincode = await ReadChaincode.create(Object.assign({
       keys: inputs.keys,

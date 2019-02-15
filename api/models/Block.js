@@ -11,6 +11,12 @@ module.exports = {
 
   attributes: {
 
+    id: {
+      type: 'number',
+      required: true,
+      unique: true,
+    },
+
     hash: {
       type: 'string',
       required: true,
@@ -29,12 +35,6 @@ module.exports = {
       required: true,
       unique: true,
       maxLength: 64
-    },
-
-    id: {
-      type: 'number',
-      required: true,
-      unique: true,
     },
 
     timestamp: {

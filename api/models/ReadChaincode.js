@@ -15,14 +15,14 @@ module.exports = {
     },
 
     keys: {
-      type: 'json',
-      required: true,
+      type: 'json'
     },
 
     // reference to transaction
     transaction: {
       model: 'transaction',
-      unique: true
+      unique: true,
+      required: true,
     }
 
   },

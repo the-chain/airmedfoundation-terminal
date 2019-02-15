@@ -42,23 +42,19 @@ module.exports = {
     },
 
     chaincodeName: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
 
     chaincodeVersion: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
 
     imputsArgs: {
-      type: 'json',
-      required: true
+      type: 'json'
     },
 
     peerEndorsment: {
-      type: 'json',
-      required: true
+      type: 'json'
     },
 
     
