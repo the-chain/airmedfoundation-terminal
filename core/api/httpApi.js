@@ -103,18 +103,14 @@ module.exports = {
     /**
      * @async
      * @param {Number} blockNumber Block number
-     * @description Delete block by number
-     */
-    async deleteBlock(blockNumber){
-
-    },
-    /**
-     * @async
-     * @param {Number} blockNumber Block number
      * @description Get block by id 
      */
     async getBlockByNumber(blockNumber){
-
+        const options = {
+            uri: host+'/block/id/'+blockNumber.toString()
+        }
+        var result = await rp(options);
+        return result; 
     },
     /**
      * @async
@@ -126,5 +122,14 @@ module.exports = {
         }
         var result = await rp(options);
         return result;
+    },
+
+    /**
+     * @async
+     * @param {Number} blockNumber Block number
+     * @description Delete block by number
+     */
+    async deleteBlock(blockNumber){
+
     }
 }
