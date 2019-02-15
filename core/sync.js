@@ -1,7 +1,4 @@
-var Client = require('fabric-client');
-var Channel = require('fabric-client').Channel;
 var ledgerQuery = require('../fabric-api/queryLedger');
-var client = Client.loadFromConfig("./fabric-api/config/configfile.yaml");
 var httpClient = require('./api/httpApi');
 
 module.exports = {
@@ -14,41 +11,49 @@ module.exports = {
      */
     async startSync(channelName, mspId, peerNumber) {
         console.log("Start sync process");
-        // Leer la cantidad de bloques de la base de datos y
-        // la cantidad de bloques de la cadena. Si son iguales, no hacer nada.
-        const totalBlocks = await httpClient.getTotalBlocks(); // Total de bloques que tiene la BD
+        // Leer la cantidad de bloques de la base de datos y la blockchain
+        const totalBlocks = await httpClient.getTotalBlocks();
         const ledgerHeight = await ledgerQuery.ledgerHeight(channelName,mspId,peerNumber);
-        // Si son distintos, entonces verificar los hashes de cada bloque
+        // Caso 1: Comenzar desde 0.
         if (totalBlocks == 0) {
             console.log("Sync the database from Block #0");
             await this.syncDataBaseFromBlock(channelName, mspId, peerNumber, 0, ledgerHeight);
             return;
         }
+        
+        // Caso 2: Esta actualizada la base de datos
         if (totalBlocks == ledgerHeight){
-            console.log("The database is updated.")
+            console.log("The database is updated.");
             return;
         }
-        // Ultimo bloque de la base de datos
-        const lastBlockBD = await httpClient.getBlockByNumber(totalBlocks);
-        // Ultimo bloque de la cadena de bloques
+
+        // Caso 3: Hay mas bloques en la BD que en la blockchain
+        if ( totalBlocks > ledgerHeight ){
+            console.log("The database does not match the blockchain. Error #1");
+            await this.dropDatabase(totalBlocks);
+            await this.syncDataBaseFromBlock(channelName, mspId, peerNumber, 0, ledgerHeight);
+            return;
+        }
+
+        // Caso #4: Actualizar la base de datos
+        const lastBlockBD = JSON.parse(await httpClient.getBlockByNumber(totalBlocks-1));
         const lastBlockDBinLedger = await ledgerQuery.queryBlock(channelName,mspId,peerNumber,totalBlocks-1);
-        if ( lastBlockBD.header.previous_hash == lastBlockDBinLedger.header.previous_hash &&
-            lastBlockBD.header.data_hash == lastBlockDBinLedger.header.data_hash ) {
-                console.log("Sync the database from Block #" + totalBlocks.toString());
+        if (lastBlockBD.dataHash == lastBlockDBinLedger.header.data_hash ) {
+            console.log("Sync the database from Block #" + totalBlocks.toString());
             await this.syncDataBaseFromBlock(channelName,mspId,peerNumber,totalBlocks,ledgerHeight);
             return;
         }
-        // Si la base de datos no coincide, entonces comienza desde 0, 
-        // reemplazando toda la información por la actual
-        console.log("The database does not match the blockchain");
+
+        // Caso #5: Drop Database y comenzar desde 0
+        console.log("The database does not match the blockchain. Error #2");
         await this.dropDatabase(totalBlocks);
-        await this.syncDataBaseFromBlock(channelName, mspId, peerNumber, 0, ledgerHeight);
+        //await this.syncDataBaseFromBlock(channelName, mspId, peerNumber, 0, ledgerHeight);
         return;
     },
     async syncDataBaseFromBlock(channelName, mspId, peerNumber, blockNumber, ledgerHeight){
         console.log("Starting database synchronization from block #" + blockNumber.toString());
         for ( i = blockNumber; i < ledgerHeight; i++ ){
-            var block = await ledgerQuery.queryBlock(channelName,mspId,peerNumber,i);
+            var block = await ledgerQuery.queryBlock(channelName,mspId,peerNumber,parseInt(i));
             let blockInfo = {
                 hash: await ledgerQuery.getBlockHash(block.header),
                 number: i,
