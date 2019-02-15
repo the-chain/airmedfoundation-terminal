@@ -5,9 +5,8 @@ module.exports = {
     description: 'Get block.',
   
     inputs: {
-      hash: {
-        type: 'string',
-        maxLength: 64
+      id: {
+        type: 'number'
       }
     },
   
@@ -20,11 +19,11 @@ module.exports = {
   
     fn: async function (inputs, exits) {
       // Search the block
-      let block = await Block.findOne({ id: inputs.id });
-  
+      let block = await Block.find({ id: inputs.id }).limit(1);
+
       if (!block) throw 'blockNotFound';
       
-      return exits.success(block);
+      return exits.success(block[0]);
   
     }
   
