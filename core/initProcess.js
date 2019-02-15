@@ -4,7 +4,7 @@ const slp = require('sleep');
 
 
 async function start() {
-    while(true){
+    //while(true){
         try {
             await sync.startSync('mychannel','Org1MSP',0);
             //await listen.startListener('mychannel');
@@ -14,7 +14,7 @@ async function start() {
             slp.sleep(10);
             //await listen.startListener('mychannel');
         }
-    }
+    //}
 }
 
 start();
