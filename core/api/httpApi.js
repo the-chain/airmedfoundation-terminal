@@ -25,11 +25,80 @@ module.exports = {
     },
     /**
      * @async
-     * @param {Object} transaction Object array 
+     * @param {Object} transaction Object 
      * @description Create transactions
      */
     async createTransaction(transaction){
-
+        var options = {
+            method: 'POST',
+            uri: host + '/transaction',
+            body: {
+                id: transaction.id,
+                timestamp: transaction.timestamp,
+                channel: transaction.channel,
+                type: transaction.type,
+                creator: transaction.creator,
+                chaincodeName: transaction.chaincode.name,
+                chaincodeVersion: transaction.chaincode.version,
+                imputsArgs: transaction.imputsArgs,
+                peerEndorsment: transaction.peerEndorsment,
+                block: transaction.block,
+                number: transaction.number
+            },
+            json: true
+        };
+        await rp(options);
+    },
+    /**
+     * @async
+     * @param {Object} key Input key 
+     * @description Block chaincode reads
+     */
+    async createKeyInChaincode(key) {
+        var options = {
+            method: 'POST',
+            uri: host + '/read-chaincode',
+            body: {
+                keys: key.keys,
+                transaction: key.id
+            },
+            json: true
+        };
+        await rp(options);
+    },
+    /**
+     * @async 
+     * @param {Object} key
+     * @description Create key-out
+     */
+    async createKeyIn(key){
+        var options = {
+            method: 'POST',
+            uri: host + '/key-in',
+            body: {
+                keys: key.keys,
+                transaction: key.id
+            },
+            json: true
+        };   
+        await rp(options); 
+    },
+    /**
+     * @async 
+     * @param {Object} key
+     * @description Create key-out
+     */
+    async createKeyOut(key){
+        var options = {
+            method: 'POST',
+            uri: host + '/key-out',
+            body: {
+                keys: key.keys,
+                transaction: key.id
+            },
+            json: true
+        };   
+        await rp(options); 
     },
     /**
      * @async
