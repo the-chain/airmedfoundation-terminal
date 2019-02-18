@@ -9,9 +9,11 @@ module.exports = {
       type: 'string',
       maxLength: 64
     },
+
     number: {
       type: 'number'
     },
+
     timestamp: {
       type: 'number',
     },
@@ -45,7 +47,7 @@ module.exports = {
     },
 
     block: {
-      type: 'string'
+      type: 'number'
     },
   },
 
@@ -64,7 +66,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // If one of required parameters is missing
-    if(inputs.number === undefined ||inputs.id === undefined || inputs.timestamp === undefined || inputs.channel === undefined || inputs.type === undefined || inputs.creator === undefined || inputs.chaincodeName === undefined || inputs.chaincodeVersion === undefined || inputs.imputsArgs === undefined || inputs.peerEndorsment === undefined || inputs.block === undefined) 
+    if(inputs.id === undefined || inputs.number === undefined || inputs.timestamp === undefined || inputs.channel === undefined || inputs.type === undefined || inputs.creator === undefined || inputs.chaincodeName === undefined || inputs.chaincodeVersion === undefined || inputs.imputsArgs === undefined || inputs.peerEndorsment === undefined || inputs.block === undefined) 
       throw 'invalid';
 
     // Create the new transaction

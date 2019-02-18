@@ -1,0 +1,136 @@
+<% include ../layouts/navigation-bar %>
+
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <h5 class="detail-title">
+                Block 
+                <span class="detail-number">
+                    #<%= blockInfo.id %>
+                </span>
+            </h5>
+            <div class="card explorer-detail">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    Block Height:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="detail-text">
+                                    <span class="font-weight-bold">
+                                        <%= blockInfo.id %>
+                                    </span>
+                                    <% if (first) { %>
+                                        <a class="p-n-btn a-disable">
+                                            <i class="fas fa-angle-left"></i>
+                                        </a>
+                                    <% }else{ %>
+                                        <a class="p-n-btn" href="<%= (blockInfo.id - 1) %>">
+                                            <i class="fas fa-angle-left"></i>
+                                        </a>
+                                    <% } %>
+                                    <% if (last) { %>
+                                        <a class="p-n-btn a-disable">
+                                            <i class="fas fa-angle-right"></i>
+                                        </a>
+                                    <% }else{ %>
+                                        <a class="p-n-btn" href="<%= (blockInfo.id + 1) %>">
+                                            <i class="fas fa-angle-right"></i>
+                                        </a>
+                                    <% } %>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    Timestamp:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="detail-text">
+                                    <i class="far fa-clock"></i> 
+                                    <%= new Date(blockInfo.timestamp).toUTCString() %>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    Transactions:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="detail-text">
+                                    <a class="tx-btn" href="<%= blockInfo.id + '/transactions' %>">
+                                        <%= nTransactions %> transactions
+                                    </a>
+                                    <span> 
+                                        in this block
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    Hash:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="p-word-breaks detail-text"> 
+                                    <%= blockInfo.hash %> 
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">Previous Hash:</p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <% if (first) { %>
+                                    <p class="detail-text"> 
+                                        <%= blockInfo.previousHash %> 
+                                    </p>
+                                <% }else{ %>
+                                    <p class="p-word-breaks detail-text"> 
+                                        <a href="<%= (blockInfo.id - 1) %>"> 
+                                            <%= blockInfo.previousHash %>
+                                        </a>
+                                    </p>
+                                <% } %>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    Data Hash:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="p-word-breaks detail-text"> 
+                                    <%= blockInfo.dataHash %> 
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+
+<% include ../layouts/footer %>

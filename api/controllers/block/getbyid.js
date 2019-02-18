@@ -19,11 +19,11 @@ module.exports = {
   
     fn: async function (inputs, exits) {
       // Search the block
-      let block = await Block.find({ id: inputs.id }).limit(1);
+      let block = await Block.findOne({ id: inputs.id });
 
       if (!block) throw 'blockNotFound';
       
-      return exits.success(block[0]);
+      return exits.success(block);
   
     }
   

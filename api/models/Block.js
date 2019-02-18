@@ -6,8 +6,6 @@
  */
 
 module.exports = {
-  
-  primaryKey: 'hash',
 
   attributes: {
 

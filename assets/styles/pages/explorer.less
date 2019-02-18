@@ -1,4 +1,5 @@
-.card {
+/* INIT INDEX */
+.explorer-index {
     color: #7a7a7a;
     border-radius: 0;
     margin-bottom: 50px;
@@ -6,24 +7,24 @@
     width: 100%;
 }
 
-.card-header {
+.explorer-index .card-header {
     background-color: rgba(0,0,0,0);
     border-radius: 0;
     border-color:rgba(0, 0, 0, 0.125);
 }
 
-.card-footer {
+.explorer-index .card-footer {
     background-color: rgba(0,0,0,0);
 }
 
-.card-footer .btn-primary {
+.explorer-index .card-footer .btn-primary {
     font-size: 12px;
     background: rgba(52,152,219,.1);
     border-color: transparent;
     color: #007bff;
 }
 
-.card-footer .btn-primary:hover {
+.explorer-index .card-footer .btn-primary:hover {
     background: #30a5ff;
     border-color: #2d99ed;
     color: white;
@@ -74,12 +75,12 @@
     background-color: #dbdbdb;
 }
 
-.list-group-item {
+.explorer-index .list-group-item {
     border-color: transparent;
     height: 115px;
 }
 
-.list-group {
+.explorer-index .list-group {
     font-size: 12px;
 }
 
@@ -102,3 +103,111 @@
 .tx-icon {
     font-size: 16px;
 }
+/* END INDEX */
+
+
+/* INIT DETAIL */
+
+.detail-title{
+    font-size: 16px;
+}
+
+.detail-text{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.detail-number{
+    color: #7a7a7a;
+}
+
+.explorer-detail {
+    color: #444444;
+    font-size: 12px;
+    border-color: rgba(0,0,0,.125);
+    margin-top: 35px;
+    margin-bottom: 50px; 
+}
+
+#block-more{
+    cursor: pointer;
+}
+
+span.blue-word:hover {
+    color: #2d99ed; 
+}
+
+.explorer-detail .p-n-btn {
+    background:  rgba(52,152,219,.1);
+    color:#30a5ff;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 5px;
+    padding: 4px;
+}
+
+.tx-btn{
+    background:  rgba(52,152,219,.1);
+    color:#30a5ff !important;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.tx-btn:hover{
+    background:  rgba(52,152,219,1.0);
+    color:#fff !important;
+    text-decoration: none;
+}
+
+.a-disable:hover {
+    cursor: not-allowed;
+}
+
+/* END DETAIL */
+
+/* INIT TABLE DETAIL */
+
+.detail-container {
+    margin-bottom: 50px;
+}
+
+.info-margin {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.pagination-margin {
+    margin-top: 25px;
+}
+
+.detail-table .even, .detail-table .odd { 
+    background-color: #ffffff 
+}
+
+.detail-table thead {
+    background-color:  #f8f9fa;
+}
+
+.detail-table th, .dataTables_filter, .dataTables_length, .dataTables_info, .dataTables_paginate, .dtr-title {
+    font-weight: 500;
+    font-size: 12px;
+    color: #7a7a7a;
+    line-height: 1.58;
+}
+
+.detail-table td {
+    font-size: 12px;
+    color: #7a7a7a;
+}
+
+.pagination > li.active > a, .pagination > li.active > span{
+    background-image: linear-gradient(7deg, #30a5ff, #30a5ff);
+}
+
+.page-item.active .page-link {
+    border-color: transparent;
+}
+
+/* END TABLE DETAIL */

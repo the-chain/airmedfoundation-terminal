@@ -3,40 +3,47 @@
 var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
 
 window.onload = function () {
-	var ctx = document.getElementById("tx-chart").getContext('2d');
-	var txChart = new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels : ["January","February", "March"],
-			datasets : [
-				{
-					label: "Transactions",
-					backgroundColor: "rgba(48, 165, 255, 0.0)",
-					borderColor: "rgba(48, 165, 255, 0.6)",
-					pointColor: "rgba(48, 165, 255, 1.0)",
-					pointStrokeColor : "#fff",
-					pointHighlightFill : "#fff",
-					pointHighlightStroke : "rgba(48, 165, 255, 1.0)",
-					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-				}
-			]
-		},
-		options: {
-			legend: {
-			   display: false
+	var ctx = document.getElementById("tx-chart");
+	if (ctx) {
+		ctx = ctx.getContext('2d');
+		var txChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels : ["January","February", "March"],
+				datasets : [
+					{
+						label: "Transactions",
+						backgroundColor: "rgba(48, 165, 255, 0.0)",
+						borderColor: "rgba(48, 165, 255, 0.6)",
+						pointColor: "rgba(48, 165, 255, 1.0)",
+						pointStrokeColor : "#fff",
+						pointHighlightFill : "#fff",
+						pointHighlightStroke : "rgba(48, 165, 255, 1.0)",
+						data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+					}
+				]
 			},
-			tooltips: {
-			   enabled: true
-			}
-	   }
-	});
+			options: {
+				legend: {
+				display: false
+				},
+				tooltips: {
+				enabled: true
+				}
+		}
+		});
+	}
 };
 
 $('.js-tooltip').tooltip();
 
 var hashSentTable = $('#hash-sent-table').DataTable({
-    'bLengthChange': false,
-	'bInfo': false,
+	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
 	'columnDefs': [
 		{
 			'targets': [0, 1],
@@ -55,8 +62,12 @@ var hashSentTable = $('#hash-sent-table').DataTable({
 });
 
 var hashReceivedTable = $('#hash-received-table').DataTable({
-    'bLengthChange': false,
-    'bInfo': false,
+    'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
 	'columnDefs': [
 		{
 			'targets': [0, 1],
