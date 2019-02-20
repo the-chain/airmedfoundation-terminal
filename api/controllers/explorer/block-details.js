@@ -22,22 +22,22 @@ module.exports = {
   },
 
   fn: async function (inputs, exits) {
-    let block, nBlocks, nTransactions, first, last;
+    let block, nBlocks, first, last;
     
-    block = await Block.findOne({ id: inputs.id });
+    block = await Block.findOne({ id: (inputs.id + 1) }).populate('transactions');
     nBlocks = await Block.count();
-    nTransactions = await Transaction.count({ block: inputs.id });
     first = false;
     last = false;
 
-    if(block.id == 1) first = true;
-    if(block.id == nBlocks) last = true;
-
     if (!block) throw 'notFound';
+
+    if(block.id == 1) first = true;
+
+    if(block.id == nBlocks) last = true;
 
     return exits.success({
       blockInfo: block,
-      nTransactions: nTransactions,
+      nTransactions: block.transactions.length,
       first: first,
       last: last
     });

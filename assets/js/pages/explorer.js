@@ -14,14 +14,14 @@ $(document.body).on('click', '#block-more', function () {
 
 var detailTable = $('#block-txs-table').DataTable({
 	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
-         	'<"row"<"col-sm-12"tr>>' +
-         	'<"row"<"col-sm-12 pagination-margin"p>>',
+         	'<"row"<"col-sm-12"tr>>',
 	'language': 
     {
         'sInfo':  'A total of _TOTAL_ transactions found',
     },
     'pagingType': 'full_numbers',
-    'bLengthChange': false,
+	'bLengthChange': false,
+	"bPaginate": false,
 	'bSort': false,
 	'columnDefs': [
 		{
@@ -35,7 +35,7 @@ var detailTable = $('#block-txs-table').DataTable({
 			'targets': [3, 5],
 			render: function (data, type, row) {
 				let address = data.substr(0, 20) + '…';
-				return '<a href="address/'+ data +'">'+ address +'</a>';
+				return '<a href="../../address/'+ data +'">'+ address +'</a>';
 			}
 		}
 	]

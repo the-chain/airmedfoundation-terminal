@@ -33,6 +33,7 @@ module.exports.routes = {
   'GET    /explorer':                               { action: 'explorer/index' },
   'GET    /explorer/block/:id':                     { action: 'explorer/block-details' },
   'GET    /explorer/block/:id/transactions':        { action: 'explorer/block-transactions' },
+  'GET    /explorer/transaction/:hash':             { action: 'explorer/transaction-details' },
 
   
   // Block model

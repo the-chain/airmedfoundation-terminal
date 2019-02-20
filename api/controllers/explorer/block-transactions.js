@@ -26,15 +26,15 @@ module.exports = {
     let transactions;
     
     transactions = await Transaction.find({ 
-      select: ['id', 'block', 'timestamp'],
-      where: { block: inputs.id } 
+      select: ['id', 'block', 'timestamp', 'imputsArgs'],
+      where: { block: 1 } 
     });
 
-    if (!transactions) throw 'notFound';
+    if (transactions.length == 0) throw 'notFound';
 
     return exits.success({
       transactions: transactions,
-      blockId: transactions[0].block
+      blockId: inputs.id
     });
 
   }
