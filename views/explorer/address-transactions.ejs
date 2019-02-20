@@ -1,0 +1,51 @@
+<% include ../layouts/navigation-bar %>
+
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <div id="detail-container">
+                <h5 class="detail-title">
+                    Address 
+                    <span class="detail-number">
+                        #<%= address %>
+                    </span>
+                </h5>
+                <% include ../layouts/spiner %>
+                <div id="block-txs-table-container" class="d-none">
+                    <table id="block-txs-table" class="table hash-table dt-responsive detail-table" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>TxHash</th>
+                                <th>Block</th>
+                                <th>Timestamp</th>
+                                <th>From</th>
+                                <th></th>
+                                <th>To</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% transactions.forEach(function(transaction)  { %>
+                                <tr>
+                                    <td><%= transaction.id %></td>
+                                    <td><%= transaction.block %></td>
+                                    <td><%= new Date(transaction.timestamp).toUTCString() %></td>
+                                    <% if(transaction.imputsArgs.args.length > 0)  { %>
+                                        <td><%=transaction.imputsArgs.args[1] %></td>
+                                        <td><i class="fas fa-arrow-right"></i></td>
+                                        <td><%=transaction.imputsArgs.args[2] %></td>
+                                    <% }else{ %>
+                                        <td>N/A</td>
+                                        <td><i class="fas fa-arrow-right"></i></td>
+                                        <td>N/A</td>
+                                    <% } %>
+                                </tr>
+                            <% }); %>   
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<% include ../layouts/footer %>

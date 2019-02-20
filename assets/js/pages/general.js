@@ -2,6 +2,8 @@
 
 var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
 
+hljs.initHighlightingOnLoad();
+
 window.onload = function () {
 	var ctx = document.getElementById("tx-chart");
 	if (ctx) {

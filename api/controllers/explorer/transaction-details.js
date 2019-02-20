@@ -25,14 +25,14 @@ module.exports = {
     fn: async function (inputs, exits) {
       let transaction;
       
-      transaction = await Transaction.findOne({ id: inputs.hash }).populate('read');
+      transaction = await Transaction.findOne({ id: inputs.hash }).populate('read').populate('write').populate('readChaincode');
 
       console.log(transaction);
 
       if (!transaction) throw 'notFound';
   
       return exits.success({
-       
+        transaction: transaction
       });
   
     }

@@ -1,0 +1,216 @@
+<% include ../layouts/navigation-bar %>
+
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <h5 class="detail-title">
+                Transaction Details
+            </h5>
+            <div class="card explorer-detail">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    Transaction Hash:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="detail-text font-weight-bold">
+                                    <%= transaction.id %> <i class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="<%= transaction.id %>" title="Copy to clipboard"></i></span>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    Type:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="detail-text">
+                                    <%= transaction.type %>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    Block:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="detail-text">
+                                    <%= transaction.block %>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    TimeStamp:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="detail-text">
+                                    <%= new Date(transaction.timestamp).toUTCString() %>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    Number:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="detail-text">
+                                    <%= transaction.number %>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    From:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <% if(transaction.imputsArgs.args.length > 0) { %>
+                                    <p class="p-word-breaks detail-text"> 
+                                        <a href="../address/<%= transaction.imputsArgs.args[1] %>"> 
+                                            <%= transaction.imputsArgs.args[1] %>
+                                        </a>
+                                        <i class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="<%= transaction.imputsArgs.args[1] %>" title="Copy to clipboard"></i>
+                                    </p>
+                                <% }else{ %>
+                                    <p class="detail-text"> 
+                                        N/A 
+                                    </p>
+                                <% } %>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">To:</p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <% if(transaction.imputsArgs.args.length > 0) { %>
+                                    <p class="p-word-breaks detail-text"> 
+                                        <a href="../address/<%= transaction.imputsArgs.args[2] %>"> 
+                                            <%= transaction.imputsArgs.args[2] %>
+                                        </a>
+                                        <i class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="<%= transaction.imputsArgs.args[2] %>" title="Copy to clipboard"></i>
+                                    </p>
+                                <% }else{ %>
+                                    <p class="detail-text"> 
+                                        N/A 
+                                    </p>
+                                <% } %>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    Message:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="p-word-breaks detail-text"> 
+                                    <% if(transaction.imputsArgs.args.length > 0) { %>
+                                        <p class="p-word-breaks detail-text"> 
+                                            <%= transaction.imputsArgs.args[3] %>
+                                        </p>
+                                    <% }else{ %>
+                                        <p class="detail-text"> 
+                                            N/A 
+                                        </p>
+                                    <% } %>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul id="hidden-data" data-toggle="collapse" aria-expanded="false" class="list-group list-group-flush collapse">
+                    <li class="list-group-item no-top-border">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <span>Peer Endorsment:</span>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <pre>
+                                    <code>
+<%= JSON.stringify(transaction.peerEndorsment, null, 4) %>    
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <span>Read:</span>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <pre>
+                                    <code>
+<%= JSON.stringify(transaction.read, null, 4) %>    
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <span>Read Chainode:</span>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <pre>
+                                    <code>
+<%= JSON.stringify(transaction.readChaincode, null, 4) %>    
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <span>Write:</span>
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <pre>
+                                        <code>
+<%= JSON.stringify(transaction.write, null, 4) %>    
+                                        </code>
+                                    </pre>
+                                </div>
+                            </div>
+                        </li>
+                </ul>
+                <ul class="list-group list-group-flush">
+                    <li id="block-more" data-toggle="collapse" aria-expanded="false" data-target="#hidden-data" class="list-group-item no-top-border">
+                        <span class="blue-word">Click to see <i id="down" class="fas fa-arrow-down"></i><i id="up" class="fas fa-arrow-up d-none"></i></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+
+<% include ../layouts/footer %>
