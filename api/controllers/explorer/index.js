@@ -13,8 +13,20 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
+    // Search the blocks
+    let blocks = await Block.find()
+    .populate('transactions')
+    .limit(10)
+    .sort('timestamp DESC');
 
-    return exits.success();
+    let transactions = await Transaction.find()
+    .limit(10)
+    .sort('timestamp DESC');
+    
+    return exits.success({
+      blocksInfo: blocks,
+      transactions: transactions
+    });
 
   }
 

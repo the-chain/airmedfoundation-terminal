@@ -5,10 +5,9 @@
         <div class="col-12 my-auto">
             <div id="detail-container">
                 <h5 class="detail-title">Transactions</h5>
-                <p><small class="detail-number">For Block <%= blockId %></small></p>
                 <% include ../layouts/spiner %>
-                <div id="block-txs-table-container" class="d-none">
-                    <table id="block-txs-table" class="table hash-table dt-responsive detail-table" style="width:100%;">
+                <div id="txs-table-container" class="d-none">
+                    <table id="txs-table" class="table hash-table dt-responsive detail-table" style="width:100%;">
                         <thead>
                             <tr>
                                 <th>TxHash</th>
@@ -25,7 +24,7 @@
                                     <td><%= transaction.id %></td>
                                     <td><%= transaction.block %></td>
                                     <td><%= new Date(transaction.timestamp).toUTCString() %></td>
-                                    <% if(transaction.imputsArgs.args.length > 0 && transaction.imputsArgs.args[0] == 'sendHash') { %>
+                                    <% if(transaction.imputsArgs.args.length > 0)  { %>
                                         <td><%=transaction.imputsArgs.args[1] %></td>
                                         <td><i class="fas fa-arrow-right"></i></td>
                                         <td><%=transaction.imputsArgs.args[2] %></td>

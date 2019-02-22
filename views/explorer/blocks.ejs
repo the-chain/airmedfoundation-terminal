@@ -1,0 +1,43 @@
+<% include ../layouts/navigation-bar %>
+
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <div id="detail-container">
+                <h5 class="detail-title">Blocks</h5>
+                <% include ../layouts/spiner %>
+                <div id="blocks-table-container" class="d-none">
+                    <table id="blocks-table" class="table hash-table dt-responsive detail-table" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Block Height</th>
+                                <th>Hash</th>
+                                <th>Timestamp</th>
+                                <th>Transactions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% blocksInfo.forEach(function(block)  { %>
+                                <tr>
+                                    <td><%= block.id - 1 %></td>
+                                    <td><%= block.hash %></td>
+                                    <td><%= new Date(block.timestamp).toUTCString() %></td>
+                                    <td>
+                                        <a class="tx-btn" href="block/<%=(block.id - 1) %>/transactions">
+                                            <%= block.transactions.length %> transactions
+                                        </a>
+                                        <span> 
+                                            in this block
+                                        </span>
+                                    </td>
+                                </tr>
+                            <% }); %>   
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<% include ../layouts/footer %>
