@@ -100,6 +100,7 @@ var detailBlocksTable = $('#blocks-table').DataTable({
 
 $('.spinner').addClass('d-none');
 
+$('#tx-chart-container').removeClass('d-none');
 
 $('#block-txs-table-container').removeClass('d-none');
 detailBlockTxTable.responsive.recalc();

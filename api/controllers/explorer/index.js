@@ -19,16 +19,20 @@ module.exports = {
     .limit(10)
     .sort('timestamp DESC');
 
+    // Search the transactions
     let transactions = await Transaction.find()
     .limit(10)
     .sort('timestamp DESC');
+
+    // Search the transactions
+    let nTransactions = await Transaction.count();
     
     return exits.success({
       blocksInfo: blocks,
-      transactions: transactions
+      transactions: transactions,
+      nTransactions: nTransactions
     });
 
   }
-
 
 };
