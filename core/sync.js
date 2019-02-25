@@ -16,7 +16,7 @@ module.exports = {
         const ledgerHeight = await ledgerQuery.ledgerHeight(channelName,mspId,peerNumber);
         // Caso 1: Comenzar desde 0.
         if (totalBlocks == 0) {
-            console.log("Sync the database from Block #0");
+            console.log("Sync the database from Block #1");
             await this.syncDataBaseFromBlock(channelName, mspId, peerNumber, 0, ledgerHeight);
             return;
         }
@@ -51,12 +51,12 @@ module.exports = {
         return;
     },
     async syncDataBaseFromBlock(channelName, mspId, peerNumber, blockNumber, ledgerHeight){
-        console.log("Starting database synchronization from block #" + blockNumber.toString());
+        console.log("Starting database synchronization from block #" + (blockNumber+1).toString());
         for ( i = blockNumber; i < ledgerHeight; i++ ){
             var block = await ledgerQuery.queryBlock(channelName,mspId,peerNumber,parseInt(i));
             let blockInfo = {
                 hash: await ledgerQuery.getBlockHash(block.header),
-                number: i,
+                number: i+1,
                 timestamp: Date.parse(block.data.data[0].payload.header.channel_header.timestamp),
                 previous_hash: block.header.previous_hash,
                 data_hash: block.header.data_hash
@@ -66,7 +66,7 @@ module.exports = {
             var N = block.data.data.length;
             for ( j = 0; j < N; j++ ){
                 let Transaction = {};
-                Transaction.block = blockInfo.hash;
+                Transaction.block = blockInfo.number;
                 Transaction.number = j;
                 Transaction.timestamp = Date.parse(block.data.data[j].payload.header.channel_header.timestamp);
                 Transaction.channel = block.data.data[j].payload.header.channel_header.channel_id;
@@ -83,15 +83,13 @@ module.exports = {
                         version: ""
                     }
                 }
+                Transaction.inputArgs = [];
                 try {
-                    Transaction.imputsArgs = {
-                        args: []
-                    };
-                    const totalArgs = block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args.length;
-                    for ( k = 0; k < totalArgs; k++)
-                        Transaction.imputsArgs.args.push(block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args[k].toString('utf8'));
+                    Transaction.inputArgs = block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args;
+                    if (Transaction.inputArgs == undefined)
+                    Transaction.inputArgs = [];
                 }catch(err){
-                    Transaction.imputsArgs.args = [];
+                    Transaction.inputArgs = [];
                 }
                 try {
                     Transaction.peerEndorsment = {
