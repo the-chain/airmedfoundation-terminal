@@ -1,5 +1,6 @@
 var rp = require('request-promise');
-var host = "http://localhost"
+//var host = "http://localhost"
+var host = "http://190.38.224.112"
 
 module.exports = {
     /**
@@ -40,7 +41,7 @@ module.exports = {
                 creator: transaction.creator,
                 chaincodeName: transaction.chaincode.name,
                 chaincodeVersion: transaction.chaincode.version,
-                imputsArgs: transaction.imputsArgs,
+                imputsArgs: transaction.inputArgs,
                 peerEndorsment: transaction.peerEndorsment,
                 block: transaction.block,
                 number: transaction.number
