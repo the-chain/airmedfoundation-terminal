@@ -1,18 +1,16 @@
 version: '2'
    
 services:
-  mysql:
-    image: mysql:5.7
-    container_name: mysql
-    restart: always
+  posgresql:
+    image: postgres:9.4
+    container_name: postgresql
     ports:
-      - "3306:3306"
+      - "5432:5432"
     environment:
-      MYSQL_DATABASE: "airmed"
-      MYSQL_USER: "airmed"
-      MYSQL_PASSWORD: "LYbAWCErGttRsP9y"
-      MYSQL_ROOT_PASSWORD: "LYbAWCErGttRsP9y"
+      POSTGRES_DB: "airmed"
+      POSTGRES_USER: "airmed"
+      POSTGRES_PASSWORD: "LYbAWCErGttRsP9y"
     volumes:
-      - data_sql:/var/lib/mysql
+      - data_psql:/var/lib/postgresql/data
 volumes:
-  data_sql:
+  data_psql:
