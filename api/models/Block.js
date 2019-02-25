@@ -36,7 +36,8 @@ module.exports = {
     },
 
     timestamp: {
-      type: 'number',
+      type: 'ref',
+      columnType: 'bigint',
       required: true,
     },
     

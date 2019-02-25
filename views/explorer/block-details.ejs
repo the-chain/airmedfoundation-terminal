@@ -55,7 +55,7 @@
                             <div class="col-12 col-md-8">
                                 <p class="detail-text">
                                     <i class="far fa-clock"></i> 
-                                    <%= new Date(blockInfo.timestamp).toUTCString() %>
+                                    <%= new Date(parseInt(blockInfo.timestamp)).toUTCString() %>
                                 </p>
                             </div>
                         </div>
@@ -69,7 +69,11 @@
                             </div>
                             <div class="col-12 col-md-8">
                                 <p class="detail-text">
-                                    <a class="tx-btn" href="<%= (blockInfo.id - 1) + '/transactions' %>">
+                                    <% if(nTransactions > 0) { %>
+                                        <a class="tx-btn" href="<%= (blockInfo.id - 1) + '/transactions' %>">
+                                    <% }else{ %>
+                                        <a class="tx-btn a-disable">
+                                    <% } %>       
                                         <%= nTransactions %> transactions
                                     </a>
                                     <span> 

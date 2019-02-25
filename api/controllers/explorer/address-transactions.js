@@ -21,15 +21,11 @@ module.exports = {
       },
     },
   
-  
     fn: async function (inputs, exits) {
-      let transactions;
-      
-      transactions = await Transaction.find({ 
-        // select: ['id', 'block', 'timestamp', 'imputsArgs'],
-        // or: [{ 'imputsArgs.args[1]': inputs.id }, { 'imputsArgs.args[2]': inputs.id } ]
-      });
+      let result = await sails.sendNativeQuery('SELECT * FROM transaction cross join json_array_elements_text("imputsArgs") where value in ($1)', [ inputs.id ]);
   
+      let transactions = result.rows;
+
       if (transactions.length == 0) throw 'notFound';
   
       return exits.success({
