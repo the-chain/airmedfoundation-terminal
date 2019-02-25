@@ -2,7 +2,7 @@ version: '2'
    
 services:
   posgresql:
-    image: postgres:9.4
+    image: postgres:11.2
     container_name: postgresql
     ports:
       - "5432:5432"
