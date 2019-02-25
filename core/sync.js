@@ -72,7 +72,7 @@ module.exports = {
                 Transaction.channel = block.data.data[j].payload.header.channel_header.channel_id;
                 Transaction.id = block.data.data[j].payload.header.channel_header.tx_id;
                 if ( Transaction.id == "")
-                    Transaction.id = "0";
+                    Transaction.id = blockInfo.hash;
                 Transaction.type = block.data.data[j].payload.header.channel_header.typeString;
                 Transaction.creator = block.data.data[j].payload.header.signature_header.creator.Mspid
                 try {
@@ -85,9 +85,9 @@ module.exports = {
                 }
                 Transaction.inputArgs = [];
                 try {
-                    Transaction.inputArgs = block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args;
-                    if (Transaction.inputArgs == undefined)
-                    Transaction.inputArgs = [];
+                    var totalArgs = block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args.length;
+                    for ( k = 0; k < totalArgs; k++)
+                        Transaction.inputArgs.push(block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args[k].toString('utf8'));
                 }catch(err){
                     Transaction.inputArgs = [];
                 }
