@@ -16,10 +16,10 @@
 module.exports.datastores = {
 
   default: {
-    adapter: 'sails-mysql',
+    adapter: 'sails-postgresql',
     user: 'airmed',
     password: 'LYbAWCErGttRsP9y',
-    port: '3306',
+    port: '5432',
     host: 'localhost',
     database: 'airmed'
   },

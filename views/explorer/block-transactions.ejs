@@ -24,11 +24,11 @@
                                 <tr>
                                     <td><%= transaction.id %></td>
                                     <td><%= transaction.block %></td>
-                                    <td><%= new Date(transaction.timestamp).toUTCString() %></td>
-                                    <% if(transaction.imputsArgs.args.length > 0 && transaction.imputsArgs.args[0] == 'sendHash') { %>
-                                        <td><%=transaction.imputsArgs.args[1] %></td>
+                                    <td><%= new Date(parseInt(transaction.timestamp)).toUTCString() %></td>
+                                    <% if(transaction.imputsArgs.length > 0 && transaction.imputsArgs[0] == 'sendHash') { %>
+                                        <td><%=transaction.imputsArgs[1] %></td>
                                         <td><i class="fas fa-arrow-right"></i></td>
-                                        <td><%=transaction.imputsArgs.args[2] %></td>
+                                        <td><%=transaction.imputsArgs[2] %></td>
                                     <% }else{ %>
                                         <td>N/A</td>
                                         <td><i class="fas fa-arrow-right"></i></td>

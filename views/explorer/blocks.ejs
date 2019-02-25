@@ -23,7 +23,11 @@
                                     <td><%= block.hash %></td>
                                     <td><%= new Date(block.timestamp).toUTCString() %></td>
                                     <td>
-                                        <a class="tx-btn" href="block/<%=(block.id - 1) %>/transactions">
+                                        <% if(block.transactions.length > 0) { %>
+                                            <a class="tx-btn" href="block/<%=(block.id - 1) %>/transactions">
+                                        <% }else{ %>
+                                            <a class="tx-btn a-disable">
+                                        <% } %>    
                                             <%= block.transactions.length %> transactions
                                         </a>
                                         <span> 

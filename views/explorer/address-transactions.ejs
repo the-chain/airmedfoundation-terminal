@@ -11,8 +11,8 @@
                     </span>
                 </h5>
                 <% include ../layouts/spiner %>
-                <div id="block-txs-table-container" class="d-none">
-                    <table id="block-txs-table" class="table hash-table dt-responsive detail-table" style="width:100%;">
+                <div id="address-table-container" class="d-none">
+                    <table id="address-table" class="table hash-table dt-responsive detail-table" style="width:100%;">
                         <thead>
                             <tr>
                                 <th>TxHash</th>
@@ -28,11 +28,11 @@
                                 <tr>
                                     <td><%= transaction.id %></td>
                                     <td><%= transaction.block %></td>
-                                    <td><%= new Date(transaction.timestamp).toUTCString() %></td>
-                                    <% if(transaction.imputsArgs.args.length > 0)  { %>
-                                        <td><%=transaction.imputsArgs.args[1] %></td>
+                                    <td><%= new Date(parseInt(transaction.timestamp)).toUTCString() %></td>
+                                    <% if(transaction.imputsArgs.length > 0)  { %>
+                                        <td><%=transaction.imputsArgs[1] %></td>
                                         <td><i class="fas fa-arrow-right"></i></td>
-                                        <td><%=transaction.imputsArgs.args[2] %></td>
+                                        <td><%=transaction.imputsArgs[2] %></td>
                                     <% }else{ %>
                                         <td>N/A</td>
                                         <td><i class="fas fa-arrow-right"></i></td>
