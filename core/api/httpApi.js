@@ -1,6 +1,6 @@
 var rp = require('request-promise');
 //var host = "http://localhost"
-var host = "http://190.38.224.112"
+var host = "http://127.0.0.1"
 
 module.exports = {
     /**
