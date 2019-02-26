@@ -22,7 +22,7 @@ module.exports = {
     async createBlock(block){
         let blockInfo = {
             hash: await ledgerQuery.getBlockHash(block.header),
-            number: parseInt(block.header.number),
+            number: parseInt(block.header.number)+1,
             timestamp: Date.parse(block.data.data[0].payload.header.channel_header.timestamp),
             previous_hash: block.header.previous_hash,
             data_hash: block.header.data_hash
@@ -32,13 +32,13 @@ module.exports = {
         var N = block.data.data.length;
         for ( j = 0; j < N; j++ ){
             let Transaction = {};
-            Transaction.block = blockInfo.hash;
+            Transaction.block = blockInfo.number;
             Transaction.number = j;
             Transaction.timestamp = Date.parse(block.data.data[j].payload.header.channel_header.timestamp);
             Transaction.channel = block.data.data[j].payload.header.channel_header.channel_id;
             Transaction.id = block.data.data[j].payload.header.channel_header.tx_id;
             if ( Transaction.id == "")
-                Transaction.id = "0";
+                Transaction.id = blockInfo.hash;
             Transaction.type = block.data.data[j].payload.header.channel_header.typeString;
             Transaction.creator = block.data.data[j].payload.header.signature_header.creator.Mspid
             try {
@@ -49,15 +49,13 @@ module.exports = {
                     version: ""
                 }
             }
+            Transaction.inputArgs = [];
             try {
-                Transaction.imputsArgs = {
-                    args: []
-                };
-                const totalArgs = block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args.length;
+                var totalArgs = block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args.length;
                 for ( k = 0; k < totalArgs; k++)
-                    Transaction.imputsArgs.args.push(block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args[k].toString('utf8'));
+                    Transaction.inputArgs.push(block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args[k].toString('utf8'));
             }catch(err){
-                Transaction.imputsArgs.args = [];
+                Transaction.inputArgs = [];
             }
             try {
                 Transaction.peerEndorsment = {

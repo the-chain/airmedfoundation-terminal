@@ -17,6 +17,13 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  //*': 'isHTTPS'
+  //'*': 'isHTTPS',
+
+  // API Rest
+  'key-in/new':        'checkOrigin', 
+  'key-out/new':        'checkOrigin',                         
+  'read-chaincode/new':  'checkOrigin',
+  'transaction/new': 'checkOrigin',
+  'block/new': 'checkOrigin',
 
 };
