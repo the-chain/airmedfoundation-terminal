@@ -67,6 +67,11 @@ module.exports = {
             }catch(err){
                 Transaction.peerEndorsment.peers = [];
             }
+            if ( j == N-1 ){
+                Transaction.last = true;
+            }else{
+                Transaction.last = false;
+            }
             // Create Transaction
             await httpClient.createTransaction(Transaction);
             let key = {

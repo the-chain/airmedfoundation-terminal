@@ -32,7 +32,7 @@ module.exports = {
             console.log("The database does not match the blockchain. Error #1");
             await this.dropDatabase(totalBlocks);
             await this.syncDataBaseFromBlock(channelName, mspId, peerNumber, 0, ledgerHeight);
-            return;
+            throw new Error("The database does not match the blockchain");
         }
 
         // Caso #4: Actualizar la base de datos
@@ -48,7 +48,7 @@ module.exports = {
         console.log("The database does not match the blockchain. Error #2");
         await this.dropDatabase(totalBlocks);
         //await this.syncDataBaseFromBlock(channelName, mspId, peerNumber, 0, ledgerHeight);
-        return;
+        throw new Error("The database does not match the blockchain");
     },
     async syncDataBaseFromBlock(channelName, mspId, peerNumber, blockNumber, ledgerHeight){
         console.log("Starting database synchronization from block #" + (blockNumber+1).toString());
@@ -100,6 +100,11 @@ module.exports = {
                         Transaction.peerEndorsment.peers.push(block.data.data[j].payload.data.actions[0].payload.action.endorsements[k].endorser.Mspid);
                 }catch(err){
                     Transaction.peerEndorsment.peers = [];
+                }
+                if ( j == N-1 ){
+                    Transaction.last = true;
+                }else{
+                    Transaction.last = false;
                 }
                 // Create Transaction
                 await httpClient.createTransaction(Transaction);

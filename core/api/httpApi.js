@@ -44,7 +44,8 @@ module.exports = {
                 imputsArgs: transaction.inputArgs,
                 peerEndorsment: transaction.peerEndorsment,
                 block: transaction.block,
-                number: transaction.number
+                number: transaction.number,
+                last: transaction.last
             },
             json: true
         };
