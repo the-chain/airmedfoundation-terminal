@@ -3,20 +3,7 @@
 <main class="container general-container">
     <div class="row h-100">
         <div class="col-12 my-auto">
-            <div id="explorer-search" class="row">
-                <div class="col-12">
-                    <div class="custom-input">
-                        <div class="input-group">
-                            <input id="explorer-input" type="text" class="search-query form-control" placeholder="Search by Address/Txhash/Block" />
-                            <span class="input-group-btn">
-                                <button class="button-search" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <% include ./header %>
             <div class="row">
                 <div class="col-12 col-lg-5">
                     <div class="explorer-index card">
@@ -61,12 +48,12 @@
                     <div class="explorer-index card">
                         <div class="card-header">
                             <ul class="nav nav-tabs card-header-tabs">
-                              <li class="nav-item">
+                                <li class="nav-item">
                                 <a id="tx-chart-pill" class="nav-link active">Transactions</a>
-                              </li>
-                              <li class="nav-item">
+                                </li>
+                                <li class="nav-item">
                                 <a id="block-chart-pill" class="nav-link">Blocks</a>
-                              </li>
+                                </li>
                             </ul>
                         </div>
                         <div class="card-body">
@@ -103,7 +90,7 @@
                                                 <p class="p-word-break">Hash <a href="explorer/block/<%= block.id - 1 %>"><%= block.hash.substr(0, 22) + '…' %></a></p>
                                                 <p class="explorer-p">
                                                     <% if(block.transactions.length > 0) { %>
-                                                        <a class="tx-btn" href="explorer/<%= (block.id - 1) %>/transactions">
+                                                        <a class="tx-btn" href="explorer/block/<%= (block.id - 1) %>/transactions">
                                                     <% }else{ %>
                                                         <a class="tx-btn a-disable">
                                                     <% } %>    

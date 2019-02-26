@@ -23,9 +23,7 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    let transactions;
-    
-    transactions = await Transaction.find({ 
+    let transactions = await Transaction.find({ 
       select: ['id', 'block', 'timestamp', 'imputsArgs'],
       where: { block: 1 } 
     });

@@ -22,9 +22,10 @@ module.exports = {
     },
   
     fn: async function (inputs, exits) {
-      let result = await sails.sendNativeQuery('SELECT * FROM transaction cross join json_array_elements_text("imputsArgs") where value in ($1)', [ inputs.id ]);
-  
-      let transactions = result.rows;
+      let result, transactions;
+      
+      result = await sails.sendNativeQuery('SELECT * FROM transaction cross join json_array_elements_text("imputsArgs") where value in ($1)', [ inputs.id ]);
+      transactions = result.rows;
 
       if (transactions.length == 0) throw 'notFound';
   

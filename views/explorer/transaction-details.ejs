@@ -3,6 +3,7 @@
 <main class="container general-container">
     <div class="row h-100">
         <div class="col-12 my-auto">
+            <% include ./header %>
             <h5 class="detail-title">
                 Transaction Details
             </h5>
@@ -16,8 +17,8 @@
                                 </p>
                             </div>
                             <div class="col-12 col-md-8">
-                                <p class="detail-text font-weight-bold">
-                                    <%= transaction.id %> <i class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="<%= transaction.id %>" title="Copy to clipboard"></i></span>
+                                <p class="detail-text">
+                                    <span class="font-weight-bold"><%= transaction.id %></span> <i class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="<%= transaction.id %>" title="Copy to clipboard"></i></span>
                                 </p>
                             </div>
                         </div>
@@ -45,21 +46,7 @@
                             </div>
                             <div class="col-12 col-md-8">
                                 <p class="detail-text">
-                                    <%= transaction.block %>
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-12 col-md-4">
-                                <p class="detail-text">
-                                    TimeStamp:
-                                </p>
-                            </div>
-                            <div class="col-12 col-md-8">
-                                <p class="detail-text">
-                                    <%= new Date(transaction.timestamp).toUTCString() %>
+                                    <a href="../block/<%= transaction.block - 1 %>"><%= transaction.block - 1 %></a>
                                 </p>
                             </div>
                         </div>
@@ -74,6 +61,20 @@
                             <div class="col-12 col-md-8">
                                 <p class="detail-text">
                                     <%= transaction.number %>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
+                                    TimeStamp:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="detail-text">
+                                    <%= new Date(parseInt(transaction.timestamp)).toUTCString() %>
                                 </p>
                             </div>
                         </div>
@@ -146,20 +147,6 @@
                     </li>
                 </ul>
                 <ul id="hidden-data" data-toggle="collapse" aria-expanded="false" class="list-group list-group-flush collapse">
-                    <li class="list-group-item no-top-border">
-                        <div class="row">
-                            <div class="col-12 col-md-4">
-                                <span>Peer Endorsment:</span>
-                            </div>
-                            <div class="col-12 col-md-8">
-                                <pre>
-                                    <code>
-<%= JSON.stringify(transaction.peerEndorsment, null, 4) %>    
-                                    </code>
-                                </pre>
-                            </div>
-                        </div>
-                    </li>
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-12 col-md-4">
@@ -169,6 +156,20 @@
                                 <pre>
                                     <code>
 <%= JSON.stringify(transaction.read, null, 4) %>    
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <span>Write:</span>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <pre>
+                                    <code>
+<%= JSON.stringify(transaction.write, null, 4) %>    
                                     </code>
                                 </pre>
                             </div>
@@ -188,20 +189,6 @@
                             </div>
                         </div>
                     </li>
-                    <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-12 col-md-4">
-                                    <span>Write:</span>
-                                </div>
-                                <div class="col-12 col-md-8">
-                                    <pre>
-                                        <code>
-<%= JSON.stringify(transaction.write, null, 4) %>    
-                                        </code>
-                                    </pre>
-                                </div>
-                            </div>
-                        </li>
                 </ul>
                 <ul class="list-group list-group-flush">
                     <li id="block-more" data-toggle="collapse" aria-expanded="false" data-target="#hidden-data" class="list-group-item no-top-border">

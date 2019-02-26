@@ -17,7 +17,9 @@ module.exports = {
   
   
     fn: async function (inputs, exits) {
-      let blocks = await Block.find().populate('transactions');
+      let blocks = await Block.find()
+      .populate('transactions')
+      .sort('timestamp DESC');;
   
       if (blocks.length == 0) throw 'notFound';
   

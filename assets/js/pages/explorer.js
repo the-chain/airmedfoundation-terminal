@@ -12,6 +12,31 @@ $(document.body).on('click', '#block-more', function () {
 	}
 });
 
+var searchValidator = $('#form-explorer-search').validate({
+	rules: {
+		data: {
+			required: true,
+			maxlength: 924,
+		}
+	},
+	errorPlacement: function(error,element) {
+		return true;
+	},
+	highlight: function(element) {
+		$(element).addClass('box-error');
+	},
+	unhighlight: function(element) {
+		$(element).removeClass('box-error');
+	}
+});
+
+$('#explorer-search-btn').click(function() {
+	if ($('#form-explorer-search').valid())
+		$('#form-explorer-search').submit();
+	else
+		searchValidator.focusInvalid();
+});
+
 var detailBlockTxTable = $('#block-txs-table').DataTable({
 	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
          	'<"row"<"col-sm-12"tr>>',

@@ -38,6 +38,7 @@ module.exports.routes = {
   'GET    /explorer/block/:id/transactions':        { action: 'explorer/block-transactions' },
   'GET    /explorer/transaction/:hash':             { action: 'explorer/transaction-details' },
   'GET    /explorer/address/:id':                   { action: 'explorer/address-transactions' },
+  'POST   /explorer/search':                        { action: 'explorer/search' },
 
   
   // Block model

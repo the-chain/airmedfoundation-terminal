@@ -3,6 +3,7 @@
 <main class="container general-container">
     <div class="row h-100">
         <div class="col-12 my-auto">
+            <% include ./header %>
             <div id="detail-container">
                 <h5 class="detail-title">Blocks</h5>
                 <% include ../layouts/spiner %>
@@ -21,7 +22,7 @@
                                 <tr>
                                     <td><%= block.id - 1 %></td>
                                     <td><%= block.hash %></td>
-                                    <td><%= new Date(block.timestamp).toUTCString() %></td>
+                                    <td><%= new Date(parseInt(block.timestamp)).toUTCString() %></td>
                                     <td>
                                         <% if(block.transactions.length > 0) { %>
                                             <a class="tx-btn" href="block/<%=(block.id - 1) %>/transactions">
