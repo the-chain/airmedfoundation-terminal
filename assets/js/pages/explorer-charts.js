@@ -30,6 +30,14 @@ window.onload = function () {
                         ]
                     },
                     options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    stepSize: 1,
+                                }
+                            }]
+                        },
                         legend: {
                             display: false
                         },
@@ -57,6 +65,14 @@ window.onload = function () {
                         ]
                     },
                     options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    stepSize: 1,
+                                }
+                            }]
+                        },
                         legend: {
                             display: false
                         },

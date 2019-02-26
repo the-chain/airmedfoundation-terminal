@@ -15,19 +15,19 @@
                                 <div class="col-6">
                                     <p class="explorer-p">Latest Block</p>
                                     <% if(blocksInfo.length > 0) { %>
-                                        <p><span class="explorer-info-text font-weight-bold"><%= blocksInfo[0].id - 1 %></span></p>
+                                        <p id="last-block-n" class="explorer-info-text font-weight-bold"><%= blocksInfo[0].id - 1 %></p>
                                     <% }else{ %>
-                                        <p><span class="explorer-info-text font-weight-bold">N/A</span></p>
+                                        <p id="last-block-n" class="explorer-info-text font-weight-bold">N/A</p>
                                     <% } %>
                                 </div>
                                 <div class="col-6">
                                     <p class="explorer-p text-right">Transactions</p>
-                                    <p class="text-right"><span class="explorer-info-text font-weight-bold"><%= nTransactions %></span></p>
+                                    <p id="last-tx-n" class="text-right explorer-info-text font-weight-bold"><%= nTransactions %></p>
                                 </div>
                                 <div class="col-6">
                                     <p class="explorer-p">Latest Block</p>
                                     <% if(blocksInfo.length > 0) { %>
-                                        <p><a class="explorer-info-text" href="explorer/block/<%=blocksInfo[0].id - 1 %>"><%= blocksInfo[0].hash.substr(0, 17) + '…' %></a></p>
+                                        <p><a id="last-block-h" class="explorer-info-text" href="explorer/block/<%=blocksInfo[0].id - 1 %>"><%= blocksInfo[0].hash.substr(0, 17) + '…' %></a></p>
                                     <% }else{ %>
                                         <p><span class="explorer-info-text font-weight-bold">N/A</span></p>
                                     <% } %>    
