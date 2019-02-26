@@ -196,11 +196,12 @@ async function renderData(data) {
 		let newBlock, list, nelemets;
 		list = $('#block-ul');
 		animateRotate($('#block-tag'), 360);
-		newBlock = $('<li class="list-group-item align-items-center"><div class="row h-100"><div class="col-3 my-auto text-center block"><p class="explorer-p"><a href="explorer/block/' + (data.block.id - 1) + '">Block ' + (data.block.id - 1) + '</a></p></div><div class="col-9 my-auto block-info"><p class="p-word-break">Hash <a href="explorer/block/' + (data.block.id - 1) + '">' + (data.block.hash.substr(0, 22)) + '…</a></p><p class="explorer-p"><a class="tx-btn" href="explorer/' + (data.block.id - 1) + '/transactions">' + data.block.ntransactions + ' transactions</a> in this block</p></div></div></li>');
+		newBlock = $('<li class="list-group-item align-items-center"><div class="row h-100"><div class="col-3 my-auto text-center block"><p class="explorer-p"><a href="explorer/block/' + (data.block.id - 1) + '">Block ' + (data.block.id - 1) + '</a></p></div><div class="col-9 my-auto block-info"><p class="p-word-break">Hash <a href="explorer/block/' + (data.block.id - 1) + '">' + (data.block.hash.substr(0, 22)) + '…</a></p><p class="explorer-p"><a class="tx-btn" href="explorer/block/' + (data.block.id - 1) + '/transactions">' + data.block.ntransactions + ' transactions</a> in this block</p></div></div></li>');
 		nelemets = list.children().length;
 		if (nelemets == 10) $('#block-ul li:last-child').remove();
 		list.prepend(newBlock);
 		$('#last-block-n').text(data.block.id - 1);
+		$('#last-block-h').removeClass('font-weight-bold');
 		$('#last-block-h').attr('href', 'explorer/block/' + (data.block.id - 1));
 		$('#last-block-h').text((data.block.hash.substr(0, 17) + '…'));
 		await sleep(1000);
@@ -222,6 +223,7 @@ async function renderData(data) {
 		});
 		ntransactions = data.transactions.length;
 		$('#last-tx-n').text(parseInt($('#last-tx-n').text()) + ntransactions);
+		$('#last-tx-h').removeClass('font-weight-bold');
 		$('#last-tx-h').attr('href', 'explorer/transaction/' + (data.transactions[ntransactions - 1].id));
 		$('#last-tx-h').text((data.transactions[ntransactions - 1].id.substr(0, 17) + '…'));
 	}

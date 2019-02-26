@@ -29,15 +29,15 @@
                                     <% if(blocksInfo.length > 0) { %>
                                         <p><a id="last-block-h" class="explorer-info-text" href="explorer/block/<%=blocksInfo[0].id - 1 %>"><%= blocksInfo[0].hash.substr(0, 17) + '…' %></a></p>
                                     <% }else{ %>
-                                        <p><span class="explorer-info-text font-weight-bold">N/A</span></p>
+                                        <p><a id="last-block-h" class="explorer-info-text font-weight-bold">N/A</a></p>
                                     <% } %>    
                                 </div>
                                 <div class="col-6">
                                     <p class="explorer-p text-right">Latest Transaction</p>
                                     <% if(transactions.length > 0) { %>
-                                        <p class="text-right"><a class="explorer-info-text" href="explorer/transaction/<%=transactions[0].id %>"><%= transactions[0].id.substr(0, 17) + '…' %></a></p>
+                                        <p class="text-right"><a id="last-tx-h" class="explorer-info-text" href="explorer/transaction/<%=transactions[0].id %>"><%= transactions[0].id.substr(0, 17) + '…' %></a></p>
                                     <% }else{ %>
-                                        <p class="text-right"><span class="explorer-info-text font-weight-bold">N/A</span></p>
+                                        <p class="text-right"><a id="last-tx-h" class="explorer-info-text font-weight-bold">N/A</a></p>
                                     <% } %>       
                                 </div>
                             </div>
@@ -76,10 +76,10 @@
                 <div class="col-12 col-lg-5">
                     <div class="explorer-index card">
                         <div class="card-header">
-                            <span class="custom-card-title"><i class="fas fa-cubes" aria-hidden="true"></i> Blocks</span>
+                            <span class="custom-card-title"><i id="block-tag" class="fas fa-cubes" aria-hidden="true"></i> Blocks</span>
                         </div>
                         <div id="block-list" class="explorer-list">
-                            <ul class="list-group list-group-flush d-flex">
+                            <ul id="block-ul" class="list-group list-group-flush d-flex">
                                 <% blocksInfo.forEach(function(block)  { %>
                                     <li class="list-group-item align-items-center">
                                         <div class="row h-100">
@@ -112,10 +112,10 @@
                 <div class="col-12 col-lg-6 offset-0 offset-lg-1">
                     <div class="explorer-index card">
                         <div class="card-header">
-                            <span class="custom-card-title"><i class="fa fa-list-alt" aria-hidden="true"></i> Transactions</span>
+                            <span class="custom-card-title"><i id="tx-tag" class="fa fa-list-alt" aria-hidden="true"></i> Transactions</span>
                         </div>
                         <div id="transactions-list" class="explorer-list">
-                            <ul class="list-group list-group-flush d-flex">
+                            <ul id="transaction-ul" class="list-group list-group-flush d-flex">
                                 <% transactions.forEach(function(transaction)  { %>
                                     <li class="list-group-item align-items-center">
                                         <div class="row h-100">

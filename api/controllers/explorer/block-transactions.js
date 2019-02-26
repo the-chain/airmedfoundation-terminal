@@ -25,7 +25,7 @@ module.exports = {
   fn: async function (inputs, exits) {
     let transactions = await Transaction.find({ 
       select: ['id', 'block', 'timestamp', 'imputsArgs'],
-      where: { block: 1 } 
+      where: { block: (inputs.id + 1) } 
     });
 
     if (transactions.length == 0) throw 'notFound';
