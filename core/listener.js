@@ -38,7 +38,7 @@ module.exports = {
             Transaction.channel = block.data.data[j].payload.header.channel_header.channel_id;
             Transaction.id = block.data.data[j].payload.header.channel_header.tx_id;
             if ( Transaction.id == "")
-                Transaction.id = blockInfo.hash;
+                Transaction.id = blockInfo.data_hash;
             Transaction.type = block.data.data[j].payload.header.channel_header.typeString;
             Transaction.creator = block.data.data[j].payload.header.signature_header.creator.Mspid
             try {
