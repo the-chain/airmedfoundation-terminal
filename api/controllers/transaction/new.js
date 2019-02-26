@@ -49,6 +49,9 @@ module.exports = {
     block: {
       type: 'number'
     },
+    last: {
+      type: 'bool'
+    }
   },
 
   exits: {
@@ -66,7 +69,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // If one of required parameters is missing
-    if(inputs.id === undefined || inputs.number === undefined || inputs.timestamp === undefined || inputs.channel === undefined || inputs.type === undefined || inputs.creator === undefined || inputs.chaincodeName === undefined || inputs.chaincodeVersion === undefined || inputs.imputsArgs === undefined || inputs.peerEndorsment === undefined || inputs.block === undefined) 
+    if( inputs.last === undefined ||inputs.id === undefined || inputs.number === undefined || inputs.timestamp === undefined || inputs.channel === undefined || inputs.type === undefined || inputs.creator === undefined || inputs.chaincodeName === undefined || inputs.chaincodeVersion === undefined || inputs.imputsArgs === undefined || inputs.peerEndorsment === undefined || inputs.block === undefined) 
       throw 'invalid';
 
     // Create the new transaction
@@ -86,7 +89,22 @@ module.exports = {
     .intercept('E_UNIQUE', 'conflict')
     .intercept({name: 'UsageError'}, 'invalid')
     .fetch();
-    
+    if (inputs.last) {
+      let block = await Block.findOne({ id: inputs.block }).populate('transactions');
+      console.log(block);
+      sails.sockets.blast('entry', {
+        verb: 'created',
+        data: {
+          block: {
+            hash: block.hash,
+            id: block.id,
+            ntransactions: block.transactions.length
+          },
+          transactions: block.transactions
+        }
+      });
+    }
+
     return exits.success(newTransaction);
 
   }
