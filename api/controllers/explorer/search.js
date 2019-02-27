@@ -13,23 +13,12 @@ module.exports = {
   exits: {
     success: {
       responseType: 'view',
-      viewTemplatePath: 'explorer/index'
+      viewTemplatePath: 'explorer/no-results'
     },
   },
 
 
   fn: async function (inputs, exits) {
-    if (Number.isInteger(parseInt(inputs.data))) {
-      let block = await Block.findOne({ id: (parseInt(inputs.data) + 1) });
-      
-      if (!block) {
-        return exits.success();
-      } else {
-        this.res.redirect('/explorer/block/' + (block.id - 1));
-        return;
-      }
-
-    }
 
     if (inputs.data.length == 64) {
       let block = await Block.findOne({ hash: inputs.data });
@@ -55,7 +44,21 @@ module.exports = {
       result = await sails.sendNativeQuery('SELECT * FROM transaction cross join json_array_elements_text("imputsArgs") where value in ($1)', [ inputs.data ]);
       transactions = result.rows;
 
-      if (transactions.length == 0) return exits.success();
+      if (transactions.length == 0) {
+        let newData = String(parseInt(inputs.data));
+        let result = newData.localeCompare(inputs.data);
+        if(result == 0) {
+          let block = await Block.findOne({ id: (parseInt(inputs.data) + 1) });
+          if (!block) {
+            return exits.success();
+          } else {
+            this.res.redirect('/explorer/block/' + (block.id - 1));
+            return;
+          }
+        } else {
+          return exits.success();
+        }
+      }
 
       this.res.redirect('/explorer/address/' + inputs.data);
       return;

@@ -91,7 +91,6 @@ module.exports = {
     .fetch();
     if (inputs.last) {
       let block = await Block.findOne({ id: inputs.block }).populate('transactions');
-      console.log(block);
       sails.sockets.blast('entry', {
         verb: 'created',
         data: {

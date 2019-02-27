@@ -31,6 +31,7 @@ module.exports.routes = {
 
   // Blockchain Explorer
   'GET    /explorer':                               { action: 'explorer/index' },
+  'GET    /explorer/search':                        { action: 'explorer/no-results' },
   'GET    /explorer/charts':                        { action: 'explorer/charts' },
   'GET    /explorer/blocks':                        { action: 'explorer/blocks' },
   'GET    /explorer/transactions':                  { action: 'explorer/transactions' },

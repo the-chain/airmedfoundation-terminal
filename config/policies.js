@@ -17,7 +17,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  //'*': 'isHTTPS',
+  '*': 'isHTTPS',
 
   // API Rest
   'key-in/new':        'checkOrigin', 
