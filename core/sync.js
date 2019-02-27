@@ -85,9 +85,14 @@ module.exports = {
                 }
                 Transaction.inputArgs = [];
                 try {
+                    var firstArg = block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args[0];
+                    if ( firstArg == 'deploy' || firstArg == 'upgrade'){
+                        Transaction.inputArgs.push(firstArg);
+                    }else{
                     var totalArgs = block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args.length;
-                    for ( k = 0; k < totalArgs; k++)
+                    for ( k = 0; k < totalArgs; k++) 
                         Transaction.inputArgs.push(block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args[k].toString('utf8'));
+                    }
                 }catch(err){
                     Transaction.inputArgs = [];
                 }
