@@ -82,14 +82,16 @@ var detailTxsTable = $('#txs-table').DataTable({
 			'targets': [0],
 			render: function (data, type, row) {
 				let address = data.substr(0, 20) + '…';
-				return '<a href="../../transaction/'+ data +'">'+ address +'</a>';
+				return '<a href="transaction/'+ data +'">'+ address +'</a>';
 			}
 		},
 		{
 			'targets': [3, 5],
 			render: function (data, type, row) {
+				if (data == 'N/A')
+					return '<span>'+ data +'</span>';
 				let address = data.substr(0, 20) + '…';
-				return '<a href="../../address/'+ data +'">'+ address +'</a>';
+				return '<a href="address/'+ data +'">'+ address +'</a>';
 			}
 		}
 	]

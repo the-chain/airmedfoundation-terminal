@@ -30,7 +30,7 @@
                                     <td><%= transaction.id %></td>
                                     <td><%= transaction.block - 1 %></td>
                                     <td><%= new Date(parseInt(transaction.timestamp)).toUTCString() %></td>
-                                    <% if(transaction.imputsArgs.length > 0)  { %>
+                                    <% if(transaction.imputsArgs.length > 0 && transaction.imputsArgs[0] == 'sendHash')  { %>
                                         <td><%=transaction.imputsArgs[1] %></td>
                                         <td><i class="fas fa-arrow-right"></i></td>
                                         <td><%=transaction.imputsArgs[2] %></td>
