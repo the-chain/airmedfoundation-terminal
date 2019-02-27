@@ -212,8 +212,8 @@ async function renderData(data) {
 		list = $('#transaction-ul');
 		data.transactions.forEach(transaction => {
 			animateRotate($('#tx-tag'), 360);
-			if (transaction.args.length > 0 && transaction.args[0] == 'sendHash')
-				fromTo = '<p class="explorer-p">From <a href="explorer/address/' + transaction.args[1] + '">' + transaction.args[1].substr(0, 22) + '… </a> To <a href="explorer/address/' + transaction.args[2] + '">' + transaction.args[2].substr(0, 22) + '…</a></p>' + '<p class="explorer-p">Message <span>' + transaction.args[3].substr(0, 22) + '…</span></p>';
+			if (transaction.imputsArgs.length > 0 && transaction.imputsArgs[0] == 'sendHash')
+				fromTo = '<p class="explorer-p">From <a href="explorer/address/' + transaction.imputsArgs[1] + '">' + transaction.imputsArgs[1].substr(0, 22) + '… </a> To <a href="explorer/address/' + transaction.imputsArgs[2] + '">' + transaction.imputsArgs[2].substr(0, 22) + '…</a></p>' + '<p class="explorer-p">Message <span>' + transaction.imputsArgs[3].substr(0, 22) + '…</span></p>';
 			else
 				fromTo = '<p class="explorer-p">From <span class="font-weight-bold">N/A</span> To <span class="font-weight-bold">N/A</span></p><p class="explorer-p">Message <span class="font-weight-bold">N/A</span></p>'
 			newTransaction = $('<li class="list-group-item align-items-center"><div class="row h-100"><div class="col-2 my-auto text-center rounded-circle block"><p class="explorer-p">Tx</p></div><div class="col-10 my-auto"><p class="explorer-p">TX# <a href="/explorer/transaction/' + (transaction.id) + '">' + (transaction.id.substr(0, 28)) + '…</a></p>' + fromTo + '</div></div></li>');
