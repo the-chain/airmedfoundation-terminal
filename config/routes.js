@@ -41,6 +41,11 @@ module.exports.routes = {
   'GET    /explorer/address/:id':                   { action: 'explorer/address-transactions' },
   'POST   /explorer/search':                        { action: 'explorer/search' },
 
+  // Secure Rec
+  'GET    /services/secure-rec':                    { action: 'services/secure-rec/home/index' },
+  'GET    /services/secure-rec/login':              { action: 'services/secure-rec/entrance/login' },
+  'GET    /services/secure-rec/signin':             { action: 'services/secure-rec/entrance/signin' },
+
   
   // Block model
   'GET    /block/:hash':                            { action: 'block/get' },
