@@ -5,33 +5,34 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/upload"><i class="fas fa-upload" aria-hidden="true"></i> Upload</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/download"><i class="fas fa-download" aria-hidden="true"></i> Download</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/explorer"><i class="fas fa-cubes" aria-hidden="true"></i> Explorer</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/tutorial"><i class="fa fa-book" aria-hidden="true"></i> Tutorial</a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-wrench" aria-hidden="true"></i> Tools
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#"><i class="fa fa-user icon-color" aria-hidden="true"></i> Identities</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/identity"><i class="fa fa-plus icon-color" aria-hidden="true"></i> New</a></li>
+                                <li><a class="dropdown-item" href="/recovery"><i class="fa fa-key icon-color" aria-hidden="true"></i> Recovery</a></li>
+                                <li><a class="dropdown-item" href="/files"><i class="fas fa-file icon-color" aria-hidden="true"></i> Files</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="dropdown-item" href="/upload"><i class="fas fa-upload icon-color" aria-hidden="true"></i> Upload File</a></li>
+                        <li><a class="dropdown-item" href="/download"><i class="fas fa-download icon-color" aria-hidden="true"></i> Download File</a></li>
+                        <li><a class="dropdown-item" href="/explorer"><i class="fas fa-cubes icon-color" aria-hidden="true"></i> Explorer</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-user" aria-hidden="true"></i> Identity
+                        <i class="fas fa-list" aria-hidden="true"></i> Services
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/identity"><i class="fa fa-plus" aria-hidden="true"></i> New</a>
-                        <a class="dropdown-item" href="/recovery"><i class="fa fa-key" aria-hidden="true"></i> Recovery</a>
-                        <a class="dropdown-item" href="/files"><i class="fas fa-file" aria-hidden="true"></i> Files</a>
-                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-briefcase icon-color" aria-hidden="true"></i> Secure Rec</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://github.com/the-chain/airmedfoundation-terminal" target="_blank"><i class="fab fa-github" aria-hidden="true"></i> Github</a>
+                    <a class="nav-link" href="/tutorial"><i class="fa fa-book" aria-hidden="true"></i> Tutorial</a>
                 </li>
             </ul>
         </div>
