@@ -51,6 +51,9 @@ module.exports = {
     },
     last: {
       type: 'bool'
+    },
+    status: {
+      type: 'string'
     }
   },
 
@@ -69,8 +72,14 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // If one of required parameters is missing
-    if( inputs.last === undefined ||inputs.id === undefined || inputs.number === undefined || inputs.timestamp === undefined || inputs.channel === undefined || inputs.type === undefined || inputs.creator === undefined || inputs.chaincodeName === undefined || inputs.chaincodeVersion === undefined || inputs.imputsArgs === undefined || inputs.peerEndorsment === undefined || inputs.block === undefined) 
+    if( inputs.status === undefined || inputs.last === undefined || inputs.id === undefined || inputs.number === undefined || inputs.timestamp === undefined || inputs.channel === undefined || inputs.type === undefined || inputs.creator === undefined || inputs.chaincodeName === undefined || inputs.chaincodeVersion === undefined || inputs.imputsArgs === undefined || inputs.peerEndorsment === undefined || inputs.block === undefined) 
       throw 'invalid';
+
+
+    /****************************************/
+    /**  DONT FORGET TO SAVE inputs.status **/
+    /****************************************/
+    console.log(inputs.status);
 
     // Create the new transaction
     let newTransaction = await Transaction.create(Object.assign({

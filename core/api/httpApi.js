@@ -45,7 +45,8 @@ module.exports = {
                 peerEndorsment: transaction.peerEndorsment,
                 block: transaction.block,
                 number: transaction.number,
-                last: transaction.last
+                last: transaction.last,
+                status: transaction.status
             },
             json: true
         };
