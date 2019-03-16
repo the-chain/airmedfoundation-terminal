@@ -3,6 +3,7 @@ var Channel = require('fabric-client').Channel;
 var client = Client.loadFromConfig("./fabric-api/config/configfile.yaml");
 var httpClient = require('./api/httpApi');
 var ledgerQuery = require('../fabric-api/queryLedger');
+var status = require('../fabric-api/tools/transactionStatus');
 
 module.exports = {
     async startListener(channelName, mspId, peerNumber){
@@ -32,6 +33,11 @@ module.exports = {
         var N = block.data.data.length;
         for ( j = 0; j < N; j++ ){
             let Transaction = {};
+            try{
+                Transaction.status = await status.getTransactionStatusString(block.metadata.metadata[2][j]);
+            }catch(err){
+                Transaction.status = await status.getTransactionStatusString(254);
+            }
             Transaction.block = blockInfo.number;
             Transaction.number = j;
             Transaction.timestamp = Date.parse(block.data.data[j].payload.header.channel_header.timestamp);
@@ -83,27 +89,23 @@ module.exports = {
                 id: Transaction.id,
                 keys: {}
             }
-            try{
-                const arg = block.data.data[j].payload.data.actions[0].payload.chaincode_proposal_payload.input.chaincode_spec.input.args[0].toString('utf8');
-                if ( arg != 'upgrade' ){
-                    key.keys = block.data.data[j].payload.data.actions[0].payload.action.proposal_response_payload.extension.results.ns_rwset[1].rwset.reads[0];
-                }
-            }catch(err){
-                key.keys = {};
-            }
             // Create from chaincode
             await httpClient.createKeyInChaincode(key);
-            var tempKey;
+            var a,M,tempKey = [];
             try {
-                tempKey = block.data.data[j].payload.data.actions[0].payload.action.proposal_response_payload.extension.results.ns_rwset[0].rwset.reads;
+                M = block.data.data[j].payload.data.actions[0].payload.action.proposal_response_payload.extension.results.ns_rwset.length;
+                for ( a = 0; a < M; a++ )
+                    tempKey = tempKey.concat(block.data.data[j].payload.data.actions[0].payload.action.proposal_response_payload.extension.results.ns_rwset[a].rwset.reads);
             }catch(err){tempKey = null}
             // Create key in
             if ( tempKey != null)
                 for ( t = 0; t < tempKey.length; t++ )
                     await httpClient.createKeyIn({id: Transaction.id, keys: tempKey[t]});
-            
+            tempKey = [];
             try{
-                tempKey = block.data.data[j].payload.data.actions[0].payload.action.proposal_response_payload.extension.results.ns_rwset[0].rwset.writes;
+                M = block.data.data[j].payload.data.actions[0].payload.action.proposal_response_payload.extension.results.ns_rwset.length;
+                for ( a = 0; a < M; a++ )
+                    tempKey = tempKey.concat(block.data.data[j].payload.data.actions[0].payload.action.proposal_response_payload.extension.results.ns_rwset[a].rwset.writes);
             }catch(err){tempKey = null}
             // Create keys out
             if ( tempKey != null)
