@@ -621,3 +621,9 @@ function recoveryKey() {
 	});
 }
 /* END RECOVERY */
+
+
+$(document.body).on('click', '.hidden-element', function () {
+	$('.hidden-element').removeClass('hidden-element-active');
+	$(this).addClass('hidden-element-active');
+});

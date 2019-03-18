@@ -17,7 +17,14 @@ module.exports = {
     
     website: {
       type: 'string',
-      maxLength: 120
+      maxLength: 120,
+      defaultsTo: 'none'
+    },
+
+    type: {
+      type: 'string',
+      isIn: ['clinic', 'laboratory', 'pharmacy'],
+      defaultsTo: 'clinic'
     },
 
     // reference to user

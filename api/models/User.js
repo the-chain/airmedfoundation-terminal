@@ -20,19 +20,34 @@ module.exports = {
     password: {
       type: 'string',
       required: true,
-      protect: true
+      protect: true,
+      minLength: 8
+    },
+
+    publicKey: {
+      type: 'string',
+      required: true,
+      minLength: 300,
+      maxLength: 300
+    },
+
+    privateKey: {
+      type: 'string',
+      required: true,
+      minLength: 920,
+      maxLength: 924
     },
 
     phone: {
       type: 'string',
       required: true,
-      maxLength: 120
+      maxLength: 100
     },
 
     country: {
       type: 'string',
       required: true,
-      maxLength: 200
+      maxLength: 100
     },
 
     state: {
@@ -63,10 +78,12 @@ module.exports = {
 
     emailProofToken: {
       type: 'string',
+      required: true
     },
 
     emailProofTokenExpiresAt: {
-      type: 'number'
+      type: 'number',
+      required: true
     },
 
     emailStatus: {

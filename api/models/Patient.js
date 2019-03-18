@@ -21,12 +21,6 @@ module.exports = {
       maxLength: 120
     },
 
-    profilePicture: {
-      type: 'string',
-      defaultsTo: 'default-avatar.png',
-      maxLength: 120
-    },
-
     bloodType: {
       type: 'string',
       required: true,

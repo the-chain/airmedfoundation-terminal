@@ -10,6 +10,11 @@
 
 module.exports.custom = {
 
-  baseUrl: 'http://localhost:1337',
+  baseUrl: 'http://localhost',
+
+  passwordResetTokenTTL: 24*60*60*1000,
+  emailProofTokenTTL:    24*60*60*1000,
+  rememberMeCookieMaxAge: 30*24*60*60*1000,
+  rememberMeCookieMinAge: 24*60*60*1000
 
 };

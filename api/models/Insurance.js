@@ -20,12 +20,6 @@ module.exports = {
       maxLength: 120
     },
 
-    type: {
-      type: 'string',
-      isIn: ['clinic', 'laboratory', 'pharmacy'],
-      defaultsTo: 'clinic'
-    },
-
     // reference to user
     user: {
       model: 'user'
