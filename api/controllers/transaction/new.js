@@ -93,6 +93,7 @@ module.exports = {
       imputsArgs: inputs.imputsArgs,
       peerEndorsment: inputs.peerEndorsment,
       block: inputs.block,
+      status: inputs.status,
       number: inputs.number
     }))
     .intercept('E_UNIQUE', 'conflict')
