@@ -28,7 +28,8 @@ module.exports = {
     }, 
     
     socialSecurityNumber: {
-      type: 'number',
+      type: 'string',
+      minLength: 11,
       required: true
     }, 
     

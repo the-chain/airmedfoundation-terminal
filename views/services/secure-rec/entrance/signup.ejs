@@ -18,6 +18,13 @@
                                     <label class="service-form-label mb-2">Password</label>
                                     <input id="password" class="form-control service-form-input" type="password" name="password" placeholder="Password" passwordCheck="passwordCheck">
                                 </div>
+                                <div id="password-conditions" data-toggle="collapse" aria-expanded="false" class="collapse container mb-4">
+                                    <p class="mt-2"><i id="uppCond" class="fas fa-check-circle"></i> At least one uppercase character</p>                         
+                                    <p><i id="lowCond" class="fas fa-check-circle"></i> At least one lowercase character</p>                     
+                                    <p><i id="numCond" class="fas fa-check-circle"></i> At least one number </p>
+                                    <p><i id="speCond" class="fas fa-check-circle"></i> At least one special character (!.@#$/%^&*?)</p>        
+                                    <p><i id="lenCond" class="fas fa-check-circle"></i> At least 8 characters</p>          
+                                </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">Repeat password</label>
                                     <input id="passwordRepeat" class="form-control service-form-input" type="password" name="passwordRepeat" placeholder="Password confirmation">
@@ -79,11 +86,11 @@
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">Phone</label>
-                                    <input class="form-control bfh-phone service-form-input" type="text" placeholder="phone" name="phone" autocomplete="off" data-country="countries_phone">
+                                    <input id="phone" class="form-control bfh-phone service-form-input" type="text" placeholder="phone" name="phone" autocomplete="off" data-country="countries_phone">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label class="service-form-label mb-2">Address</label>
-                                    <textarea id="address" name="address" cols="40" rows="5" class="form-control service-form-textarea" autocomplete="none"></textarea>
+                                    <textarea id="address" name="address" cols="40" rows="5" class="form-control service-form-textarea" autocomplete="none" placeholder="ie. Headquarters 1120 N Street Sacramento 916-654-5266"></textarea>
                                 </div>
                             </div>
                         </section>
@@ -165,7 +172,7 @@
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">Social Security Number</label>
-                                    <input id="socialSecurityNumber" class="form-control service-form-input" type="text" name="socialSecurityNumber" placeholder="Social Security Number" autocomplete="none">
+                                    <input id="socialSecurityNumber" class="form-control service-form-input" type="text" name="socialSecurityNumber" placeholder="ie. 123-45-6789" autocomplete="none">
                                 </div>
                             </div>
                         </section>
@@ -187,7 +194,7 @@
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label class="service-form-label mb-2">Allergies</label>
-                                    <textarea id="allergies" name="allergies" cols="40" rows="5" class="form-control service-form-textarea" autocomplete="none"></textarea>
+                                    <textarea id="allergies" name="allergies" cols="40" rows="5" class="form-control service-form-textarea" autocomplete="none" placeholder="Separates allergies by coma. ie. fruit, peanut, pollen"></textarea>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label class="service-form-label mb-2">Organ donor</label>

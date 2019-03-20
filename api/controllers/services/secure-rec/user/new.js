@@ -69,11 +69,24 @@ module.exports = {
     }, 
     
     socialSecurityNumber: {
-      type: 'number'
+      type: 'string',
+      minLength: 120
+    },
+
+    bloodType: {
+      type: 'string',
+      maxLength: 20
+    },
+    
+    allergies: {
+      type: 'json'
     }, 
+    
+    donor: {
+      type: 'boolean'
+    },
 
   },
-
 
   exits: {
     invalid: {
