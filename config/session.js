@@ -9,13 +9,17 @@
  * https://sailsjs.com/config/session
  */
 
-module.exports.session = {
+var config = require('../appconfig.json');
 
-  host: "127.0.0.1",
-  port: 6379,
-  db: 15,
-  secret: "079666aa3233f80748ecf0cf1a49cf58",
-  name: "sails.sid",
+
+module.exports.session = {
+  //url: config.session.redis.url,
+  host: config.session.redis.host,
+  port: config.session.redis.port,
+  //pass: config.session.redis.pass,
+  db: config.session.redis.db,
+  secret: config.session.secret,
+  name: config.session.name,
   cookie: {
     maxAge: 24 * 60 * 60 * 1000,
     secure: true

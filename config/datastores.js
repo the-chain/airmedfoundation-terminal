@@ -12,16 +12,10 @@
  * For more information on configuring datastores, check out:
  * https://sailsjs.com/config/datastores
  */
+var config = require('../appconfig.json');
 
 module.exports.datastores = {
 
-  default: {
-    adapter: 'sails-postgresql',
-    user: 'airmed',
-    password: 'LYbAWCErGttRsP9y',
-    port: '5432',
-    host: 'localhost',
-    database: 'airmed'
-  },
+  default: config.database
 
 };
