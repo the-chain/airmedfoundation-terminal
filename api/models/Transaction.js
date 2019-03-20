@@ -32,6 +32,10 @@ module.exports = {
       required: true
     },
 
+    status: {
+      type: 'string'
+    },
+
     type: {
       type: 'string',
       required: true
