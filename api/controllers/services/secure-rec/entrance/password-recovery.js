@@ -1,13 +1,13 @@
 module.exports = {
 
-  friendlyName: 'Signin',
+  friendlyName: 'Password recovery',
 
-  description: 'Signin secure rec.',
+  description: 'Password recovery secure rec.',
 
   exits: {
     success: {
       responseType: 'view',
-      viewTemplatePath: 'services/secure-rec/entrance/signin'
+      viewTemplatePath: 'services/secure-rec/entrance/password-recovery'
     }
   },
 

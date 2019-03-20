@@ -1,0 +1,220 @@
+<% include ../layouts/navigation-bar %>
+
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <div class="row">
+                <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                    <p class="text-center"><small>Step <span id="step">1</span> of 3</small></p>
+                    <h5 class="mb-5 text-center">Join Secure Rec</h5>
+                    <form id="form-secure-rec-primary">
+                        <section id="user-primary-info">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Email address</label>
+                                    <input id="email" class="form-control service-form-input" type="email" name="email" placeholder="Email" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Password</label>
+                                    <input id="password" class="form-control service-form-input" type="password" name="password" placeholder="Password" passwordCheck="passwordCheck">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Repeat password</label>
+                                    <input id="passwordRepeat" class="form-control service-form-input" type="password" name="passwordRepeat" placeholder="Password confirmation">
+                                </div>
+                                <div class="form-group col-12"> 
+                                    <label class="service-form-label mb-3">Enrolling as</label>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="hidden-element-container">
+                                                <label class="hidden-element">
+                                                    <input type="radio" name="userType" value="provider">
+                                                    <i class="fas fa-clinic-medical hidden-element-icon" aria-hidden="true"></i>
+                                                </label>
+                                                <p class="service-form-label">Provider</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="hidden-element-container">
+                                                <label class="hidden-element">
+                                                    <input type="radio" name="userType" value="insurance">
+                                                    <i class="fas fa-ambulance hidden-element-icon" aria-hidden="true"></i>
+                                                </label>
+                                                <p class="service-form-label">Insurance Company</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="hidden-element-container">
+                                                <label class="hidden-element">
+                                                    <input type="radio" name="userType" value="doctor">
+                                                    <i class="fas fa-user-md hidden-element-icon" aria-hidden="true"></i>
+                                                </label>
+                                                <p class="service-form-label">Doctor</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="hidden-element-container">
+                                                <label class="hidden-element">
+                                                    <input type="radio" name="userType" value="patient">
+                                                    <i class="fas fa-user hidden-element-icon" aria-hidden="true"></i>
+                                                </label>
+                                                <p class="service-form-label">Patient</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                    <form id="form-secure-rec-secundary" class="d-none">
+                        <section id="user-secundary-info">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Country</label>
+                                    <select id="countries_phone" class="form-control bfh-countries service-form-input"  name="country" data-country="US"></select>
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">State</label>
+                                    <input id="state" class="form-control service-form-input" type="text" name="state" placeholder="State" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Phone</label>
+                                    <input class="form-control bfh-phone service-form-input" type="text" placeholder="phone" name="phone" autocomplete="off" data-country="countries_phone">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="service-form-label mb-2">Address</label>
+                                    <textarea id="address" name="address" cols="40" rows="5" class="form-control service-form-textarea" autocomplete="none"></textarea>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                    <form id="form-secure-rec-provider" class="d-none">
+                        <section id="provider-info">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Legal name</label>
+                                    <input id="legalNameProvider" class="form-control service-form-input" type="text" name="legalName" placeholder="Legal Name" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Website</label>
+                                    <input id="websiteProvider" class="form-control service-form-input" type="text" name="website" placeholder="Website link" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12"> 
+                                    <label class="service-form-label mb-3">Enrolling as</label>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="hidden-element-container">
+                                                <label class="hidden-element">
+                                                    <input type="radio" name="providerType" value="clinic">
+                                                    <i class="far fa-hospital hidden-element-icon" aria-hidden="true"></i>
+                                                </label>
+                                                <p class="service-form-label">Clinic</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="hidden-element-container">
+                                                <label class="hidden-element">
+                                                    <input type="radio" name="providerType" value="laboratory">
+                                                    <i class="fas fa-microscope hidden-element-icon" aria-hidden="true"></i>
+                                                </label>
+                                                <p class="service-form-label">Laboratory</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="hidden-element-container">
+                                                <label class="hidden-element">
+                                                    <input type="radio" name="providerType" value="pharmacy">
+                                                    <i class="fas fa-capsules hidden-element-icon" aria-hidden="true"></i>
+                                                </label>
+                                                <p class="service-form-label">Pharmacy</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                    <form id="form-secure-rec-insurance" class="d-none">
+                        <section id="insurance-info">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Legal name</label>
+                                    <input id="legalNameInsurance" class="form-control service-form-input" type="text" name="legalName" placeholder="Legal Name" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Website</label>
+                                    <input id="websiteInsurance" class="form-control service-form-input" type="text" name="website" placeholder="Website link" autocomplete="none">
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                    <form id="form-secure-rec-doctor" class="d-none">
+                        <section id="doctor-info">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">First name</label>
+                                    <input id="firstNameDoctor" class="form-control service-form-input" type="text" name="firstName" placeholder="First name" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Last name</label>
+                                    <input id="lastNameDoctor" class="form-control service-form-input" type="text" name="lastName" placeholder="Last name" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Specialty</label>
+                                    <input id="specialty" class="form-control service-form-input" type="text" name="specialty" placeholder="Specialty" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Social Security Number</label>
+                                    <input id="socialSecurityNumber" class="form-control service-form-input" type="text" name="socialSecurityNumber" placeholder="Social Security Number" autocomplete="none">
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                    <form id="form-secure-rec-patient" class="d-none">
+                        <section id="patient-info">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">First name</label>
+                                    <input id="firstNamePatient" class="form-control service-form-input" type="text" name="firstName" placeholder="First name" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Last name</label>
+                                    <input id="lastNamePatient" class="form-control service-form-input" type="text" name="lastName" placeholder="Last name" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Blood type</label>
+                                    <input id="bloodType" class="form-control service-form-input" type="text" name="bloodType" placeholder="Blood type" autocomplete="none">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="service-form-label mb-2">Allergies</label>
+                                    <textarea id="allergies" name="allergies" cols="40" rows="5" class="form-control service-form-textarea" autocomplete="none"></textarea>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="service-form-label mb-2">Organ donor</label>
+                                    <div class="custom-control custom-radio">
+                                        <input id="customRadio1" type="radio" name="organDonor" class="custom-control-input" value="true">
+                                        <label class="custom-control-label service-form-label mb-2 pt-1 font-weight-normal" for="customRadio1">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="customRadio2" type="radio" name="organDonor" class="custom-control-input" value="false">
+                                        <label class="custom-control-label service-form-label mb-2 pt-1 font-weight-normal" for="customRadio2">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                    <div class="form-row mt-4 mb-5">
+                        <div class="col-4">
+                            <button id="previus" type="button" class="btn btn-primary btn-block d-none">Previus</button>
+                        </div>
+                        <div class="col-4 offset-4">
+                            <button id="next" type="button" class="btn btn-primary btn-block">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<% include ../../../layouts/footer %>

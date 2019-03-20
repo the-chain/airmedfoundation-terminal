@@ -44,7 +44,8 @@ module.exports.routes = {
   // Secure Rec
   'GET    /services/secure-rec':                    { action: 'services/secure-rec/home/index' },
   'GET    /services/secure-rec/login':              { action: 'services/secure-rec/entrance/login' },
-  'GET    /services/secure-rec/signin':             { action: 'services/secure-rec/entrance/signin' },
+  'GET    /services/secure-rec/signup':             { action: 'services/secure-rec/entrance/signup' },
+  'GET    /services/secure-rec/password-recovery':   { action: 'services/secure-rec/entrance/password-recovery' },
 
   
   // Block model
