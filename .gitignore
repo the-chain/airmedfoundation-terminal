@@ -130,3 +130,4 @@ lib-cov
 *.out
 *.pid
 
+appconfig.json
