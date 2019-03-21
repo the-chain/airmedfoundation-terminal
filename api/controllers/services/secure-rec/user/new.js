@@ -70,7 +70,8 @@ module.exports = {
     
     socialSecurityNumber: {
       type: 'string',
-      minLength: 120
+      minLength: 11,
+      maxLength: 11
     },
 
     bloodType: {
@@ -126,11 +127,11 @@ module.exports = {
       emailProofToken: hashToVerify,
       emailProofTokenExpiresAt: Date.now() + sails.config.custom.emailProofTokenTTL
     });
-  
+
     switch (inputs.type) {
         case 'provider':
           // If one of required parameters is missing
-          if(inputs.name === undefined || inputs.providerType)
+          if(inputs.name === undefined || inputs.providerType === undefined)
             throw 'invalid';
           
           newUserRecord = await User.create(newUserObject)
@@ -142,7 +143,7 @@ module.exports = {
               user: newUserRecord.id,
               name: inputs.name,
               website: website,
-              type: providerType
+              type: inputs.providerType
           }))
           .intercept({name: 'UsageError'}, 'invalid')
           .fetch();
@@ -192,13 +193,13 @@ module.exports = {
           // If one of required parameters is missing
           if(inputs.name === undefined || inputs.lastName === undefined || inputs.bloodType === undefined || inputs.allergies === undefined || inputs.donor === undefined)
             throw 'invalid';
-
+          
           newUserRecord = await User.create(newUserObject)
           .intercept('E_UNIQUE', 'emailAlreadyInUse')
           .intercept({name: 'UsageError'}, 'invalid')
           .fetch();
   
-          newRecord = await Doctor.create(Object.assign({
+          newRecord = await Patient.create(Object.assign({
             user: newUserRecord.id,
             name: inputs.name,
             lastName: inputs.lastName,
@@ -214,7 +215,7 @@ module.exports = {
           throw 'invalid';
         break;
     }
-    
+
     return exits.success(newRecord);
 
   }

@@ -73,7 +73,8 @@ module.exports = {
     },
 
     passwordResetTokenExpiresAt: {
-      type: 'number'
+      type: 'ref',
+      columnType: 'bigint'
     },
 
     emailProofToken: {
@@ -82,8 +83,8 @@ module.exports = {
     },
 
     emailProofTokenExpiresAt: {
-      type: 'number',
-      required: true
+      type: 'ref',
+      columnType: 'bigint'
     },
 
     emailStatus: {
@@ -99,7 +100,8 @@ module.exports = {
     },
 
     lastSeenAt: {
-      type: 'number'
+      type: 'ref',
+      columnType: 'bigint'
     },
 
     // reference to provider

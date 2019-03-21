@@ -29,22 +29,6 @@ jQuery.validator.addMethod('passwordCheck',
 	'error'
 );
 
-// jQuery.validator.addMethod('ssnCheck',
-// 	function(value, element, param) {
-// 		var patt = new RegExp("\d{3}[\-]\d{2}[\-]\d{4}");
-// 		var x = document.getElementById("ssn");
-// 		var res = patt.test(x.value);
-// 		if(!res){
-// 		x.value = x.value
-// 			.match(/\d*/g).join('')
-// 			.match(/(\d{0,3})(\d{0,2})(\d{0,4})/).slice(1).join('-')
-// 			.replace(/-*$/g, '');
-// 		}
-// 		return false;
-// 	}, 
-// 	'error'
-// );
-		
 var secureRecPrimaryInfo = $('#form-secure-rec-primary').validate({
 	rules: {
 		email: {
@@ -115,10 +99,10 @@ var secureRecProviderInfo = $('#form-secure-rec-provider').validate({
 	rules: {
 		legalName: {
 			required: true,
-			maxLength: 120
+			maxlength: 100
 		},
 		website: {
-            maxlength: 120
+            maxlength: 100
 		},
 		providerType: {
 			required: true
@@ -145,7 +129,7 @@ var secureRecInsuranceInfo = $('#form-secure-rec-insurance').validate({
 	rules: {
 		legalName: {
 			required: true,
-			maxLength: 120
+			maxlength: 120
 		},
 		website: {
             maxlength: 120
@@ -166,19 +150,19 @@ var secureRecDoctorInfo = $('#form-secure-rec-doctor').validate({
 	rules: {
 		firstName: {
 			required: true,
-			maxLength: 120
+			maxlength: 120
 		},
 		lastName: {
 			required: true,
-			maxLength: 120
+			maxlength: 120
 		},
 		specialty: {
 			required: true,
-			maxLength: 120
+			maxlength: 120
 		},
-		socialSecurityNumber: { //Check
+		socialSecurityNumber: {
 			required: true,
-			maxLength: 120
+			maxlength: 11
 		}
 	},
 	errorPlacement: function(error,element) {
@@ -196,19 +180,19 @@ var secureRecPatientInfo = $('#form-secure-rec-patient').validate({
 	rules: {
 		firstName: {
 			required: true,
-			maxLength: 120
+			maxlength: 120
 		},
 		lastName: {
 			required: true,
-			maxLength: 120
+			maxlength: 120
 		},
 		bloodType: {
 			required: true,
-			maxLength: 20
+			maxlength: 20
 		},
 		allergies: {
 			required: true,
-			maxLength: 350
+			maxlength: 350
 		},
 		organDonor: {
 			required: true
@@ -231,6 +215,14 @@ var secureRecPatientInfo = $('#form-secure-rec-patient').validate({
 	}
 });
 /* END DECLARATION OF FORMS */
+
+$(document.body).on('click', '.hidden-element', function () {
+	$('.hidden-element').each(function(i, obj) {
+		if (!$(this).find('input').is(':checked'))
+			$(this).removeClass('hidden-element-active');
+	});
+	$(this).addClass('hidden-element-active');
+});
 
 $(document.body).on('focus', '#password', function () {
 	$('#password-conditions').collapse('show');
@@ -294,25 +286,29 @@ $(document.body).on('click', '#next', function () {
 				'country': $('#countries_phone').val(),
 				'state': $('#state').val(),
 				'phone': $('#phone').val(),
-				'address': $('#address').val(),
+				'address': $('#address').val()
 			};
-	
+			
 			switch (userType) {
 				case 'provider':
 					if ($('#form-secure-rec-provider').valid()) {
 						sendInfo.name = $('#legalNameProvider').val();
 						sendInfo.website = $('#websiteProvider').val();
 						sendInfo.providerType = $('input[name=providerType]:checked', '#form-secure-rec-provider').val();
-					} else
+					} else {
 						secureRecProviderInfo.focusInvalid();
+						return;
+					}
 					break;
 			
 				case 'insurance':
 					if ($('#form-secure-rec-insurance').valid()) {
 						sendInfo.name = $('#legalNameInsurance').val();
 						sendInfo.website = $('#websiteInsurance').val();
-					} else
+					} else {
 						secureRecInsuranceInfo.focusInvalid();
+						return;
+					}
 					break;
 
 				case 'doctor':
@@ -321,8 +317,10 @@ $(document.body).on('click', '#next', function () {
 						sendInfo.lastName = $('#lastNameDoctor').val();
 						sendInfo.specialty = $('#specialty').val();
 						sendInfo.socialSecurityNumber = $('#socialSecurityNumber').val();
-					} else
+					} else {
 						secureRecDoctorInfo.focusInvalid();
+						return;
+					}	
 					break;
 				
 				case 'patient':
@@ -331,13 +329,25 @@ $(document.body).on('click', '#next', function () {
 						sendInfo.lastName = $('#lastNamePatient').val();
 						sendInfo.bloodType = $('#bloodType').val();
 						sendInfo.allergies = $('#allergies').val().split(',');
-						sendInfo.organDonor = ($('input[name=organDonor]:checked', '#form-secure-rec-patient').val() === 'true');
-					} else
+						sendInfo.donor = ($('input[name=organDonor]:checked', '#form-secure-rec-patient').val() === 'true');
+					} else {
 						secureRecPatientInfo.focusInvalid();
+						return;
+					}
 					break;
 			}
-
-			// Send Form
+			$.ajax({
+				type: 'POST',
+				url: '/services/secure-rec/user/new',
+				data: sendInfo,
+				dataType: 'json',
+				error: function (xhr, ajaxOptions, thrownError) {
+					
+				},
+				success: function(result) {
+					console.log(result);
+				}
+			});
 			break;
 	}
 });

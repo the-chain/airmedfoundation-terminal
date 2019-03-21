@@ -7,15 +7,16 @@
                 <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
                     <p class="text-center"><small>Step <span id="step">1</span> of 3</small></p>
                     <h5 class="mb-5 text-center">Join Secure Rec</h5>
+                    <p class="tag-error mb-4"><small>* Required field</small></p>
                     <form id="form-secure-rec-primary">
                         <section id="user-primary-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">Email address</label>
+                                    <label class="service-form-label mb-2">* Email address</label>
                                     <input id="email" class="form-control service-form-input" type="email" name="email" placeholder="Email" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">Password</label>
+                                    <label class="service-form-label mb-2">* Password</label>
                                     <input id="password" class="form-control service-form-input" type="password" name="password" placeholder="Password" passwordCheck="passwordCheck">
                                 </div>
                                 <div id="password-conditions" data-toggle="collapse" aria-expanded="false" class="collapse container mb-4">
@@ -26,11 +27,11 @@
                                     <p><i id="lenCond" class="fas fa-check-circle"></i> At least 8 characters</p>          
                                 </div>
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">Repeat password</label>
+                                    <label class="service-form-label mb-2">* Repeat password</label>
                                     <input id="passwordRepeat" class="form-control service-form-input" type="password" name="passwordRepeat" placeholder="Password confirmation">
                                 </div>
                                 <div class="form-group col-12"> 
-                                    <label class="service-form-label mb-3">Enrolling as</label>
+                                    <label class="service-form-label mb-3">* Enrolling as</label>
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="hidden-element-container">
@@ -77,19 +78,19 @@
                         <section id="user-secundary-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">Country</label>
+                                    <label class="service-form-label mb-2">* Country</label>
                                     <select id="countries_phone" class="form-control bfh-countries service-form-input"  name="country" data-country="US"></select>
                                 </div>
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">State</label>
+                                    <label class="service-form-label mb-2">* State</label>
                                     <input id="state" class="form-control service-form-input" type="text" name="state" placeholder="State" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">Phone</label>
+                                    <label class="service-form-label mb-2">* Phone</label>
                                     <input id="phone" class="form-control bfh-phone service-form-input" type="text" placeholder="phone" name="phone" autocomplete="off" data-country="countries_phone">
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="service-form-label mb-2">Address</label>
+                                    <label class="service-form-label mb-2">* Address</label>
                                     <textarea id="address" name="address" cols="40" rows="5" class="form-control service-form-textarea" autocomplete="none" placeholder="ie. Headquarters 1120 N Street Sacramento 916-654-5266"></textarea>
                                 </div>
                             </div>
@@ -99,15 +100,15 @@
                         <section id="provider-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">Legal name</label>
-                                    <input id="legalNameProvider" class="form-control service-form-input" type="text" name="legalName" placeholder="Legal Name" autocomplete="none">
+                                    <label class="service-form-label mb-2">* Legal name</label>
+                                    <input id="legalNameProvider" class="form-control service-form-input" type="text" name="legalNameProvider" placeholder="Legal Name" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">Website</label>
-                                    <input id="websiteProvider" class="form-control service-form-input" type="text" name="website" placeholder="Website link" autocomplete="none">
+                                    <input id="websiteProvider" class="form-control service-form-input" type="text" name="websiteProvider" placeholder="Website link" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12"> 
-                                    <label class="service-form-label mb-3">Enrolling as</label>
+                                    <label class="service-form-label mb-3">* Enrolling as</label>
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="hidden-element-container">
@@ -145,7 +146,7 @@
                         <section id="insurance-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">Legal name</label>
+                                    <label class="service-form-label mb-2">* Legal name</label>
                                     <input id="legalNameInsurance" class="form-control service-form-input" type="text" name="legalName" placeholder="Legal Name" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
@@ -159,20 +160,20 @@
                         <section id="doctor-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">First name</label>
+                                    <label class="service-form-label mb-2">* First name</label>
                                     <input id="firstNameDoctor" class="form-control service-form-input" type="text" name="firstName" placeholder="First name" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">Last name</label>
+                                    <label class="service-form-label mb-2">* Last name</label>
                                     <input id="lastNameDoctor" class="form-control service-form-input" type="text" name="lastName" placeholder="Last name" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">Specialty</label>
+                                    <label class="service-form-label mb-2">* Specialty</label>
                                     <input id="specialty" class="form-control service-form-input" type="text" name="specialty" placeholder="Specialty" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">Social Security Number</label>
-                                    <input id="socialSecurityNumber" class="form-control service-form-input" type="text" name="socialSecurityNumber" placeholder="ie. 123-45-6789" autocomplete="none">
+                                    <label class="service-form-label mb-2">* Social Security Number</label>
+                                    <input id="socialSecurityNumber" class="form-control service-form-input bfh-phone" type="text" name="socialSecurityNumber" placeholder="ie. 123-45-6789" autocomplete="none" data-format="ddd-dd-dddd">
                                 </div>
                             </div>
                         </section>
@@ -181,23 +182,23 @@
                         <section id="patient-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">First name</label>
+                                    <label class="service-form-label mb-2">* First name</label>
                                     <input id="firstNamePatient" class="form-control service-form-input" type="text" name="firstName" placeholder="First name" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">Last name</label>
+                                    <label class="service-form-label mb-2">* Last name</label>
                                     <input id="lastNamePatient" class="form-control service-form-input" type="text" name="lastName" placeholder="Last name" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">Blood type</label>
+                                    <label class="service-form-label mb-2">* Blood type</label>
                                     <input id="bloodType" class="form-control service-form-input" type="text" name="bloodType" placeholder="Blood type" autocomplete="none">
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="service-form-label mb-2">Allergies</label>
+                                    <label class="service-form-label mb-2">* Allergies</label>
                                     <textarea id="allergies" name="allergies" cols="40" rows="5" class="form-control service-form-textarea" autocomplete="none" placeholder="Separates allergies by coma. ie. fruit, peanut, pollen"></textarea>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="service-form-label mb-2">Organ donor</label>
+                                    <label class="service-form-label mb-2">* Organ donor</label>
                                     <div class="custom-control custom-radio">
                                         <input id="customRadio1" type="radio" name="organDonor" class="custom-control-input" value="true">
                                         <label class="custom-control-label service-form-label mb-2 pt-1 font-weight-normal" for="customRadio1">Yes</label>

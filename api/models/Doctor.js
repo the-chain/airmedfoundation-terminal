@@ -30,6 +30,7 @@ module.exports = {
     socialSecurityNumber: {
       type: 'string',
       minLength: 11,
+      maxLength: 11,
       required: true
     }, 
     
