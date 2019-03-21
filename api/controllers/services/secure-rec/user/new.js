@@ -216,7 +216,12 @@ module.exports = {
         break;
     }
 
-    return exits.success(newRecord);
+    return exits.success({
+        success: true, 
+        message: '',
+        publicKey: keys.publicKey, 
+        secretKey: keys.secretKey
+    });
 
   }
 

@@ -216,6 +216,15 @@ var secureRecPatientInfo = $('#form-secure-rec-patient').validate({
 });
 /* END DECLARATION OF FORMS */
 
+function clearSecureRecData() {
+	$('#form-secure-rec-primary').trigger('reset');
+	$('#form-secure-rec-secundary').trigger('reset');
+	$('#form-secure-rec-provider').trigger('reset');
+	$('#form-secure-rec-insurance').trigger('reset');
+	$('#form-secure-rec-doctor').trigger('reset');
+	$('#form-secure-rec-patient').trigger('reset');
+}
+
 $(document.body).on('click', '.hidden-element', function () {
 	$('.hidden-element').each(function(i, obj) {
 		if (!$(this).find('input').is(':checked'))
@@ -234,7 +243,7 @@ $(document.body).on('keyup', '#password', function(){
 	$('#numCond').removeClass('tag-check');
 	$('#lenCond').removeClass('tag-check');
 	$('#speCond').removeClass('tag-check');
-	$("#form-secure-rec-primary").validate().element(':input[name="password"]');
+	$('#form-secure-rec-primary').validate().element(':input[name="password"]');
 });
 
 $(document.body).on('click', '#next', function () {
@@ -295,6 +304,7 @@ $(document.body).on('click', '#next', function () {
 						sendInfo.name = $('#legalNameProvider').val();
 						sendInfo.website = $('#websiteProvider').val();
 						sendInfo.providerType = $('input[name=providerType]:checked', '#form-secure-rec-provider').val();
+						$('#form-secure-rec-provider').addClass('d-none');
 					} else {
 						secureRecProviderInfo.focusInvalid();
 						return;
@@ -305,6 +315,7 @@ $(document.body).on('click', '#next', function () {
 					if ($('#form-secure-rec-insurance').valid()) {
 						sendInfo.name = $('#legalNameInsurance').val();
 						sendInfo.website = $('#websiteInsurance').val();
+						$('#form-secure-rec-insurance').addClass('d-none');
 					} else {
 						secureRecInsuranceInfo.focusInvalid();
 						return;
@@ -317,6 +328,7 @@ $(document.body).on('click', '#next', function () {
 						sendInfo.lastName = $('#lastNameDoctor').val();
 						sendInfo.specialty = $('#specialty').val();
 						sendInfo.socialSecurityNumber = $('#socialSecurityNumber').val();
+						$('#form-secure-rec-doctor').addClass('d-none');
 					} else {
 						secureRecDoctorInfo.focusInvalid();
 						return;
@@ -330,22 +342,45 @@ $(document.body).on('click', '#next', function () {
 						sendInfo.bloodType = $('#bloodType').val();
 						sendInfo.allergies = $('#allergies').val().split(',');
 						sendInfo.donor = ($('input[name=organDonor]:checked', '#form-secure-rec-patient').val() === 'true');
+						$('#form-secure-rec-patient').addClass('d-none');
 					} else {
 						secureRecPatientInfo.focusInvalid();
 						return;
 					}
 					break;
 			}
+			
+			$('#wait-response').removeClass('d-none');
+			$('#signup-secure-rec').addClass('d-none');
+			
 			$.ajax({
 				type: 'POST',
 				url: '/services/secure-rec/user/new',
 				data: sendInfo,
 				dataType: 'json',
 				error: function (xhr, ajaxOptions, thrownError) {
-					
+					clearSecureRecData();
+					$('#step').text('1');
+					$('#signup-secure-rec').removeClass('d-none');
+					$('#form-secure-rec-primary').removeClass('d-none');
+					$('#wait-response').addClass('d-none');
+					$('#message-error-text').html(xhr.responseJSON.message);
+					$('#message-error').removeClass('d-none');
+					$('#message-error').show();
 				},
 				success: function(result) {
-					console.log(result);
+					if(result.success) {
+						clearSecureRecData();
+						$('#message-success-text').text(result.message);
+						$('#secure-rec-secret-btn').attr('data-copy', result.secretKey);
+						$('#secure-rec-secret-key').text(result.secretKey);
+						$('#secure-rec-public-btn').attr('data-copy', result.publicKey);
+						$('#secure-rec-public-key').text(result.publicKey);
+						$('#wait-response').addClass('d-none');
+						$('#signup-secure-rec-response').removeClass('d-none');
+						$('#message-success').removeClass('d-none');
+						$('#message-success').show();
+					}
 				}
 			});
 			break;
