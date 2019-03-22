@@ -11,6 +11,7 @@
 var config = require('../appconfig.json');
 
 module.exports.email = {
+    adminEmail: config.email.admin,
     service: config.email.service,
     auth: {
         user: config.email.auth.user,
