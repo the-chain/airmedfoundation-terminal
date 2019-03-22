@@ -92,17 +92,20 @@ module.exports = function Email(sails) {
      * @param  {Function} cb
      */
 
-    send: function (template, data, options, cb) {
-      data = data || {};
-      // Turn off layouts by default
-      if (typeof data.layout === 'undefined') data.layout = false;
-      var templateDir = sails.config[self.configKey].templateDir;
-      var templatePath = path.join(templateDir, template);
-      // Set some default options
-      var defaultOptions = {
-        from: sails.config[self.configKey].from
-      };
-
+    send:  function (template, data, options, cb) {
+      try {
+        data = data || {};
+        // Turn off layouts by default
+        if (typeof data.layout === 'undefined') data.layout = false;
+        var templateDir = sails.config[self.configKey].templateDir;
+        var templatePath = path.join(templateDir, template);
+        // Set some default options
+        var defaultOptions = {
+          from: sails.config[self.configKey].from
+        };
+      }catch(err){
+        cb(err);
+      }
       sails.log.verbose('EMAILING:', options);
       var Text, Html;
       var compileText = async function() {
@@ -115,16 +118,25 @@ module.exports = function Email(sails) {
           Html = html;
         });
       }
+
       var sendEmail = async function () {
-        await compileHtml();
-        await compileText();
-        resultHtml = Text;
-        resultText = Html;
-        defaultOptions.html = resultHtml;
-        if (resultText) defaultOptions.text = resultText;
-        var mailOptions = _.defaults(options, defaultOptions);
-        mailOptions.to = sails.config[self.configKey].alwaysSendTo || mailOptions.to;
-        transport.sendMail(mailOptions, function(err,data){});
+        try{
+          await compileHtml();
+          await compileText();
+          resultHtml = Text;
+          resultText = Html;
+          defaultOptions.html = resultHtml;
+          if (resultText) defaultOptions.text = resultText;
+          var mailOptions = _.defaults(options, defaultOptions);
+          mailOptions.to = sails.config[self.configKey].alwaysSendTo || mailOptions.to;
+          transport.sendMail(mailOptions, function(err,data){
+            if (err)
+              cb(err);
+            cb(undefined);
+          });
+        }catch(err){
+          cb(err);
+        }
       }
       sendEmail();
     }
