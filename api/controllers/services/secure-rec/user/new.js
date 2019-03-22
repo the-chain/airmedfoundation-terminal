@@ -106,15 +106,22 @@ module.exports = {
     if(inputs.emailAddress === undefined || inputs.password === undefined || inputs.phone === undefined || inputs.country === undefined || inputs.state === undefined || inputs.address === undefined || inputs.type === undefined) 
       throw 'invalid';
 
-    let newEmailAddress, newPassword, hashToVerify, website, newUserObject, newUserRecord, newRecord;
+    let newEmailAddress, newPassword, hashToVerify, website, newUserObject, newUserRecord, newRecord, emailVerification;
     const keys = await crypto.generateKeys();
 
     newEmailAddress = inputs.emailAddress.toLowerCase();
     newPassword = await sails.helpers.passwords.hashPassword(inputs.password);
     hashToVerify = await sails.helpers.strings.random('url-friendly');
     website = inputs.website === undefined ? 'none' : inputs.website;
-   
+
+    // Email verfication
+    if ( sails.config.email.emailVerification == 0 ) 
+      emailVerification = active; // ONLY FOR TESTING
+    else 
+      emailVerification = unconfirmed;
+    
     newUserObject = Object.assign({
+      status: emailVerification,
       emailAddress: newEmailAddress,
       password: newPassword,
       publicKey: keys.publicKey,
@@ -215,13 +222,42 @@ module.exports = {
           throw 'invalid';
         break;
     }
-    // Message 1
-    return exits.success({
+
+    //let data = {recipientName: "Alexander",senderName: "Alex99y"};
+    //let options =  {to: "alexammine94@gmail.com",subject: "Correo de prueba"};
+    //sails.hooks.email.send("testEmail", data, options,function(err) {console.log(err || "It worked!");});
+
+    // Send email verification to admin
+    if ( sails.config.email.emailVerification == 1 ) {
+
+      return exits.success({
+        success: true, 
+        message: 'Thank you for registering an account on Secure Rec! Before we get started, we just need to verify your information',
+        publicKey: keys.publicKey, 
+        secretKey: keys.secretKey
+      }); 
+    } 
+    // Send email verification to user
+    else if ( sails.config.email.emailVerification == 2 ) {
+      
+      return exits.success({
         success: true, 
         message: 'Thank you for registering an account on Secure Rec! Before we get started, we just need to confirm this is you. A confirmation email has been sent.',
         publicKey: keys.publicKey, 
         secretKey: keys.secretKey
-    });
+      });
+    }
+    // Just register the user without email verification 
+    // ONLY FOR TESTING
+    else {
+      return exits.success({
+        success: true, 
+        message: 'Thank you for registering an account on Secure Rec!',
+        publicKey: keys.publicKey, 
+        secretKey: keys.secretKey
+      });
+    }
+    
 
   }
 
