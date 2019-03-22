@@ -215,10 +215,10 @@ module.exports = {
           throw 'invalid';
         break;
     }
-
+    // Message 1
     return exits.success({
         success: true, 
-        message: '',
+        message: 'Thank you for registering an account on Secure Rec! Before we get started, we just need to confirm this is you. A confirmation email has been sent.',
         publicKey: keys.publicKey, 
         secretKey: keys.secretKey
     });

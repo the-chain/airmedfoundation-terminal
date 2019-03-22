@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'Password recover',
+  friendlyName: 'New',
 
 
-  description: '',
+  description: 'New session.',
 
 
   inputs: {

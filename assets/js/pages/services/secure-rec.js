@@ -214,9 +214,52 @@ var secureRecPatientInfo = $('#form-secure-rec-patient').validate({
 			$(element).prev('label').removeClass('tag-error');
 	}
 });
+
+var secureRecLoginInfo = $('#form-secure-rec-login').validate({
+	rules: {
+		email: {
+			required: true,
+			maxlength: 200
+		},
+		password: {
+            required: true,
+            minlength: 8
+		}
+	},
+	errorPlacement: function(error, element) {
+		return true;
+	},
+	highlight: function(element) {
+		$(element).prev('label').addClass('tag-error');
+	},
+	unhighlight: function(element) {
+		$(element).prev('label').removeClass('tag-error');
+	}
+});
+
+var secureRecRecoverInfo = $('#form-secure-rec-recovery').validate({
+	rules: {
+		email: {
+			required: true,
+			maxlength: 200
+		}
+	},
+	errorPlacement: function(error, element) {
+		return true;
+	},
+	highlight: function(element) {
+		$(element).prev('label').addClass('tag-error');
+	},
+	unhighlight: function(element) {
+		$(element).prev('label').removeClass('tag-error');
+	}
+});
 /* END DECLARATION OF FORMS */
 
 function clearSecureRecData() {
+	$('.hidden-element').removeClass('hidden-element-active');
+	$('#previus').addClass('d-none');
+	$('#next').html('Next');
 	$('#form-secure-rec-primary').trigger('reset');
 	$('#form-secure-rec-secundary').trigger('reset');
 	$('#form-secure-rec-provider').trigger('reset');
@@ -364,7 +407,7 @@ $(document.body).on('click', '#next', function () {
 					$('#signup-secure-rec').removeClass('d-none');
 					$('#form-secure-rec-primary').removeClass('d-none');
 					$('#wait-response').addClass('d-none');
-					$('#message-error-text').html(xhr.responseJSON.message);
+					$('#message-error-text').html(xhr.responseJSON.message); //Check
 					$('#message-error').removeClass('d-none');
 					$('#message-error').show();
 				},
