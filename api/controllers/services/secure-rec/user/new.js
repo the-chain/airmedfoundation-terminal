@@ -116,9 +116,9 @@ module.exports = {
 
     // Email verfication
     if ( sails.config.email.emailVerification == 0 ) 
-      emailVerification = active; // ONLY FOR TESTING
+      emailVerification = 'active'; // ONLY FOR TESTING
     else 
-      emailVerification = unconfirmed;
+      emailVerification = 'unconfirmed';
     
     newUserObject = Object.assign({
       status: emailVerification,
@@ -146,14 +146,13 @@ module.exports = {
           .intercept({name: 'UsageError'}, 'invalid')
           .fetch();
   
-          newRecord = await Provider.create(Object.assign({
+          await Provider.create(Object.assign({
               user: newUserRecord.id,
               name: inputs.name,
               website: website,
               type: inputs.providerType
           }))
-          .intercept({name: 'UsageError'}, 'invalid')
-          .fetch();
+          .intercept({name: 'UsageError'}, 'invalid');
         break;
 
         case 'insurance':
@@ -166,13 +165,12 @@ module.exports = {
           .intercept({name: 'UsageError'}, 'invalid')
           .fetch();
   
-          newRecord = await Insurance.create(Object.assign({
+         await Insurance.create(Object.assign({
               user: newUserRecord.id,
               name: inputs.name,
               website: website
           }))
-          .intercept({name: 'UsageError'}, 'invalid')
-          .fetch();
+          .intercept({name: 'UsageError'}, 'invalid');
         break;
 
         case 'doctor':
@@ -185,15 +183,14 @@ module.exports = {
           .intercept({name: 'UsageError'}, 'invalid')
           .fetch();
 
-          newRecord = await Doctor.create(Object.assign({
+          await Doctor.create(Object.assign({
             user: newUserRecord.id,
             name: inputs.name,
             lastName: inputs.lastName,
             specialty: inputs.specialty,
             socialSecurityNumber: inputs.socialSecurityNumber,
           }))
-          .intercept({name: 'UsageError'}, 'invalid')
-          .fetch();
+          .intercept({name: 'UsageError'}, 'invalid');
         break;
 
         case 'patient':
@@ -206,7 +203,7 @@ module.exports = {
           .intercept({name: 'UsageError'}, 'invalid')
           .fetch();
   
-          newRecord = await Patient.create(Object.assign({
+          await Patient.create(Object.assign({
             user: newUserRecord.id,
             name: inputs.name,
             lastName: inputs.lastName,
@@ -214,42 +211,57 @@ module.exports = {
             allergies: inputs.allergies,
             donor: inputs.donor
           }))
-          .intercept({name: 'UsageError'}, 'invalid')
-          .fetch();
+          .intercept({name: 'UsageError'}, 'invalid');
         break;
 
         case 'default':
           throw 'invalid';
         break;
     }
-
-    //let data = {recipientName: "Alexander",senderName: "Alex99y"};
-    //let options =  {to: "alexammine94@gmail.com",subject: "Correo de prueba"};
-    //sails.hooks.email.send("testEmail", data, options,function(err) {console.log(err || "It worked!");});
-
     // Send email verification to admin
     if ( sails.config.email.emailVerification == 1 ) {
-
-      return exits.success({
-        success: true, 
-        message: 'Thank you for registering an account on Secure Rec! Before we get started, we just need to verify your information',
-        publicKey: keys.publicKey, 
-        secretKey: keys.secretKey
-      }); 
-    } 
-    // Send email verification to user
-    else if ( sails.config.email.emailVerification == 2 ) {
-      
-      return exits.success({
-        success: true, 
-        message: 'Thank you for registering an account on Secure Rec! Before we get started, we just need to confirm this is you. A confirmation email has been sent.',
-        publicKey: keys.publicKey, 
-        secretKey: keys.secretKey
+      let messageBody = {
+        email: sails.config.email.adminEmail,
+        errorMessage: 'An error has occurred, sending the confirmation email. Please contact us.',
+        successMessage: 'Thank you for registering an account on Secure Rec! Before we get started, we just need to confirm this is you. A confirmation email has been sent.',
+        titleMessage: 'Welcome to Secure Rec!',
+        message: 'Thank you for registering an account! Before we get started, we just need to confirm this is you. Click below to verify your email address: ',
+        buttonName: 'Verify email',
+        buttonUrl:   sails.config.custom.baseUrl + '/services/secure-rec/user/verify-email/' + hashToVerify,
+        subject: 'Verify email address Secure Rec'
+      }
+      mailer.emailConfirmation(messageBody, function(err, messageMail){
+        return exits.success({
+          success: true, 
+          message: messageMail.message,
+          publicKey: keys.publicKey, 
+          secretKey: keys.secretKey
+        });
       });
     }
+    // Send email verification to user
+    else if ( sails.config.email.emailVerification == 2 ) {
+      let messageBody = {
+        email: newEmailAddress,
+        errorMessage: 'An error has occurred, sending the confirmation email. Please contact us.',
+        successMessage: 'Thank you for registering an account on Secure Rec! Before we get started, we just need to confirm this is you. A confirmation email has been sent.',
+        titleMessage: 'Welcome to Secure Rec!',
+        message: 'Thank you for registering an account! Before we get started, we just need to confirm this is you. Click below to verify your email address: ',
+        buttonName: 'Verify email',
+        buttonUrl:   sails.config.custom.baseUrl + '/services/secure-rec/user/verify-email/' + hashToVerify,
+        subject: 'Verify email address Secure Rec'
+      }
+      mailer.emailConfirmation(messageBody, function(err, messageMail){
+        return exits.success({
+          success: true, 
+          message: messageMail.message,
+          publicKey: keys.publicKey, 
+          secretKey: keys.secretKey
+        });
+      });
     // Just register the user without email verification 
     // ONLY FOR TESTING
-    else {
+    } else {
       return exits.success({
         success: true, 
         message: 'Thank you for registering an account on Secure Rec!',
@@ -257,8 +269,5 @@ module.exports = {
         secretKey: keys.secretKey
       });
     }
-    
-
   }
-
 };
