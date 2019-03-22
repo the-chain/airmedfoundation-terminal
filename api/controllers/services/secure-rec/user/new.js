@@ -106,7 +106,7 @@ module.exports = {
     if(inputs.emailAddress === undefined || inputs.password === undefined || inputs.phone === undefined || inputs.country === undefined || inputs.state === undefined || inputs.address === undefined || inputs.type === undefined) 
       throw 'invalid';
 
-    let newEmailAddress, newPassword, hashToVerify, website, newUserObject, newUserRecord, newRecord;
+    let newEmailAddress, newPassword, hashToVerify, website, newUserObject, newUserRecord;
     const keys = await crypto.generateKeys();
 
     newEmailAddress = inputs.emailAddress.toLowerCase();
@@ -139,14 +139,13 @@ module.exports = {
           .intercept({name: 'UsageError'}, 'invalid')
           .fetch();
   
-          newRecord = await Provider.create(Object.assign({
+          await Provider.create(Object.assign({
               user: newUserRecord.id,
               name: inputs.name,
               website: website,
               type: inputs.providerType
           }))
-          .intercept({name: 'UsageError'}, 'invalid')
-          .fetch();
+          .intercept({name: 'UsageError'}, 'invalid');
         break;
 
         case 'insurance':
@@ -159,13 +158,12 @@ module.exports = {
           .intercept({name: 'UsageError'}, 'invalid')
           .fetch();
   
-          newRecord = await Insurance.create(Object.assign({
+         await Insurance.create(Object.assign({
               user: newUserRecord.id,
               name: inputs.name,
               website: website
           }))
-          .intercept({name: 'UsageError'}, 'invalid')
-          .fetch();
+          .intercept({name: 'UsageError'}, 'invalid');
         break;
 
         case 'doctor':
@@ -178,15 +176,14 @@ module.exports = {
           .intercept({name: 'UsageError'}, 'invalid')
           .fetch();
 
-          newRecord = await Doctor.create(Object.assign({
+          await Doctor.create(Object.assign({
             user: newUserRecord.id,
             name: inputs.name,
             lastName: inputs.lastName,
             specialty: inputs.specialty,
             socialSecurityNumber: inputs.socialSecurityNumber,
           }))
-          .intercept({name: 'UsageError'}, 'invalid')
-          .fetch();
+          .intercept({name: 'UsageError'}, 'invalid');
         break;
 
         case 'patient':
@@ -199,7 +196,7 @@ module.exports = {
           .intercept({name: 'UsageError'}, 'invalid')
           .fetch();
   
-          newRecord = await Patient.create(Object.assign({
+          await Patient.create(Object.assign({
             user: newUserRecord.id,
             name: inputs.name,
             lastName: inputs.lastName,
@@ -207,20 +204,33 @@ module.exports = {
             allergies: inputs.allergies,
             donor: inputs.donor
           }))
-          .intercept({name: 'UsageError'}, 'invalid')
-          .fetch();
+          .intercept({name: 'UsageError'}, 'invalid');
         break;
 
         case 'default':
           throw 'invalid';
         break;
     }
+    
     // Message 1
-    return exits.success({
+    let messageBody = {
+      email: newEmailAddress,
+			errorMessage: 'An error has occurred, sending the confirmation email. Please contact us.',
+			successMessage: 'Thank you for registering an account on Secure Rec! Before we get started, we just need to confirm this is you. A confirmation email has been sent.',
+			titleMessage: 'Welcome to Secure Rec!',
+			message: 'Thank you for registering an account! Before we get started, we just need to confirm this is you. Click below to verify your email address: ',
+			buttonName: 'Verify email',
+			buttonUrl:  'http://localhost/services/secure-rec/user/verify-email/' + hashToVerify,
+			subject: 'Verify email address Secure Rec'
+    }
+
+    mailer.emailConfirmation(messageBody, function(err, messageMail){
+      return exits.success({
         success: true, 
-        message: 'Thank you for registering an account on Secure Rec! Before we get started, we just need to confirm this is you. A confirmation email has been sent.',
+        message: messageMail.message,
         publicKey: keys.publicKey, 
         secretKey: keys.secretKey
+      });
     });
 
   }
