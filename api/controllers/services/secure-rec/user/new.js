@@ -96,7 +96,7 @@ module.exports = {
     },
 
     emailAlreadyInUse: {
-        statusCode: 409,
+        responseType: 'email-conflict',
         description: 'El email propocionado ya esta registrado.'
     }
   },
@@ -104,9 +104,9 @@ module.exports = {
   fn: async function (inputs, exits) {
     // If one of required parameters is missing
     if(inputs.emailAddress === undefined || inputs.password === undefined || inputs.phone === undefined || inputs.country === undefined || inputs.state === undefined || inputs.address === undefined || inputs.type === undefined) 
-      throw 'invalid';
+      return exits.invalid();
 
-    let newEmailAddress, newPassword, hashToVerify, website, newUserObject, newUserRecord, newRecord, emailVerification;
+    let newEmailAddress, newPassword, hashToVerify, website, newUserObject, newUserRecord, emailVerification;
     const keys = await crypto.generateKeys();
 
     newEmailAddress = inputs.emailAddress.toLowerCase();
@@ -115,7 +115,7 @@ module.exports = {
     website = inputs.website === undefined ? 'none' : inputs.website;
 
     // Email verfication
-    if ( sails.config.email.emailVerification == 0 ) 
+    if (sails.config.email.emailVerification == 0) 
       emailVerification = 'active'; // ONLY FOR TESTING
     else 
       emailVerification = 'unconfirmed';
@@ -130,6 +130,7 @@ module.exports = {
       country: inputs.country,
       state: inputs.state,
       address: inputs.address,
+      type: inputs.type,
       tosAcceptedByIp: this.req.ip,
       emailProofToken: hashToVerify,
       emailProofTokenExpiresAt: Date.now() + sails.config.custom.emailProofTokenTTL
@@ -139,7 +140,7 @@ module.exports = {
         case 'provider':
           // If one of required parameters is missing
           if(inputs.name === undefined || inputs.providerType === undefined)
-            throw 'invalid';
+            return exits.invalid();
           
           newUserRecord = await User.create(newUserObject)
           .intercept('E_UNIQUE', 'emailAlreadyInUse')
@@ -196,7 +197,7 @@ module.exports = {
         case 'patient':
           // If one of required parameters is missing
           if(inputs.name === undefined || inputs.lastName === undefined || inputs.bloodType === undefined || inputs.allergies === undefined || inputs.donor === undefined)
-            throw 'invalid';
+            return exits.invalid();
           
           newUserRecord = await User.create(newUserObject)
           .intercept('E_UNIQUE', 'emailAlreadyInUse')
@@ -215,7 +216,7 @@ module.exports = {
         break;
 
         case 'default':
-          throw 'invalid';
+          return exits.invalid();
         break;
     }
     // Send email verification to admin

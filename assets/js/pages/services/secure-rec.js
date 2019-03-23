@@ -260,8 +260,15 @@ function clearSecureRecData() {
 	$('.hidden-element').removeClass('hidden-element-active');
 	$('#previus').addClass('d-none');
 	$('#next').html('Next');
+	$('#uppCond').removeClass('tag-check');
+	$('#lowCond').removeClass('tag-check');
+	$('#numCond').removeClass('tag-check');
+	$('#lenCond').removeClass('tag-check');
+	$('#speCond').removeClass('tag-check');
 	$('#form-secure-rec-primary').trigger('reset');
-	$('#form-secure-rec-secundary').trigger('reset');
+	$('#state').val('');
+	$('#phone').val('+1 ');
+	$('#address').val('');
 	$('#form-secure-rec-provider').trigger('reset');
 	$('#form-secure-rec-insurance').trigger('reset');
 	$('#form-secure-rec-doctor').trigger('reset');
@@ -407,9 +414,10 @@ $(document.body).on('click', '#next', function () {
 					$('#signup-secure-rec').removeClass('d-none');
 					$('#form-secure-rec-primary').removeClass('d-none');
 					$('#wait-response').addClass('d-none');
-					$('#message-error-text').html(xhr.responseJSON.message); //Check
+					$('#message-error-text').html(xhr.responseJSON.message);
 					$('#message-error').removeClass('d-none');
 					$('#message-error').show();
+					$('html, body').animate({ scrollTop: 0 }, 'slow');
 				},
 				success: function(result) {
 					if(result.success) {

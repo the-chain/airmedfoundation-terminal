@@ -104,6 +104,12 @@ module.exports = {
       columnType: 'bigint'
     },
 
+    type: {
+      type: 'string',
+      isIn: ['provider', 'insurance', 'doctor', 'patient'],
+      defaultsTo: 'provider'
+    },
+
     // reference to provider
     provider: {
       collection: 'provider',

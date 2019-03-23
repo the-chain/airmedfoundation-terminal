@@ -13,9 +13,8 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // Search the user
-    let user = await User.findOne({ id: 1 }).populate('provider');
-
-    return exits.success(user);
+    let user = await User.findOne({ id: 4 }).populate('provider').populate('insurance').populate('doctor').populate('patient');
+    return exits.success({ 'user': user });
 
   }
 
