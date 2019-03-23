@@ -1,8 +1,8 @@
 var ipfsClient = require('ipfs-http-client');
-var config = require("./config_ipfs.json");
+var config = require('../appconfig.json');
 const fs = require('fs');
 
-var ipfs = ipfsClient( config.host, config.port, { protocol: 'http' });
+var ipfs = ipfsClient( config.ipfs.host, config.ipfs.port, { protocol: 'http' });
 
 module.exports = {
     /**
