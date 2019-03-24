@@ -52,6 +52,7 @@ module.exports.routes = {
 
   'POST    /services/secure-rec/user/new':          { action: 'services/secure-rec/user/new' },
   'POST    /services/secure-rec/session/new':       { action: 'services/secure-rec/session/new' },
+  'POST    /services/secure-rec/session/destroy':   { action: 'services/secure-rec/session/destroy' },
   'POST    /services/secure-rec/password-recovery': { action: 'services/secure-rec/entrance/password-recovery' },
   
   // Block model
