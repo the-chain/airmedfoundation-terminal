@@ -17,7 +17,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  '*': 'isHTTPS',
+  //'*': 'isHTTPS',
 
   // API Rest
   'key-in/new':        'checkOrigin', 
@@ -25,5 +25,17 @@ module.exports.policies = {
   'read-chaincode/new':  'checkOrigin',
   'transaction/new': 'checkOrigin',
   'block/new': 'checkOrigin',
+
+  // Views
+  'services/secure-rec/entrance/login': 'logout',
+  'services/secure-rec/entrance/signup': 'logout',
+  'services/secure-rec/home/index': 'logout',
+  'services/secure-rec/files/index': 'login',
+
+  // Sessions
+  'services/secure-rec/entrance/password-recovery': 'logout',
+  'services/secure-rec/session/new': 'logout',
+  'services/secure-rec/user/new': 'logout',
+  'services/secure-rec/session/destroy': 'login'
 
 };
