@@ -13,7 +13,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     // Search the user
-    let user = await User.findOne({ id: 4 }).populate('provider').populate('insurance').populate('doctor').populate('patient');
+    let user = await User.findOne({ emailAddress: this.req.session.auth.emailAddress }).populate(this.req.session.auth.type);
     return exits.success({ 'user': user });
 
   }
