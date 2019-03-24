@@ -31,6 +31,9 @@ module.exports.policies = {
   'services/secure-rec/entrance/signup': 'logout',
   'services/secure-rec/home/index': 'logout',
   'services/secure-rec/files/index': 'login',
+  'services/secure-rec/transaction/index': 'login',
+  'services/secure-rec/user/profile': 'login',
+  'services/secure-rec/user/change-password': 'login',
 
   // Sessions
   'services/secure-rec/entrance/password-recovery': 'logout',

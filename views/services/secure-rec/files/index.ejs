@@ -3,7 +3,99 @@
 <main class="container general-container">
     <div class="row h-100">
         <div class="col-12 my-auto">
-            
+            <% include ../../../layouts/wait %>
+            <div id="sr-files-card" class="card explorer-detail tabs-card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="sr-files-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="sr-sent-tab" data-toggle="tab" href="#sr-sent-table" role="tab" aria-controls="sr-sent-table" aria-selected="true">Hash Sent</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="sr-received-tab" data-toggle="tab" href="#sr-received-table" role="tab" aria-controls="sr-received-table" aria-selected="false">Hash Received</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="sr-hash-tables">
+                    <div class="tab-pane fade show active hash-table-div" id="sr-sent-table" role="tabpanel" aria-labelledby="sr-sent-tab">
+                        <table id="sr-hash-sent" class="table hash-table dt-responsive" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>To</th>
+                                    <th>Hash</th>
+                                    <th>View More</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade hash-table-div" id="sr-received-table" role="tabpanel" aria-labelledby="sr-received-tab">
+                        <table id="sr-hash-received" class="table hash-table dt-responsive" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>From</th>
+                                    <th>Hash</th>
+                                    <th>View More</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-keys" id="modal-viewed-received" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hash Received</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12"> 
+                            <div class="form-group">
+                                <label for="from">From</label>
+                                <textarea class="form-control textarea-keys" rows="5" id="from" disabled></textarea>
+                            </div>
+                            <div class="form-group margin-custom-radio">
+                                <label for="hash-received">Hash</label>
+                                <textarea class="form-control textarea-keys" rows="5" id="hash-received" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-keys" id="modal-viewed-sent" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hash Sent</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12"> 
+                            <div class="form-group">
+                                <label for="to">To</label>
+                                <textarea class="form-control textarea-keys" rows="5" id="to" disabled></textarea>
+                            </div>
+                            <div class="form-group margin-custom-radio">
+                                <label for="hash-sent">Hash</label>
+                                <textarea class="form-control textarea-keys" rows="5" id="hash-sent" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>

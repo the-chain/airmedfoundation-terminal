@@ -1,27 +1,20 @@
 module.exports = {
 
+  friendlyName: 'Secure Rec files',
 
-  friendlyName: 'Index',
-
-
-  description: 'Index files.',
-
-
-  inputs: {
-
-  },
-
+  description: 'Secure Rec files.',
 
   exits: {
-
+    success: {
+      responseType: 'view',
+      viewTemplatePath: 'services/secure-rec/files/index'
+    }
   },
-
 
   fn: async function (inputs, exits) {
 
     return exits.success();
 
   }
-
 
 };

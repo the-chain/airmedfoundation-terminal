@@ -51,10 +51,10 @@ module.exports.routes = {
   'GET    /services/secure-rec/profile':            { action: 'services/secure-rec/user/profile' },
   'GET    /services/secure-rec/files':              { action: 'services/secure-rec/files/index' },
   'GET    /services/secure-rec/transaction':        { action: 'services/secure-rec/transaction/index' },
+  'GET    /services/secure-rec/session/destroy':    { action: 'services/secure-rec/session/destroy' },
 
   'POST    /services/secure-rec/user/new':          { action: 'services/secure-rec/user/new' },
   'POST    /services/secure-rec/session/new':       { action: 'services/secure-rec/session/new' },
-  'POST    /services/secure-rec/session/destroy':   { action: 'services/secure-rec/session/destroy' },
   'POST    /services/secure-rec/password-recovery': { action: 'services/secure-rec/entrance/password-recovery' },
   
   // Block model

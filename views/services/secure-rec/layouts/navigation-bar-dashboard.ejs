@@ -11,18 +11,18 @@
                         <i class="fas fa-wrench" aria-hidden="true"></i> Tools
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-exchange-alt icon-color" aria-hidden="true"></i> Transaction</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-file icon-color" aria-hidden="true"></i> Files</a></li>
+                        <li><a class="dropdown-item" href="/services/secure-rec/transaction"><i class="fas fa-exchange-alt icon-color" aria-hidden="true"></i> Transaction</a></li>
+                        <li><a class="dropdown-item" href="/services/secure-rec/files"><i class="fas fa-file icon-color" aria-hidden="true"></i> Files</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Username
+                        <i class="fa fa-user icon-color" aria-hidden="true"></i>  <%= session.auth.emailAddress.split('@')[0].substring(0, 10) %>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#"><i class="fa fa-user icon-color" aria-hidden="true"></i> Profile</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa fa-key icon-color" aria-hidden="true"></i>  Change password</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa fa-power-off icon-color" aria-hidden="true"></i> Logout</a></li>
+                        <li><a class="dropdown-item" href="/services/secure-rec/profile"><i class="fas fa-address-book icon-color" aria-hidden="true"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="/services/secure-rec/change-password"><i class="fa fa-key icon-color" aria-hidden="true"></i>  Change password</a></li>
+                        <li><a class="dropdown-item" href="/services/secure-rec/session/destroy"><i class="fa fa-power-off icon-color" aria-hidden="true"></i> Logout</a></li>
                     </ul>
                 </li>
             </ul>

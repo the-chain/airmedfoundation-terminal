@@ -475,3 +475,52 @@ $(document.body).on('click', '#previus', function () {
 			break;
 	}
 });
+
+
+var srHashSent = $('#sr-hash-sent').DataTable({
+	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		},
+		{
+			'targets': 2,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block viewed-sent'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		}
+	]
+});
+
+var srHashReceived = $('#sr-hash-received').DataTable({
+    'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		},
+		{
+			'targets': 2,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block viewed-received'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		}
+	]
+});
