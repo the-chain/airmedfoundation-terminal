@@ -12,7 +12,6 @@ module.exports = {
     },
     password: {
       type: 'string',
-      protect: true,
       minLength: 8
     }
 
@@ -70,9 +69,7 @@ module.exports = {
     }
     this.req.session.save();
     // Login successfully
-    return exits.success({
-      success: true
-    });
+    return this.res.redirect('/services/secure-rec/profile');
 
   }
 
