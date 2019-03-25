@@ -47,7 +47,7 @@ module.exports.routes = {
   'GET    /services/secure-rec/signup':             { action: 'services/secure-rec/entrance/signup' },
   'GET    /services/secure-rec/password-recovery':  { action: 'services/secure-rec/entrance/password-recovery-view' },
   'GET    /services/secure-rec/user/verify-email':  { action: 'services/secure-rec/user/verify-email' },
-  'GET    /services/secure-rec/change-password':    { action: 'services/secure-rec/user/change-password' },
+  'GET    /services/secure-rec/change-password':    { action: 'services/secure-rec/user/change-password-view' },
   'GET    /services/secure-rec/profile':            { action: 'services/secure-rec/user/profile' },
   'GET    /services/secure-rec/dashboard':          { action: 'services/secure-rec/user/dashboard' },
   'GET    /services/secure-rec/files':              { action: 'services/secure-rec/files/index' },
