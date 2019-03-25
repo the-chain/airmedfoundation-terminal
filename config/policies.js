@@ -33,6 +33,7 @@ module.exports.policies = {
   'services/secure-rec/files/index': 'login',
   'services/secure-rec/transaction/index': 'login',
   'services/secure-rec/user/profile': 'login',
+  'services/secure-rec/user/dashboard': 'login',
   'services/secure-rec/user/change-password': 'login',
 
   // Sessions

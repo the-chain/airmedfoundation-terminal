@@ -69,7 +69,7 @@ module.exports = {
     }
     this.req.session.save();
     // Login successfully
-    return this.res.redirect('/services/secure-rec/profile');
+    return this.res.redirect('/services/secure-rec/dashboard');
 
   }
 

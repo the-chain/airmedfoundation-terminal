@@ -1,0 +1,54 @@
+<% include ../layouts/navigation-bar-dashboard %>
+
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <h5 class="detail-title mb-5">
+                Dashboard
+            </h5>
+            <div class="row dashboard-profile">
+                <div class="col-12 col-lg-6">
+                    <div class="row">
+                        <div class="col-12 col-lg-4">
+                            <div class="user-type-icon">
+                                <i class="fas fa-clinic-medical user-type-icon-i" aria-hidden="true"></i>
+                            </div>
+                            <p class="service-keys-p text-uppercase blue-word font-weight-bold text-center"><%= user.type %></p>
+                        </div>
+                        <div class="col-12 col-lg-8 dashboard-info-profile">
+                            <p class="profile-label">Name:</p>
+                            <% if(user.type == 'patient' || user.type == 'doctor') { %>
+                                <p class="service-keys-p">
+                                    <% if(user.type == 'patient') { %>
+                                        <%= user.patient[0].name %> <%= user.patient[0].lastName %>
+                                    <% }else{ %>
+                                        <%= user.doctor[0].name %> <%= user.doctor[0].lastName %>
+                                    <% } %>
+                                </p>
+                            <% }else{ %>
+                                <p class="service-keys-p">
+                                    <% if(user.type == 'insurance') { %>
+                                        <%= user.insurance[0].name %>
+                                    <% }else{ %>
+                                        <%= user.provider[0].name %>
+                                    <% } %>
+                                </p>
+                            <% } %>
+                            <p class="profile-label">Email address:</p>
+                            <p class="service-keys-p"><%= user.emailAddress %></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 dashboard-line">
+                    <p class="profile-label">Public Key:</p>
+                    <p class="service-keys-p p-word-break">
+                        <%= user.publicKey %> 
+                        <i class="fas fa-paste js-tooltip js-copy icon-color" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="<%= user.publicKey %>" title="Copy to clipboard"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<% include ../../../layouts/footer %>

@@ -1,27 +1,20 @@
 module.exports = {
 
+  friendlyName: 'Secure Rec transaction',
 
-  friendlyName: 'Index',
-
-
-  description: 'Index transaction.',
-
-
-  inputs: {
-
-  },
-
+  description: 'Secure Rec transaction.',
 
   exits: {
-
+    success: {
+      responseType: 'view',
+      viewTemplatePath: 'services/secure-rec/transaction/index'
+    }
   },
-
 
   fn: async function (inputs, exits) {
 
     return exits.success();
 
   }
-
 
 };
