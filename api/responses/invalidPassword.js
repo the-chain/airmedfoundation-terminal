@@ -10,7 +10,7 @@ module.exports = function invalidPassword() {
 
     result = {
         status: 400,
-        message: 'Invalid email or password'
+        message: 'Invalid password'
     };
   
     return res.status(400).json(result);
