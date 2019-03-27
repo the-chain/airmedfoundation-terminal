@@ -177,7 +177,7 @@ module.exports = {
         case 'doctor':
           // If one of required parameters is missing
           if(inputs.name === undefined || inputs.lastName === undefined || inputs.specialty === undefined || inputs.socialSecurityNumber === undefined)
-            throw 'invalid';
+            return exits.invalid();
           
           newUserRecord = await User.create(newUserObject)
           .intercept('E_UNIQUE', 'emailAlreadyInUse')

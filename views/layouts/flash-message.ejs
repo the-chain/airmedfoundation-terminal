@@ -21,3 +21,33 @@
     </button>
     <p id="message-error-text" class="text-justify alert-text-message"></p>
 </div>
+
+<% flash.get('success').forEach(function (message) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <h6 class="alert-heading">Success!</h6>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p class="text-justify alert-text-message"><%= message %></p>
+    </div>
+<% }) %>
+
+<% flash.get('info').forEach(function (message) { %>
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <h6 class="alert-heading">Info</h6>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p class="text-justify alert-text-message"><%= message %></p>
+    </div>
+<% }) %>
+
+<% flash.get('error').forEach(function (message) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <h6 class="alert-heading">Error</h6>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p class="text-justify alert-text-message"><%= message %></p>
+    </div>
+<% }) %>
