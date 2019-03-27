@@ -57,7 +57,6 @@ module.exports = {
       .set({
           password: newPassword
       });
-
       if (!updatedUser)
         return exits.internalError();
 
