@@ -34,12 +34,12 @@ module.exports.policies = {
   'services/secure-rec/transaction/index': 'login',
   'services/secure-rec/user/profile': 'login',
   'services/secure-rec/user/dashboard': 'login',
-  'services/secure-rec/user/change-password': 'login',
+  'services/secure-rec/user/change-password-view': 'login',
 
   // Sessions
   'services/secure-rec/entrance/password-recovery': 'logout',
   'services/secure-rec/session/new': 'logout',
   'services/secure-rec/user/new': 'logout',
-  'services/secure-rec/session/destroy': 'login'
-
+  'services/secure-rec/session/destroy': 'login',
+  'services/secure-rec/user/change-password': 'login'
 };

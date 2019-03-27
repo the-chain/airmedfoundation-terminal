@@ -43,7 +43,7 @@ module.exports = {
 
     // Find user
     var user = await User.findOne({
-      emailAddress: inputs.emailAddress
+      emailAddress: inputs.emailAddress.toLowerCase()
     });
     if ( user === undefined )
       return exits.invalidPassword();
