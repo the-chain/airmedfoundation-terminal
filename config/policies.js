@@ -41,5 +41,6 @@ module.exports.policies = {
   'services/secure-rec/session/new': 'logout',
   'services/secure-rec/user/new': 'logout',
   'services/secure-rec/session/destroy': 'login',
-  'services/secure-rec/user/change-password': 'login'
+  'services/secure-rec/user/change-password': 'login',
+  'services/secure-rec/user/verify-email': 'logout'
 };
