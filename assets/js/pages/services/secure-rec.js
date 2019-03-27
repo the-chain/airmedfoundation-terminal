@@ -254,7 +254,82 @@ var secureRecRecoverInfo = $('#form-secure-rec-recovery').validate({
 		$(element).prev('label').removeClass('tag-error');
 	}
 });
+
+var secureRecChangePassword = $('#form-secure-rec-change-pass').validate({
+	rules: {
+		oldpassword: {
+            required: true,
+            minlength: 8,
+		},
+		password: {
+            required: true,
+            minlength: 8,
+		},
+		passwordRepeat: {
+			required: true,
+            equalTo : '#password',
+            minlength: 8
+        }
+	},
+	errorPlacement: function(error, element) {
+		return true;
+	},
+	highlight: function(element) {
+		$(element).prev('label').addClass('tag-error');
+	},
+	unhighlight: function(element) {
+		$(element).prev('label').removeClass('tag-error');
+	}
+});
 /* END DECLARATION OF FORMS */
+
+var srHashSent = $('#sr-hash-sent').DataTable({
+	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		},
+		{
+			'targets': 2,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block viewed-sent'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		}
+	]
+});
+
+var srHashReceived = $('#sr-hash-received').DataTable({
+    'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		},
+		{
+			'targets': 2,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block viewed-received'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		}
+	]
+});
 
 function clearSecureRecData() {
 	$('.hidden-element').removeClass('hidden-element-active');
@@ -293,7 +368,10 @@ $(document.body).on('keyup', '#password', function(){
 	$('#numCond').removeClass('tag-check');
 	$('#lenCond').removeClass('tag-check');
 	$('#speCond').removeClass('tag-check');
-	$('#form-secure-rec-primary').validate().element(':input[name="password"]');
+	if($('#form-secure-rec-primary').validate() != undefined)
+		$('#form-secure-rec-primary').validate().element(':input[name="password"]');
+	else
+		$('#form-secure-rec-change-pass').validate().element(':input[name="password"]');
 });
 
 $(document.body).on('click', '#next', function () {
@@ -476,7 +554,6 @@ $(document.body).on('click', '#previus', function () {
 	}
 });
 
-
 $('#secure-rec-login-btn').click(function() {
 	if ($('#form-secure-rec-login').valid()){
 		let sendInfo = {
@@ -509,50 +586,40 @@ $('#secure-rec-login-btn').click(function() {
 		secureRecLoginInfo.focusInvalid();
 });
 
-var srHashSent = $('#sr-hash-sent').DataTable({
-	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
-         	'<"row"<"col-sm-12"tr>>' +
-			 '<"row"<"col-sm-12 pagination-margin"p>>',
-	'pagingType': 'full_numbers',
-	'bLengthChange': false,
-	'bSort': false,
-	'columnDefs': [
-		{
-			'targets': [0, 1],
-			render: function (data, type, row) {
-				return data.length > 40 ?
-				data.substr(0, 40) +'…' :
-				data;
-			}
-		},
-		{
-			'targets': 2,
-			'data': null,
-			'defaultContent': "<button type='button' class='btn btn-primary btn-block viewed-sent'><i class='fa fa-eye' aria-hidden='true'></i></button>"
-		}
-	]
-});
+$('#change-pass-btn').click(function() {
+	if ($('#form-secure-rec-change-pass').valid()){
+		let sendInfo = {
+			'oldPassword': $('#oldPassword').val(),
+			'newPassword': $('#password').val(),
+		};
 
-var srHashReceived = $('#sr-hash-received').DataTable({
-    'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
-         	'<"row"<"col-sm-12"tr>>' +
-			 '<"row"<"col-sm-12 pagination-margin"p>>',
-	'pagingType': 'full_numbers',
-	'bLengthChange': false,
-	'bSort': false,
-	'columnDefs': [
-		{
-			'targets': [0, 1],
-			render: function (data, type, row) {
-				return data.length > 40 ?
-				data.substr(0, 40) +'…' :
-				data;
+		$('#wait-response').removeClass('d-none');
+		$('#change-pass-secure-rec').addClass('d-none');
+
+		$.ajax({
+			type: 'POST',
+			url: '/services/secure-rec/change-password',
+			data: sendInfo,
+			dataType: 'json',
+			error: function (xhr, ajaxOptions, thrownError) {
+				$('#form-secure-rec-change-pass').trigger('reset');
+				$('#change-pass-secure-rec').removeClass('d-none');
+				$('#wait-response').addClass('d-none');
+				$('#message-error-text').html(xhr.responseJSON.message);
+				$('#message-error').removeClass('d-none');
+				$('#message-error').show();
+			},
+			success: function(result) {
+				if(result.success) {
+					$('#form-secure-rec-change-pass').trigger('reset');
+					$('#message-success-text').text(result.message);
+					$('#message-success').removeClass('d-none');
+					$('#change-pass-secure-rec').removeClass('d-none');
+					$('#wait-response').addClass('d-none');
+					$('#message-success').show();
+				}
 			}
-		},
-		{
-			'targets': 2,
-			'data': null,
-			'defaultContent': "<button type='button' class='btn btn-primary btn-block viewed-received'><i class='fa fa-eye' aria-hidden='true'></i></button>"
-		}
-	]
+		});
+	} else
+		secureRecChangePassword.focusInvalid();
 });

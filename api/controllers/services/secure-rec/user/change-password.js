@@ -24,7 +24,7 @@ module.exports = {
         },
         invalidPassword: {
             responseType: 'invalidPassword',
-            description: 'Email o contraseña incorrecta'
+            description: 'Contraseña incorrecta'
         },
         internalError: {
             responseType: 'internal-error',
@@ -60,7 +60,10 @@ module.exports = {
       if (!updatedUser)
         return exits.internalError();
 
-      return exits.success();
+      return exits.success({
+        'success': true,
+        'message': 'Password change successfully.'
+      });
   
     }
   
