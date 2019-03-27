@@ -5,21 +5,53 @@ module.exports = {
   description: 'Password Recovery Secure Rec',
 
   inputs: {
-    key: {
+    email: {
       type: 'string'
     },
   },
 
   exits: {
-
+    invalid: {
+      responseType: 'bad-combo',
+      description: 'Error data provided'
+    },
+    invalidPrivKey: {
+      responseType: 'ursa-error2',
+      description: 'Invalid private key'
+    },
+    internalError: {
+      responseType: 'internal-error',
+      description: 'Error changing password'
+    }
   },
 
   fn: async function (inputs, exits) {
-    // Search the user
-    let user = await User.findOne({ privateKey: inputs.key });
     
-    // Si es valido genera una key temporal y un tiempo, e insertar en el usuario, luego manda el correo
+    if ( inputs.email === undefined )
+      return exits.invalid();
+    
+    // Find user
+    var user = await User.findOne({
+      emailAddress: inputs.email.toLowerCase()
+    });
 
+    if ( !user ) 
+      return exits.invalidPrivKey();
+
+
+    // Create new password
+    var newPassword = await sails.helpers.strings.random();
+    var hashedPassword = await sails.helpers.passwords.hashPassword(newPassword);
+    console.log(newPassword);
+    // Update user password
+    var updatedUser = await User.updateOne({ emailAddress: user.emailAddress })
+    .set({
+        password: hashedPassword
+    });
+    if (!updatedUser)
+      return exits.internalError();
+
+    // Send new password
     let messageBody = 
 		{
 			errorMessage: 'An error has occurred sending the temporary key, please contact us.',
@@ -35,23 +67,19 @@ module.exports = {
       {
         title:  messageBody.titleMessage,
         message: messageBody.message,
-        temporalCode: user.temporalCode,
+        temporalCode: newPassword,
         conditions: messageBody.conditions
       },
       {
-        to: user.email,
+        to: user.emailAddress,
         subject: messageBody.subject
       },
           function(err) {
             if (err)
-              cb(err, { type: 'error', message: messageBody.errorMessage });
+              return exits.success({ status: 'error', message: messageBody.errorMessage });
             else
-              cb(null, { type: 'info', message: messageBody.infoMessage });
+              return exits.success({ status: 'info', message: messageBody.infoMessage });
         }
-      );
-    
-    return exits.success();
-
+      );    
   }
-
 };
