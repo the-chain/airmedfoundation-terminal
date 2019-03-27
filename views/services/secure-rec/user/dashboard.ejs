@@ -11,9 +11,27 @@
                     <div class="row">
                         <div class="col-12 col-lg-4">
                             <div class="user-type-icon">
-                                <i class="fas fa-clinic-medical user-type-icon-i" aria-hidden="true"></i>
+                                <% if(user.type == 'provider') { %>
+                                    <% if(user.provider[0].type == 'clinic') { %>
+                                        <i class="far fa-hospital user-type-icon-i" aria-hidden="true"></i>
+                                    <% }else if(user.provider[0].type == 'laboratory') { %>
+                                        <i class="fas fa-microscope user-type-icon-i" aria-hidden="true"></i>
+                                    <% } else { %>
+                                        <i class="fas fa-capsules user-type-icon-i" aria-hidden="true"></i>
+                                    <% } %>
+                                <% }else if(user.type == 'insurance') { %>
+                                    <i class="fas fa-ambulance user-type-icon-i" aria-hidden="true"></i>
+                                <% }else if(user.type == 'doctor') { %>
+                                    <i class="fas fa-user-md user-type-icon-i" aria-hidden="true"></i>
+                                <% } else { %>
+                                    <i class="fas fa-user user-type-icon-i" aria-hidden="true"></i>
+                                <% } %>
                             </div>
-                            <p class="service-keys-p text-uppercase blue-word font-weight-bold text-center"><%= user.type %></p>
+                            <% if(user.type == 'provider') { %>
+                                <p class="service-keys-p text-uppercase blue-word font-weight-bold text-center"><%= user.provider[0].type %></p>
+                            <% } else { %>
+                                <p class="service-keys-p text-uppercase blue-word font-weight-bold text-center"><%= user.type %></p>
+                            <% } %>   
                         </div>
                         <div class="col-12 col-lg-8 dashboard-info-profile">
                             <p class="profile-label">Name:</p>

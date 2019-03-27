@@ -116,6 +116,15 @@
                                     </div>
                                     <div class="col-12 col-md-8">
                                         <p class="detail-text text-uppercase blue-word font-weight-bold"> 
+                                            <% if(user.type == 'provider') { %>
+                                                <i class="fas fa-clinic-medical" aria-hidden="true"></i>
+                                            <% }else if(user.type == 'insurance') { %>
+                                                <i class="fas fa-ambulance" aria-hidden="true"></i>
+                                            <% }else if(user.type == 'doctor') { %>
+                                                <i class="fas fa-user-md" aria-hidden="true"></i>
+                                            <% } else { %>
+                                                <i class="fas fa-user" aria-hidden="true"></i>
+                                            <% } %>
                                             <%= user.type %>
                                         </p>
                                     </div>
@@ -185,7 +194,14 @@
                                             <p class="detail-text profile-label">Provider Type:</p>
                                         </div>
                                         <div class="col-12 col-md-8">
-                                            <p class="detail-text text-uppercase font-weight-bold"> 
+                                            <p class="detail-text text-uppercase font-weight-bold">
+                                                <% if(user.provider[0].type == 'clinic') { %>
+                                                    <i class="far fa-hospital" aria-hidden="true"></i>
+                                                <% }else if(user.provider[0].type == 'laboratory') { %>
+                                                    <i class="fas fa-microscope" aria-hidden="true"></i>
+                                                <% } else { %>
+                                                    <i class="fas fa-capsules" aria-hidden="true"></i>
+                                                <% } %> 
                                                 <%= user.provider[0].type %>
                                             </p>
                                         </div>

@@ -477,6 +477,39 @@ $(document.body).on('click', '#previus', function () {
 });
 
 
+$('#secure-rec-login-btn').click(function() {
+	if ($('#form-secure-rec-login').valid()){
+		let sendInfo = {
+			'emailAddress': $('#email-login').val(),
+			'password': $('#password-login').val(),
+		};
+
+		$('#wait-response').removeClass('d-none');
+		$('#login-secure-rec').addClass('d-none');
+
+		$.ajax({
+			type: 'POST',
+			url: '/services/secure-rec/session/new',
+			data: sendInfo,
+			dataType: 'json',
+			error: function (xhr, ajaxOptions, thrownError) {
+				$('#form-secure-rec-login').trigger('reset');
+				$('#login-secure-rec').removeClass('d-none');
+				$('#wait-response').addClass('d-none');
+				$('#message-error-text').html(xhr.responseJSON.message);
+				$('#message-error').removeClass('d-none');
+				$('#message-error').show();
+			},
+			success: function(result) {
+				if(result.success) {
+					// Redirect
+				}
+			}
+		});
+	} else
+		secureRecLoginInfo.focusInvalid();
+});
+
 var srHashSent = $('#sr-hash-sent').DataTable({
 	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
          	'<"row"<"col-sm-12"tr>>' +
