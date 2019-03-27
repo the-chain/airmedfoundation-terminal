@@ -501,9 +501,8 @@ $('#secure-rec-login-btn').click(function() {
 				$('#message-error').show();
 			},
 			success: function(result) {
-				if(result.success) {
-					// Redirect
-				}
+				if(result.success)
+					window.location.replace('/services/secure-rec/dashboard');
 			}
 		});
 	} else
