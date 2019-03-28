@@ -19,7 +19,7 @@ module.exports = {
 
   exits: {
     invalid: {
-      responseType: 'badRequest',
+      responseType: 'bad-combo',
       description: 'Los parámetros proporcionados son inválidos.'
     },
     invalidPassword: {
