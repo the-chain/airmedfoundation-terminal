@@ -22,6 +22,10 @@ module.exports = {
     internalError: {
       responseType: 'internal-error',
       description: 'Error changing password'
+    },
+    timeOut: {
+      responseType: 'passwordTimeout',
+      description: 'Wait one day to generate a new password'
     }
   },
 
@@ -38,15 +42,19 @@ module.exports = {
     if ( !user ) 
       return exits.invalidPrivKey();
 
-
+    if ( user.passwordResetTokenExpiresAt < Date.now() )
+      return exits.timeOut();
+    
     // Create new password
     var newPassword = await sails.helpers.strings.random();
     var hashedPassword = await sails.helpers.passwords.hashPassword(newPassword);
-    console.log(newPassword);
+    var ExpiresAt = Date.now() + sails.config.custom.passwordResetTokenTTL;
+
     // Update user password
     var updatedUser = await User.updateOne({ emailAddress: user.emailAddress })
     .set({
-        password: hashedPassword
+        password: hashedPassword,
+        passwordResetTokenExpiresAt: ExpiresAt
     });
     if (!updatedUser)
       return exits.internalError();
