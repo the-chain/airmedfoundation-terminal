@@ -640,6 +640,49 @@ $('#secure-rec-login-btn').click(function() {
 		secureRecLoginInfo.focusInvalid();
 });
 
+$('#secure-rec-recovery-btn').click(function() {
+	if ($('#form-secure-rec-recovery').valid()){
+		let sendInfo = {
+			'email': $('#emailAdress').val()
+		};
+
+		$('#wait-response').removeClass('d-none');
+		$('#recovery-secure-rec').addClass('d-none');
+
+		$.ajax({
+			type: 'POST',
+			url: '/services/secure-rec/password-recovery',
+			data: sendInfo,
+			dataType: 'json',
+			error: function (xhr, ajaxOptions, thrownError) {
+				$('#form-secure-rec-recovery').trigger('reset');
+				$('#recovery-secure-rec').removeClass('d-none');
+				$('#wait-response').addClass('d-none');
+				$('#message-error-text').html(xhr.responseJSON.message);
+				$('#message-error').removeClass('d-none');
+				$('#message-error').show();
+			},
+			success: function(result) {
+				$('#form-secure-rec-recovery').trigger('reset');
+				if(result.status == 'info') {
+					$('#message-info-text').text(result.message);
+					$('#message-info').removeClass('d-none');
+					$('#recovery-secure-rec').removeClass('d-none');
+					$('#wait-response').addClass('d-none');
+					$('#message-info').show();
+				}else{
+					$('#message-error-text').text(result.message);
+					$('#message-error').removeClass('d-none');
+					$('#recovery-secure-rec').removeClass('d-none');
+					$('#wait-response').addClass('d-none');
+					$('#message-error').show();
+				}
+			}
+		});
+	} else
+		secureRecRecoverInfo.focusInvalid();
+});
+
 $('#change-pass-btn').click(function() {
 	if ($('#form-secure-rec-change-pass').valid()){
 		let sendInfo = {

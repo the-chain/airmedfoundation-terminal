@@ -28,7 +28,7 @@ module.exports = {
   fn: async function (inputs, exits) {
 
     if ( inputs.hash === undefined ) {
-      this.req.addFlash('error', 'Invalid data provided');
+      this.req.flash('error', 'Invalid data provided');
       return this.res.redirect('/services/secure-rec/login');
     }
       
@@ -37,10 +37,10 @@ module.exports = {
       emailProofToken: inputs.hash
     });
     if ( !user ) {
-      this.req.addFlash('error', 'Invalid data provided');
+      this.req.flash('error', 'Invalid data provided');
       return this.res.redirect('/services/secure-rec/login');
     } else if ( user.status == 'active' ) {
-      this.req.addFlash('error', 'User is confirmed');
+      this.req.flash('info', 'User is confirmed');
       return this.res.redirect('/services/secure-rec/login');
     }
     
@@ -69,9 +69,9 @@ module.exports = {
       mailer.emailConfirmation(messageBody, 
         function(err){
           if (err)
-            this.req.addFlash('error','An error has occurred, sending the confirmation email. Please contact us.');
+            this.req.flash('error','An error has occurred, sending the confirmation email. Please contact us.');
           else
-            this.req.addFlash('error','The verify email was expired, a new verify email was sended');
+            this.req.flash('error','The verify email was expired, a new verify email was sended');
           return this.res.redirect('/services/secure-rec/login');
         }
       );
@@ -85,11 +85,11 @@ module.exports = {
       });
 
       if (!updatedUser) {
-        this.req.addFlash('error', 'Internal Error');
+        this.req.flash('error', 'Internal Error');
         return this.res.redirect('/services/secure-rec/login');
       }
 
-      this.req.addFlash('success', 'Welcome to Secure Rec! Thank you for verifying your account! Now you can login.');
+      this.req.flash('success', 'Welcome to Secure Rec! Thank you for verifying your account! Now you can login.');
       return this.res.redirect('/services/secure-rec/login');
     }
   }

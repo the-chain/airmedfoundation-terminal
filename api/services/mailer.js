@@ -25,3 +25,29 @@ module.exports.emailConfirmation = function(data, cb) {
       }
     );
 }
+
+module.exports.passwordRecovery = function(data, cb) {
+  // If one of required parameters is missing
+  if(data.errorMessage === undefined || data.infoMessage === undefined || data.titleMessage === undefined || data.message === undefined || data.newPassword === undefined || data.conditions === undefined || data.subject === undefined || data.email === undefined)
+          throw 'invalid';
+
+  return sails.hooks.email.send(
+    'passwordRecovery',
+    {
+      title:  data.titleMessage,
+      message: data.message,
+      temporalCode: data.newPassword,
+      conditions: data.conditions
+    },
+    {
+      to: data.email,
+      subject: data.subject
+    },
+    function(err) {
+        if (err)
+          cb(err, { status: 'error', message: data.errorMessage });
+        else
+          cb(null, { status: 'info', message: data.infoMessage });
+    }
+  );
+}

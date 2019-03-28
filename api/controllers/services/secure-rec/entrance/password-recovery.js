@@ -30,7 +30,6 @@ module.exports = {
   },
 
   fn: async function (inputs, exits) {
-    
     if ( inputs.email === undefined )
       return exits.invalid();
     
@@ -42,7 +41,7 @@ module.exports = {
     if ( !user ) 
       return exits.invalidPrivKey();
 
-    if ( user.passwordResetTokenExpiresAt < Date.now() )
+    if ( user.passwordResetTokenExpiresAt != null && user.passwordResetTokenExpiresAt < Date.now() )
       return exits.timeOut();
     
     // Create new password
@@ -60,34 +59,25 @@ module.exports = {
       return exits.internalError();
 
     // Send new password
-    let messageBody = 
-		{
+    let messageBody = {
 			errorMessage: 'An error has occurred sending the temporary key, please contact us.',
 			infoMessage: 'An email with a temporary password has been sent, please follow the instructions.',
 			titleMessage: 'Password Recovery',
 			message: 'Hi, to verify your identity, please use the following code: ',
 			conditions: ', this code will only be valid for 24 hours. Please change your password when you enter in Secure Rec.',
-			subject: 'Secure Rec Password Recovery'
+      subject: 'Secure Rec Password Recovery',
+      newPassword: newPassword,
+      email:  user.emailAddress
     }
 
-    sails.hooks.email.send(
-      'PasswordRecovery',
-      {
-        title:  messageBody.titleMessage,
-        message: messageBody.message,
-        temporalCode: newPassword,
-        conditions: messageBody.conditions
-      },
-      {
-        to: user.emailAddress,
-        subject: messageBody.subject
-      },
-          function(err) {
-            if (err)
-              return exits.success({ status: 'error', message: messageBody.errorMessage });
-            else
-              return exits.success({ status: 'info', message: messageBody.infoMessage });
-        }
-      );    
+    mailer.passwordRecovery(messageBody, function(err, messageMail){
+      return exits.success({
+        status: messageMail.status, 
+        message: messageMail.message,
+        publicKey: keys.publicKey, 
+        secretKey: keys.secretKey
+      });
+    });
+
   }
 };
