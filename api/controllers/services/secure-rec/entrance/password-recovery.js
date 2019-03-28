@@ -42,7 +42,7 @@ module.exports = {
     // Create new password
     var newPassword = await sails.helpers.strings.random();
     var hashedPassword = await sails.helpers.passwords.hashPassword(newPassword);
-    console.log(newPassword);
+    
     // Update user password
     var updatedUser = await User.updateOne({ emailAddress: user.emailAddress })
     .set({
