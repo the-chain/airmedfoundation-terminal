@@ -283,6 +283,7 @@ var secureRecChangePassword = $('#form-secure-rec-change-pass').validate({
 });
 /* END DECLARATION OF FORMS */
 
+/* INIT DECLARATION OF TABLES */
 var srHashSent = $('#sr-hash-sent').DataTable({
 	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
          	'<"row"<"col-sm-12"tr>>' +
@@ -302,7 +303,12 @@ var srHashSent = $('#sr-hash-sent').DataTable({
 		{
 			'targets': 2,
 			'data': null,
-			'defaultContent': "<button type='button' class='btn btn-primary btn-block viewed-sent'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-viewed-sent'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		},
+		{
+			'targets': 3,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-download-sent'><i class='fas fa-download' aria-hidden='true'></i></button>"
 		}
 	]
 });
@@ -326,10 +332,58 @@ var srHashReceived = $('#sr-hash-received').DataTable({
 		{
 			'targets': 2,
 			'data': null,
-			'defaultContent': "<button type='button' class='btn btn-primary btn-block viewed-received'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-viewed-received'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		},
+		{
+			'targets': 3,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-download-received'><i class='fas fa-download' aria-hidden='true'></i></button>"
 		}
 	]
 });
+
+$(document.body).on('click', '.sr-viewed-sent', function () {
+	var to, hash;
+	srHashSent.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	to = srHashSent.row('.selected').data()[0];
+	hash = srHashSent.row('.selected').data()[1];
+	$('#sr-to').text(to)
+	$('#sr-hash-sent-row').text(hash);
+	$('#modal-sr-viewed-sent').modal('show');
+});
+
+$(document.body).on('click', '.sr-viewed-received', function () {
+	var from, hash;
+	srHashReceived.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	from = srHashReceived.row('.selected').data()[0];
+	hash = srHashReceived.row('.selected').data()[1];
+	$('#sr-from').text(from)
+	$('#sr-hash-received-row').text(hash);
+	$('#modal-sr-viewed-received').modal('show');
+});
+
+$(document.body).on('click', '.sr-download-sent', function () {
+	var hash;
+	srHashSent.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass("child")) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	hash = srHashSent.row('.selected').data()[1];
+	console.log(hash);
+});
+
+$(document.body).on('click', '.sr-download-received', function () {
+	var hash;
+	srHashReceived.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass("child")) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	hash = srHashReceived.row('.selected').data()[1];
+	console.log(hash);
+});
+/* END DECLARATION OF TABLES */
 
 function clearSecureRecData() {
 	$('.hidden-element').removeClass('hidden-element-active');
