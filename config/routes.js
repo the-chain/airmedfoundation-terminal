@@ -58,7 +58,8 @@ module.exports.routes = {
   'POST    /services/secure-rec/session/new':       { action: 'services/secure-rec/session/new' },
   'POST    /services/secure-rec/password-recovery': { action: 'services/secure-rec/entrance/password-recovery' },
   'POST    /services/secure-rec/change-password':   { action: 'services/secure-rec/user/change-password'},
-  
+  'POST    /services/secure-rec/upload-register':   { action: 'services/secure-rec/transaction/upload-register'},
+
   // Block model
   'GET    /block/:hash':                            { action: 'block/get' },
   'GET    /block/id/:id':                           { action: 'block/getbyid' },
