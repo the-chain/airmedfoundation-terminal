@@ -1,7 +1,6 @@
 const ipfs      = require('../../../../../ipfs-api/ipfs_api');
 const fabric    = require('../../../../../fabric-api/chaincodeTransactions');
 const key       = require('../../../../../crypto/keys');
-const fs        = require('fs');
 
 module.exports = {
 
@@ -105,7 +104,7 @@ module.exports = {
                     console.log(dataHash, fileHash);
 
                     // Encrypt the hash for every one
-                    var from = key.getPublicKey(owner.privateKey);
+                    var from = await key.getPublicKey(owner.privateKey);
                     var Args = {
                         to: new Array(),
                         dataHash: new Array(),
@@ -113,7 +112,8 @@ module.exports = {
                     };
                     var doctors = inputs.users.doctors, insurances = inputs.users.insurances, providers = inputs.users.providers;
                     var doctor, insurance, provider, patient = inputs.users.patient;
-                    if ( owner.type == 'patient' ) {
+                    // Get all doctors
+                    if ( doctors ) {
                         try{
                             for ( i = 0; i < doctors.length; i++ ){
                                 doctor = await User.findOne({emailAddress: doctors[i].toLowerCase()});
@@ -121,12 +121,28 @@ module.exports = {
                                 Args.dataHash.push(await key.encryptIpfsHash(doctor.publicKey,dataHash));
                                 Args.fileHash.push(await key.encryptIpfsHash(doctor.publicKey,fileHash));
                             }
+                        }catch(err){
+                            console.log(err);
+                            return exits.internalError();
+                        }
+                    }
+                    // Get all insurances
+                    if ( insurances ){
+                        try{
                             for ( i = 0; i < insurances.length; i++ ){
                                 insurance = await User.findOne({emailAddress: insurances[i].toLowerCase()});
                                 Args.to.push(insurance.publicKey);
                                 Args.dataHash.push(await key.encryptIpfsHash(insurance.publicKey,dataHash));
                                 Args.fileHash.push(await key.encryptIpfsHash(insurance.publicKey,fileHash));
                             }
+                        }catch(err){
+                            console.log(err);
+                            return exits.internalError();
+                        }
+                    }
+                    // Get all providers
+                    if ( providers ){
+                        try{
                             for ( i = 0; i < providers.length; i++ ){
                                 provider = await User.findOne({emailAddress: providers[i].toLowerCase()});
                                 Args.to.push(provider.publicKey);
@@ -137,68 +153,14 @@ module.exports = {
                             console.log(err);
                             return exits.internalError();
                         }
-                    }else if ( owner.type == 'doctor' ){
+                    }
+                    // Get the patient
+                    if ( patient ) {
                         try{
-                            Patient = await User.findOne({emailAddress: patient.toLowerCase()});
-                            Args.to.push(Patient.publicKey);
-                            Args.dataHash.push(await key.encryptIpfsHash(Patient.publicKey,dataHash));
-                            Args.fileHash.push(await key.encryptIpfsHash(Patient.publicKey,fileHash));
-                            for ( i = 0; i < insurances.length; i++ ){
-                                insurance = await User.findOne({emailAddress: insurances[i].toLowerCase()});
-                                Args.to.push(insurance.publicKey);
-                                Args.dataHash.push(await key.encryptIpfsHash(insurance.publicKey,dataHash));
-                                Args.fileHash.push(await key.encryptIpfsHash(insurance.publicKey,fileHash));
-                            }
-                            for ( i = 0; i < providers.length; i++ ){
-                                provider = await User.findOne({emailAddress: providers[i].toLowerCase()});
-                                Args.to.push(provider.publicKey);
-                                Args.dataHash.push(await key.encryptIpfsHash(provider.publicKey,dataHash));
-                                Args.fileHash.push(await key.encryptIpfsHash(provider.publicKey,fileHash));
-                            }
-                        }catch(err){
-                            console.log(err);
-                            return exits.internalError();
-                        }
-                    }else if ( owner.type == 'insurance' ){
-                        try{
-                            Patient = await User.findOne({emailAddress: patient.toLowerCase()});
-                            Args.to.push(Patient.publicKey);
-                            Args.dataHash.push(await key.encryptIpfsHash(Patient.publicKey,dataHash));
-                            Args.fileHash.push(await key.encryptIpfsHash(Patient.publicKey,fileHash));
-                            for ( i = 0; i < doctors.length; i++ ){
-                                doctor = await User.findOne({emailAddress: doctors[i].toLowerCase()});
-                                Args.to.push(doctor.publicKey);
-                                Args.dataHash.push(await key.encryptIpfsHash(doctor.publicKey,dataHash));
-                                Args.fileHash.push(await key.encryptIpfsHash(doctor.publicKey,fileHash));
-                            }
-                            for ( i = 0; i < providers.length; i++ ){
-                                provider = await User.findOne({emailAddress: providers[i].toLowerCase()});
-                                Args.to.push(provider.publicKey);
-                                Args.dataHash.push(await key.encryptIpfsHash(provider.publicKey,dataHash));
-                                Args.fileHash.push(await key.encryptIpfsHash(provider.publicKey,fileHash));
-                            }
-                        }catch(err){
-                            console.log(err);
-                            return exits.internalError();
-                        }
-                    }else if ( owner.type == 'provider' ) {
-                        try{
-                            Patient = await User.findOne({emailAddress: patient.toLowerCase()});
-                            Args.to.push(Patient.publicKey);
-                            Args.dataHash.push(await key.encryptIpfsHash(Patient.publicKey,dataHash));
-                            Args.fileHash.push(await key.encryptIpfsHash(Patient.publicKey,fileHash));
-                            for ( i = 0; i < doctors.length; i++ ){
-                                doctor = await User.findOne({emailAddress: doctors[i].toLowerCase()});
-                                Args.to.push(doctor.publicKey);
-                                Args.dataHash.push(await key.encryptIpfsHash(doctor.publicKey,dataHash));
-                                Args.fileHash.push(await key.encryptIpfsHash(doctor.publicKey,fileHash));
-                            }
-                            for ( i = 0; i < insurances.length; i++ ){
-                                insurance = await User.findOne({emailAddress: insurances[i].toLowerCase()});
-                                Args.to.push(insurance.publicKey);
-                                Args.dataHash.push(await key.encryptIpfsHash(insurance.publicKey,dataHash));
-                                Args.fileHash.push(await key.encryptIpfsHash(insurance.publicKey,fileHash));
-                            }
+                            patient = await User.findOne({emailAddress: patient.toLowerCase()});
+                            Args.to.push(patient.publicKey);
+                            Args.dataHash.push(await key.encryptIpfsHash(patient.publicKey,dataHash));
+                            Args.fileHash.push(await key.encryptIpfsHash(patient.publicKey,fileHash));
                         }catch(err){
                             console.log(err);
                             return exits.internalError();
