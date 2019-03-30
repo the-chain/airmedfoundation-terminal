@@ -288,7 +288,8 @@ var $form = $('.box-form');
 var $image = $('#image-preview');
 
 showFiles = function(file) {
-  	$('#file-name').text(file.name);
+	$('#file-name').text(file.name);
+	$('#file-name').removeClass('d-none');
 	if (file.type.match('image.*')) {
 		var reader = new FileReader();
 		reader.onload = function (e) {
@@ -296,8 +297,12 @@ showFiles = function(file) {
 		}
 		reader.readAsDataURL(file);
 	}
-	else
-		$image.attr('src', './images/general/file.png');
+	else {
+		if($('#file-name').hasClass('sr-trans'))
+			$image.attr('src', '../../images/general/file.png');
+		else
+			$image.attr('src', './images/general/file.png');
+	}
 };
 
 if (isAdvancedUpload) {
@@ -431,9 +436,13 @@ $('#file-hidden').change(function() {
 		}
 	}
 	else {
-		$image.attr('src', 'images/general/upload.png');
+		if($('#file-name').hasClass('sr-trans'))
+			$image.attr('src', '../../images/general/upload.png');
+		else
+			$image.attr('src', './images/general/upload.png');
 		$('#message-error-text').text('No file chosen');
 		$('#file-name').text('');
+		$('#file-name').addClass('d-none');
 		$('#message-error').removeClass('d-none');
 		$('#message-error').show();
 		this.value = '';

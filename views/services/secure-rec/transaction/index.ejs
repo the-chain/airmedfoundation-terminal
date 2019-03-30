@@ -3,7 +3,110 @@
 <main class="container general-container">
     <div class="row h-100">
         <div class="col-12 my-auto">
-            
+            <% include ../../../layouts/flash-message %>
+            <% include ../../../layouts/wait %>
+            <h5 class="detail-title mb-5">
+                Transaction
+            </h5>
+            <form id="form-secure-rec-upload">
+                <div class="form-row mb-2">
+                    <div class="form-group col-md-12 col-lg-6 mb-4">
+                        <label class="service-form-label mb-2">File <small>(max size 15 MB)</small></label>
+                        <div class="box-input upload-drop-zone text-center">
+                            <div class="box-form">
+                                <img src="../../images/general/upload.png" class="image-src img-thumbnail" id="image-preview">
+                                <span id="file-name" class="d-none sr-trans"></span>
+                                <input class="box-file invisible" type="file" name="medicalFile" id="file-hidden" />
+                                <div class="mt-1 sr-trans">
+                                    <button id="file-preview" class="box-button btn btn-primary" type="button"><i class="far fa-image" aria-hidden="true"></i>  Choose a file</button><strong class="box-dragndrop"> or drag it here</strong>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col-md-12 col-lg-6">
+                        <% if(session.auth.type != 'provider') { %>
+                            <div class="form-group mb-4">
+                                <label class="service-form-label mb-2">Providers</label>
+                                <select id="providers" class="selectpicker form-control" multiple name="providers[]" data-selected-text-format="count" title="No providers selected" data-live-search="true">
+                                    <optgroup label="Clinics">
+                                        <% clinics.forEach(function(clinic)  { %>    
+                                            <option value="<%= clinic.user.emailAddress %>"><%= clinic.name %> - <%= clinic.user.emailAddress %></option>
+                                        <% }); %> 
+                                    </optgroup>
+                                    <optgroup label="Laboratories">
+                                        <% laboratories.forEach(function(laboratory)  { %>   
+                                            <option value="<%= laboratory.user.emailAddress %>"><%= laboratory.name %> - <%= laboratory.user.emailAddress %></option>
+                                        <% }); %> 
+                                    </optgroup>
+                                    <optgroup label="Pharmacies">
+                                        <% pharmacies.forEach(function(pharmacy)  { %>   
+                                            <option value="<%= pharmacy.user.emailAddress %>"><%= pharmacy.name %> - <%= pharmacy.user.emailAddress %></option>
+                                        <% }); %> 
+                                    </optgroup>
+                                </select>
+                            </div>
+                        <% } %>
+                        <% if(session.auth.type != 'insurance') { %>
+                            <div class="form-group mb-4">
+                                <label class="service-form-label mb-2">Self payment</label>
+                                <div class="custom-control custom-radio">
+                                    <input id="customRadio1" type="radio" name="selfPayment" class="custom-control-input" value="true">
+                                    <label class="custom-control-label service-form-label mb-2 pt-1 font-weight-normal" for="customRadio1">Yes</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="customRadio2" type="radio" name="selfPayment" class="custom-control-input" value="false">
+                                    <label class="custom-control-label service-form-label mb-2 pt-1 font-weight-normal" for="customRadio2">No</label>
+                                </div>
+                            </div>
+                            <div id="insurance-companies-container" class="form-group mb-4 d-none">
+                                <label class="service-form-label mb-2">Insurance Companies</label>
+                                <select id="companies" class="selectpicker form-control" multiple name="companies[]" data-selected-text-format="count" title="No insurance companies selected" data-live-search="true">
+                                    <% insuranceCompanies.forEach(function(insuranceCompany)  { %>   
+                                        <option value="<%= insuranceCompany.user.emailAddress %>"><%= insuranceCompany.name %> - <%= insuranceCompany.user.emailAddress %></option>
+                                    <% }); %> 
+                                </select>
+                            </div>
+                        <% } %>
+                        <% if(session.auth.type != 'doctor') { %>
+                            <div class="form-group mb-4">
+                                <label class="service-form-label mb-2">Doctors</label>
+                                <select id="doctors" class="selectpicker form-control" multiple name="doctors[]" data-selected-text-format="count" title="No doctors selected" data-live-search="true">
+                                    <% doctors.forEach(function(doctor)  { %>   
+                                        <option value="<%= doctor.user.emailAddress %>"><%= doctor.name %> <%= doctor.lastName %> - <%= doctor.user.emailAddress %></option>
+                                    <% }); %> 
+                                </select>
+                            </div>
+                        <% } %>
+                        <% if(session.auth.type != 'patient') { %>
+                            <div class="form-group mb-4">
+                                <label class="service-form-label mb-2">Patients</label>
+                                <select id="patients" class="selectpicker form-control" name="patients" title="No patients selected" data-live-search="true">
+                                    <% patients.forEach(function(patient)  { %>
+                                        <option value="<%= patient.user.emailAddress %>"><%= patient.name %> <%= patient.lastName %> - <%= patient.user.emailAddress %></option>
+                                    <% }); %> 
+                                </select>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="form-row mb-2">
+                    <div class="form-group col-md-12 col-lg-6 mb-4">
+                        <div style="margin-right: 10px;">
+                            <label class="service-form-label mb-2">File description</label>
+                            <textarea id="file-description" name="fileDescription" cols="40" rows="6" class="form-control service-form-textarea" autocomplete="none" placeholder="ie. file .png, is a image of blood test"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12 col-lg-6 mb-4">
+                        <label class="service-form-label mb-2">Notes</label>
+                        <textarea id="notes" name="notes" cols="40" rows="6" class="form-control service-form-textarea" autocomplete="none" placeholder="Add your notes ..."></textarea>
+                    </div>
+                </div>
+                <div class="form-row mb-2">
+                    <div class="form-group offset-8 offset-lg-9 col-lg-3 col-4 mt-4 mb-5">
+                        <button id="sr-upload-btn" class="box-button btn btn-primary btn-block float-right" type="button"><i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Upload</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </main>

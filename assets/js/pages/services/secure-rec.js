@@ -281,6 +281,82 @@ var secureRecChangePassword = $('#form-secure-rec-change-pass').validate({
 		$(element).prev('label').removeClass('tag-error');
 	}
 });
+
+var secureRecTransaction = $('#form-secure-rec-upload').validate({
+	ignore: ':hidden:not(input[type="file"])',
+	rules: {
+		medicalFile: {
+			required: true
+		},
+		'providers[]': {
+			required: true,
+            minlength: 1
+		},
+		selfPayment: {
+			required: true
+		},
+		'companies[]': {
+			required: true,
+            minlength: 1
+		},
+		'doctors[]': {
+			required: true,
+            minlength: 1
+		},
+		patients: {
+			required: true
+		},
+		fileDescription: {
+			required: true
+		},
+		notes: {
+			required: true
+		},
+	},
+	errorPlacement: function(error, element) {
+		return true;
+	},
+	highlight: function(element) {
+		let inputType = $(element).attr('type');
+		if (inputType != undefined) {
+			switch (inputType) {
+				case 'radio':
+					$(element).parent().prev('label').addClass('tag-error');
+					break;
+				case 'file':
+					$(element).parent().parent().prev('label').addClass('tag-error');
+					$(element).parent().parent().addClass('box-error');
+					break;
+				default:
+					$(element).prev('label').addClass('tag-error');
+					break;
+			}
+		} else if ($(element).hasClass('selectpicker')) {
+			$(element).parent().prev('label').addClass('tag-error');
+		} else
+			$(element).prev('label').addClass('tag-error');
+	},
+	unhighlight: function(element) {
+		let inputType = $(element).attr('type');
+		if (inputType != undefined) {
+			switch (inputType) {
+				case 'radio':
+					$(element).parent().prev('label').removeClass('tag-error');
+					break;
+				case 'file':
+					$(element).parent().parent().prev('label').removeClass('tag-error');
+					$(element).parent().parent().removeClass('box-error');
+					break;
+				default:
+					$(element).prev('label').removeClass('tag-error');
+					break;
+			}
+		} else if ($(element).hasClass('selectpicker')) {
+			$(element).parent().prev('label').removeClass('tag-error');
+		} else
+			$(element).prev('label').removeClass('tag-error');
+	}
+});
 /* END DECLARATION OF FORMS */
 
 /* INIT DECLARATION OF TABLES */
@@ -384,6 +460,19 @@ $(document.body).on('click', '.sr-download-received', function () {
 	console.log(hash);
 });
 /* END DECLARATION OF TABLES */
+
+$('.selectpicker').change(function () {
+    $(this).valid();
+});
+
+$(function() {
+    $('input[name="selfPayment"]').on('click', function() {
+        if ($(this).val() == 'true')
+            $('#insurance-companies-container').addClass('d-none');
+        else
+            $('#insurance-companies-container').removeClass('d-none');
+    });
+});
 
 function clearSecureRecData() {
 	$('.hidden-element').removeClass('hidden-element-active');
@@ -719,4 +808,11 @@ $('#change-pass-btn').click(function() {
 		});
 	} else
 		secureRecChangePassword.focusInvalid();
+});
+
+$('#sr-upload-btn').click(function() {
+	if ($('#form-secure-rec-upload').valid()){
+		
+	} else
+		secureRecTransaction.focusInvalid();
 });
