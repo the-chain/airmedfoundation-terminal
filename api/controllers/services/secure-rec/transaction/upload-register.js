@@ -99,8 +99,10 @@ module.exports = {
                 }
                 fileHash = hashFile;
                 data.pay = inputs.pay; data.notes = inputs.notes;  data.description = inputs.description;
+                data.patient = inputs.users.patient; data.doctors = inputs.users.doctors;
+                data.insurances = inputs.users.insurances; data.providers = inputs.users.providers;
                 try {
-                    dataHash = ipfs.uploadFromBuffer(Buffer.from(JSON.stringify(data)));
+                    dataHash = await ipfs.uploadFromBuffer(Buffer.from(JSON.stringify(data)));
                     console.log(dataHash, fileHash);
 
                     // Encrypt the hash for every one
