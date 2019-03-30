@@ -45,5 +45,6 @@ module.exports.policies = {
   'services/secure-rec/user/verify-email': 'logout',
 
   // Transactions
-  'services/secure-rec/transaction/upload-register': 'login'
+  'services/secure-rec/transaction/upload-register': 'login',
+  'services/secure-rec/files/get-files':  'login'
 };
