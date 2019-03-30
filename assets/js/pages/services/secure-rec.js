@@ -307,10 +307,14 @@ var secureRecTransaction = $('#form-secure-rec-upload').validate({
 			required: true
 		},
 		fileDescription: {
-			required: true
+			required: true,
+			minlength: 15,
+			maxlength: 250,
 		},
 		notes: {
-			required: true
+			required: true,
+			minlength: 15,
+			maxlength: 250,
 		},
 	},
 	errorPlacement: function(error, element) {
@@ -812,7 +816,53 @@ $('#change-pass-btn').click(function() {
 
 $('#sr-upload-btn').click(function() {
 	if ($('#form-secure-rec-upload').valid()){
-		
+		var sendInfo, selfPayment, users, description, notes;
+
+		sendInfo = new FormData();
+		selfPayment = ($('input[name=selfPayment]:checked').val() === 'true');
+		users = {
+			'patient': 	$('#patients').val(),
+			'doctors':  $('#doctors').val(),
+			'insurances': $('#companies').val(),
+			'providers': $('#providers').val()
+		};
+		description = $('#file-description').val();
+		notes = $('#notes').val();
+
+		sendInfo.append('pay', selfPayment);
+		sendInfo.append('users', JSON.stringify(users));
+		sendInfo.append('description', description);
+		sendInfo.append('notes', notes);
+		sendInfo.append('fileName', $('input[type=file]')[0].files[0].name);
+		sendInfo.append('file', $('input[type=file]')[0].files[0]);
+
+		$('#wait-response').removeClass('d-none');
+		$('#div-secure-rec-upload').addClass('d-none');
+
+		$.ajax({
+			type: 'POST',
+			url: '/services/secure-rec/upload-register',
+			data: sendInfo,
+			dataType: 'json',
+			cache: false,
+			contentType: false,
+			processData: false,
+			error: function (xhr, ajaxOptions, thrownError)
+			{
+				$('#wait-response').addClass('d-none');
+				$('#div-secure-rec-upload').removeClass('d-none'); //Check
+				$('#message-error-text').html(xhr.responseJSON.message);
+				$('#message-error').removeClass('d-none');
+				$('#message-error').show();
+			},
+			success: function(result) {
+				if (result.success){
+					$('#wait-response').addClass('d-none');
+					$('#form-secure-rec-upload').trigger('reset'); //Check
+					$('#div-secure-rec-upload').removeClass('d-none');
+				}
+			}
+		});
 	} else
 		secureRecTransaction.focusInvalid();
 });

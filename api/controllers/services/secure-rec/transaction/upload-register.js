@@ -20,7 +20,7 @@ module.exports = {
             description: 'File name'
         },
         users: {
-            type: 'json',
+            type: 'string',
             required: true,
             description: 'Arrays of involved users'
         },
@@ -73,25 +73,25 @@ module.exports = {
         if ( owner == undefined )
             return exits.invalid();
 
+        var users = JSON.parse(inputs.users);
         // Validate controller inputs
-        if (!inputs.users.patient  &&  inputs.users.doctors &&  inputs.users.insurances &&  inputs.users.providers ||
-             inputs.users.patient  && !inputs.users.doctors &&  inputs.users.insurances &&  inputs.users.providers ||
-             inputs.users.patient  &&  inputs.users.doctors && !inputs.users.insurances &&  inputs.users.providers ||
-             inputs.users.patient  &&  inputs.users.doctors &&  inputs.users.insurances && !inputs.users.providers )
+        if ((!users.patient     &&  (!users.doctors || !users.insurances || !users.providers)) ||
+            (!users.doctors     &&  (!users.patient || !users.insurances || !users.providers)) ||
+            (!users.insurances  &&  (!users.patient || !users.doctors    || !users.providers)) ||
+            (!users.providers   &&  (!users.patient || !users.doctors    || !users.insurances)))
           return exits.invalid();
         
-        
-        let imageFileName = await sails.helpers.strings.random('url-friendly') + '.' + inputs.imageName.split('.').pop();
+        let fileName = await sails.helpers.strings.random('url-friendly') + '.' + inputs.fileName.split('.').pop();
         // Save the Image
-        inputs.imageFile.upload({ dirname: require('path').resolve(sails.config.appPath, 'assets/images/medical/'), saveAs: imageFileName }, function (err, uploadedFile){
+        inputs.file.upload({ dirname: require('path').resolve(sails.config.appPath, 'assets/images/medical/'), saveAs: fileName }, function (err, uploadedFile){
             if (err) 
                 return exits.internalError();
 
             // Image path
-            var path = 'assets/images/medical/' + imageFileName;
+            var path = 'assets/images/medical/' + fileName;
 
             // Upload the file and data to ipfs
-            var dataHash, fileHash, data = {}; 
+            var dataHash, fileHash, data = {};
             ipfs.upload(path, async (err, hashFile) => {
                 if (err){
                     console.log(err);
@@ -99,8 +99,8 @@ module.exports = {
                 }
                 fileHash = hashFile;
                 data.pay = inputs.pay; data.notes = inputs.notes;  data.description = inputs.description;
-                data.patient = inputs.users.patient; data.doctors = inputs.users.doctors;
-                data.insurances = inputs.users.insurances; data.providers = inputs.users.providers;
+                data.patient = users.patient; data.doctors = users.doctors;
+                data.insurances = users.insurances; data.providers = users.providers;
                 try {
                     dataHash = await ipfs.uploadFromBuffer(Buffer.from(JSON.stringify(data)));
                     console.log(dataHash, fileHash);
@@ -112,8 +112,8 @@ module.exports = {
                         dataHash: new Array(),
                         fileHash: new Array()
                     };
-                    var doctors = inputs.users.doctors, insurances = inputs.users.insurances, providers = inputs.users.providers;
-                    var doctor, insurance, provider, patient = inputs.users.patient;
+                    var doctors = users.doctors, insurances = users.insurances, providers = users.providers;
+                    var doctor, insurance, provider, patient = users.patient;
                     // Get all doctors
                     if ( doctors ) {
                         try{
