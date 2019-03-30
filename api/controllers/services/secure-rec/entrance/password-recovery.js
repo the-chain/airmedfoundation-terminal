@@ -26,6 +26,14 @@ module.exports = {
     timeOut: {
       responseType: 'passwordTimeout',
       description: 'Wait one day to generate a new password'
+    },
+    unconfirmedUser: {
+      responseType: 'unconfirmedUser',
+      description: 'Usuario sin verificar email'
+    },
+    suspendedUser: {
+      responseType: 'suspendedUser',
+      description: 'Usuario suspendido'
     }
   },
 
@@ -41,6 +49,12 @@ module.exports = {
     if ( !user ) 
       return exits.invalidPrivKey();
 
+    // Check status
+    if ( user.status == 'unconfirmed' )
+      return exits.unconfirmedUser();
+    else if ( user.status == 'suspended' )
+      return exits.suspendedUser();
+      
     if ( user.passwordResetTokenExpiresAt != null && user.passwordResetTokenExpiresAt < Date.now() )
       return exits.timeOut();
     
