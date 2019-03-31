@@ -97,20 +97,24 @@ module.exports = {
                     console.log(err);
                     return exits.ipfs();
                 }
-                fileHash = hashFile;
-                data.pay = inputs.pay; data.notes = inputs.notes;  data.description = inputs.description;
-                data.patient = users.patient; data.doctors = users.doctors;
-                data.insurances = users.insurances; data.providers = users.providers;
-                try {
-                    dataHash = await ipfs.uploadFromBuffer(Buffer.from(JSON.stringify(data)));
+                ipfs.uploadFromBuffer(Buffer.from(JSON.stringify(data)), async (err,hash) =>{
+                    if (err){
+                        console.log(err);
+                        return exits.ipfs();
+                    }
+                    dataHash = hash;
+                    fileHash = hashFile;
+                    data.pay = inputs.pay; data.description = inputs.description;
+                    data.patient = users.patient; data.doctors = users.doctors;
+                    data.insurances = users.insurances; data.providers = users.providers;
                     console.log(dataHash, fileHash);
 
                     // Encrypt the hash for every one
                     var from = await key.getPublicKey(owner.privateKey);
                     var Args = {
-                        to: new Array(),
-                        dataHash: new Array(),
-                        fileHash: new Array()
+                        to: [],
+                        dataHash: [],
+                        fileHash: []
                     };
                     var doctors = users.doctors, insurances = users.insurances, providers = users.providers;
                     var doctor, insurance, provider, patient = users.patient;
@@ -180,10 +184,7 @@ module.exports = {
                         console.log(err);
                         return exits.fabric();
                     }
-                }catch(err){
-                    console.log(err);
-                    return exits.ipfs();
-                }
+                });
             });
         });
     }
