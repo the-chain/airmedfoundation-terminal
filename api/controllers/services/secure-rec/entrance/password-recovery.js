@@ -5,7 +5,7 @@ module.exports = {
   description: 'Password Recovery Secure Rec',
 
   inputs: {
-    email: {
+    privateKey: {
       type: 'string'
     },
   },
@@ -38,12 +38,12 @@ module.exports = {
   },
 
   fn: async function (inputs, exits) {
-    if ( inputs.email === undefined )
+    if ( inputs.privateKey === undefined )
       return exits.invalid();
     
     // Find user
     var user = await User.findOne({
-      emailAddress: inputs.email.toLowerCase()
+      privateKey: inputs.privateKey
     });
 
     if ( !user ) 
@@ -55,7 +55,7 @@ module.exports = {
     else if ( user.status == 'suspended' )
       return exits.suspendedUser();
       
-    if ( user.passwordResetTokenExpiresAt != null && user.passwordResetTokenExpiresAt < Date.now() )
+    if ( user.passwordResetTokenExpiresAt != null && user.passwordResetTokenExpiresAt > Date.now() )
       return exits.timeOut();
     
     // Create new password
@@ -87,9 +87,7 @@ module.exports = {
     mailer.passwordRecovery(messageBody, function(err, messageMail){
       return exits.success({
         status: messageMail.status, 
-        message: messageMail.message,
-        publicKey: keys.publicKey, 
-        secretKey: keys.secretKey
+        message: messageMail.message
       });
     });
 

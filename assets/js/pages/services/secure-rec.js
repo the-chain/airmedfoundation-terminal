@@ -736,7 +736,7 @@ $('#secure-rec-login-btn').click(function() {
 $('#secure-rec-recovery-btn').click(function() {
 	if ($('#form-secure-rec-recovery').valid()){
 		let sendInfo = {
-			'email': $('#emailAdress').val()
+			'privateKey': $('#privateKey').val()
 		};
 
 		$('#wait-response').removeClass('d-none');
