@@ -9,14 +9,14 @@ module.exports = {
      * @param {string} data Buffer image
      * @description Upload fie to ipfs
      */
-    uploadFromBuffer: async function(data){
+    uploadFromBuffer: function(data, cb){
         // Upload to ipfs
         ipfs.add(data, (err, file) => {
             // Error uploading the image
             if (err)
-                throw new Error('Error uploading image');
+                cb(err,undefined);
             // Done.
-            return file[0].hash;
+            cb(undefined,file[0].hash);
         });
     },
     /**
