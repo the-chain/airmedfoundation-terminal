@@ -97,25 +97,27 @@ module.exports = {
                     console.log(err);
                     return exits.ipfs();
                 }
+                
+                // Save data to IPFS
+                data.pay = inputs.pay; data.description = inputs.description;
+                data.patient = users.patient; data.doctors = users.doctors;
+                data.insurances = users.insurances; data.providers = users.providers;
+                data.fileHash = hashFile;
                 ipfs.uploadFromBuffer(Buffer.from(JSON.stringify(data)), async (err,hash) =>{
                     if (err){
                         console.log(err);
                         return exits.ipfs();
                     }
                     dataHash = hash;
-                    fileHash = hashFile;
-                    data.pay = inputs.pay; data.description = inputs.description;
-                    data.patient = users.patient; data.doctors = users.doctors;
-                    data.insurances = users.insurances; data.providers = users.providers;
-                    console.log(dataHash, fileHash);
-
                     // Encrypt the hash for every one
                     var from = await key.getPublicKey(owner.privateKey);
                     var Args = {
                         to: [],
                         dataHash: [],
-                        fileHash: []
+                        fileHash: [],
+                        copy: ''
                     };
+                    Args.copy = await key.encryptIpfsHash(from,dataHash);
                     var doctors = users.doctors, insurances = users.insurances, providers = users.providers;
                     var doctor, insurance, provider, patient = users.patient;
                     // Get all doctors
@@ -125,7 +127,6 @@ module.exports = {
                                 doctor = await User.findOne({emailAddress: doctors[i].toLowerCase()});
                                 Args.to.push(doctor.publicKey);
                                 Args.dataHash.push(await key.encryptIpfsHash(doctor.publicKey,dataHash));
-                                Args.fileHash.push(await key.encryptIpfsHash(doctor.publicKey,fileHash));
                             }
                         }catch(err){
                             console.log(err);
@@ -139,7 +140,6 @@ module.exports = {
                                 insurance = await User.findOne({emailAddress: insurances[i].toLowerCase()});
                                 Args.to.push(insurance.publicKey);
                                 Args.dataHash.push(await key.encryptIpfsHash(insurance.publicKey,dataHash));
-                                Args.fileHash.push(await key.encryptIpfsHash(insurance.publicKey,fileHash));
                             }
                         }catch(err){
                             console.log(err);
@@ -153,7 +153,6 @@ module.exports = {
                                 provider = await User.findOne({emailAddress: providers[i].toLowerCase()});
                                 Args.to.push(provider.publicKey);
                                 Args.dataHash.push(await key.encryptIpfsHash(provider.publicKey,dataHash));
-                                Args.fileHash.push(await key.encryptIpfsHash(provider.publicKey,fileHash));
                             }
                         }catch(err){
                             console.log(err);
@@ -166,7 +165,6 @@ module.exports = {
                             patient = await User.findOne({emailAddress: patient.toLowerCase()});
                             Args.to.push(patient.publicKey);
                             Args.dataHash.push(await key.encryptIpfsHash(patient.publicKey,dataHash));
-                            Args.fileHash.push(await key.encryptIpfsHash(patient.publicKey,fileHash));
                         }catch(err){
                             console.log(err);
                             return exits.internalError();
