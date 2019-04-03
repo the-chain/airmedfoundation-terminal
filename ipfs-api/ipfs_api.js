@@ -6,6 +6,15 @@ var ipfs = ipfsClient( config.ipfs.host, config.ipfs.port, { protocol: 'http' })
 
 module.exports = {
     /**
+     * @async
+     * @param {String} hash 
+     * @description Async download
+     */
+    asyncDownload: async function(hash){
+        var data = await ipfs.get(hash);
+        return data[0].content;
+    },
+    /**
      * @param {string} data Buffer image
      * @description Upload fie to ipfs
      */
@@ -29,7 +38,7 @@ module.exports = {
         fs.readFile(imagePath, (err,image) => {
             // Error reading the image
             if (err)
-                return cb(err, null);
+                return cb(err, undefined);
             // Creating object image
             let data = {
                 path: imagePath,
@@ -39,9 +48,9 @@ module.exports = {
             ipfs.add(data, (err, file) => {
                 // Error uploading the image
                 if (err)
-                    return cb(err, null);
+                    return cb(err, undefined);
                 // Done.
-                return cb(null,file[0].hash);
+                return cb(undefined,file[0].hash);
             });
         });
     },
@@ -54,8 +63,8 @@ module.exports = {
     download: function(imageHash,cb){
         ipfs.get(imageHash, (err,file) =>{
             if ( err )
-                return cb(err, null);
-            return cb(null, file[0].content);
+                return cb(err, undefined);
+            return cb(undefined, file[0].content);
         })
     }
 }
