@@ -35,30 +35,33 @@ var Chaincode = class {
       if ( !args[0] )
         throw new Error('Incorrect arguments. Invalid sender provided');
       // Validate Arrays
-      if ( !Args.to.length || !Args.dataHash.length  || !Args.fileHash.length )
+      if ( !Args.to.length || !Args.dataHash.length  )
         throw new Error('Incorrect arguments. Some arrays is empty or undefined');
-      if ( Args.to.length != Args.dataHash.length && Args.length != Args.fileHash.length )
+      if ( Args.to.length != Args.dataHash.length && Args.lengt )
         throw new Error('Incorrect arguments. Arrays should be same length');
+      if ( !Args.copy )
+        throw new Error('Incorrect arguments. copy undefined');
       // Get sender
       let userSender = await stub.getState(args[0]);
       try{
         userSender = JSON.parse(userSender.toString());
       }catch(err){
-        userSender={hashSent:[],hashReceived:[]}
+        userSender={hashSent:[],hashReceived:[], copyToSender: []};
       }
       var i, N = Args.to.length;
       for ( i = 0; i < N; i ++ ){
-        userSender.hashSent.push({to: Args.to[i], dataHash: Args.dataHash[i], fileHash: Args.fileHash[i]});
+        userSender.hashSent.push({to: Args.to[i], dataHash: Args.dataHash[i]});
         // For every one receiver
         let userReceiver = await stub.getState(Args.to[i]);
         try{
           userReceiver = JSON.parse(userReceiver.toString());
         }catch(err){
-          userReceiver={hashSent:[],hashReceived:[]}
+          userReceiver={hashSent:[],hashReceived:[], copyToSender: []};
         }
-        userReceiver.hashReceived.push({from: args[0], dataHash: Args.dataHash[i], fileHash: Args.fileHash[i]});
+        userReceiver.hashReceived.push({from: args[0], dataHash: Args.dataHash[i]});
         await stub.putState(Args.to[i], Buffer.from(JSON.stringify(userReceiver)));
       }
+      userSender.copyToSender.push(Args.copy);
       await stub.putState(args[0], Buffer.from(JSON.stringify(userSender)));
   }
 
