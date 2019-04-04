@@ -18,6 +18,10 @@ module.exports = {
       responseType: 'bad-combo',
       description: 'Los parámetros proporcionados son inválidos.'
     },
+    ipfs: {
+      responseType: 'ipfs-error2',
+      description: 'Error uploading the image'
+    },
     ursa: {
       responseType: 'ursa-error',
       description: 'La clave publica/privada es invalida'
@@ -77,22 +81,21 @@ module.exports = {
     }
     // Download files received 
     if ( response.hashReceived.length > 0){
-      files.hashReceived.data = []; files.hashReceived.from = [];
+      var data, user;
       for ( var i = 0; i < response.hashReceived.length; i++ ){
         var hash = await ursa.decryptIpfsHash(this.req.session.auth.privateKey,response.hashReceived[i].dataHash);
         try{
-          var data = await ipfs.asyncDownload(hash);
+          data = await ipfs.asyncDownload(hash);
+          data = JSON.parse(data.toString('utf8'));
+          user = await User.findOne({publicKey: response.hashReceived[i].from});
+          data.from = {emailAddress: user.emailAddress, type: user.type};
         }catch(err){
           return exits.ipfs();
         }
-        files.hashReceived.data.push(JSON.parse(data.toString('utf8')));
-        var user = await User.findOne({publicKey: response.hashReceived[i].from});
-        files.hashReceived.from.push({emailAddress: user.emailAddress, type: user.type});
+        files.hashReceived.push(data);
       }
     }
-    console.log(files);
-    console.log(files.hashReceived.data);
-    console.log(files.hashReceived.from);
+    console.log(files.hashReceived);
     // Send response
     return exits.success(
     { 
