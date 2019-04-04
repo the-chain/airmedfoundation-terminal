@@ -382,11 +382,16 @@ var srHashSent = $('#sr-hash-sent').DataTable({
 		},
 		{
 			'targets': 2,
+			'visible': false,
+            'searchable': false
+		},
+		{
+			'targets': 3,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-viewed-sent'><i class='fa fa-eye' aria-hidden='true'></i></button>"
 		},
 		{
-			'targets': 3,
+			'targets': 4,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-download-sent'><i class='fas fa-download' aria-hidden='true'></i></button>"
 		}
@@ -411,11 +416,16 @@ var srHashReceived = $('#sr-hash-received').DataTable({
 		},
 		{
 			'targets': 2,
+			'visible': false,
+            'searchable': false
+		},
+		{
+			'targets': 3,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-viewed-received'><i class='fa fa-eye' aria-hidden='true'></i></button>"
 		},
 		{
-			'targets': 3,
+			'targets': 4,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-download-received'><i class='fas fa-download' aria-hidden='true'></i></button>"
 		}
@@ -423,14 +433,16 @@ var srHashReceived = $('#sr-hash-received').DataTable({
 });
 
 $(document.body).on('click', '.sr-viewed-sent', function () {
-	var to, hash;
+	var description, note, hash;
 	srHashSent.$('tr.selected').removeClass('selected');
 	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
 	else $(this).closest('tr').prev().addClass('selected');
-	to = srHashSent.row('.selected').data()[0];
-	hash = srHashSent.row('.selected').data()[1];
-	$('#sr-to').text(to)
-	$('#sr-hash-sent-row').text(hash);
+	description = srHashSent.row('.selected').data()[0];
+	note = srHashSent.row('.selected').data()[1];
+	hash = srHashSent.row('.selected').data()[2];
+	$('#sr-description').text(description);
+	$('#sr-note').text(note);
+	$('#sr-hash-sent-row').val(hash);
 	$('#modal-sr-viewed-sent').modal('show');
 });
 
