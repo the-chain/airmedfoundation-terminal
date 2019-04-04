@@ -814,6 +814,13 @@ $('#change-pass-btn').click(function() {
 		secureRecChangePassword.focusInvalid();
 });
 
+function clearUploadData() {
+	$image.attr('src', '../../images/general/upload.png');
+	$('#file-name').text('');
+	$('#file-name').addClass('d-none');
+	$('#providers').val('');
+}
+
 $('#sr-upload-btn').click(function() {
 	if ($('#form-secure-rec-upload').valid()){
 		var sendInfo, selfPayment, users, description, notes;
@@ -857,9 +864,13 @@ $('#sr-upload-btn').click(function() {
 			},
 			success: function(result) {
 				if (result.success){
+					clearUploadData();
 					$('#wait-response').addClass('d-none');
 					$('#form-secure-rec-upload').trigger('reset'); //Check
 					$('#div-secure-rec-upload').removeClass('d-none');
+					$('#message-success-text').html(result.message);
+					$('#message-success').removeClass('d-none');
+					$('#message-success').show();
 				}
 			}
 		});
