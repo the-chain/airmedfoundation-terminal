@@ -46,5 +46,4 @@ module.exports.policies = {
 
   // Transactions
   'services/secure-rec/transaction/upload-register': 'login',
-  'services/secure-rec/files/get-files':  'login'
 };
