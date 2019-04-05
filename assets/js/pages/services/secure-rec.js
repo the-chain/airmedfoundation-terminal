@@ -373,7 +373,7 @@ var srHashSent = $('#sr-hash-sent').DataTable({
 	'bSort': false,
 	'columnDefs': [
 		{
-			'targets': [0, 1],
+			'targets': [0, 1, 2],
 			render: function (data, type, row) {
 				return data.length > 40 ?
 				data.substr(0, 40) +'…' :
@@ -381,17 +381,22 @@ var srHashSent = $('#sr-hash-sent').DataTable({
 			}
 		},
 		{
-			'targets': 2,
+			'targets': [3, 4, 5, 6],
 			'visible': false,
             'searchable': false
 		},
 		{
-			'targets': 3,
+			'targets': 7,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-viewed-sent'><i class='fa fa-eye' aria-hidden='true'></i></button>"
 		},
 		{
-			'targets': 4,
+			'targets': 8,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-edit-sent'><i class='far fa-edit' aria-hidden='true'></i></button>"
+		},
+		{
+			'targets': 9,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-download-sent'><i class='fas fa-download' aria-hidden='true'></i></button>"
 		}
@@ -407,7 +412,7 @@ var srHashReceived = $('#sr-hash-received').DataTable({
 	'bSort': false,
 	'columnDefs': [
 		{
-			'targets': [0, 1],
+			'targets': [0, 1, 2, 3],
 			render: function (data, type, row) {
 				return data.length > 40 ?
 				data.substr(0, 40) +'…' :
@@ -415,17 +420,12 @@ var srHashReceived = $('#sr-hash-received').DataTable({
 			}
 		},
 		{
-			'targets': 2,
-			'visible': false,
-            'searchable': false
-		},
-		{
-			'targets': 3,
+			'targets': 4,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-viewed-received'><i class='fa fa-eye' aria-hidden='true'></i></button>"
 		},
 		{
-			'targets': 4,
+			'targets': 5,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-download-received'><i class='fas fa-download' aria-hidden='true'></i></button>"
 		}
@@ -433,28 +433,58 @@ var srHashReceived = $('#sr-hash-received').DataTable({
 });
 
 $(document.body).on('click', '.sr-viewed-sent', function () {
-	var description, note, hash;
+	var to, doctors, insurances, providers, patient, description, note, hash;
 	srHashSent.$('tr.selected').removeClass('selected');
 	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
 	else $(this).closest('tr').prev().addClass('selected');
 	description = srHashSent.row('.selected').data()[0];
 	note = srHashSent.row('.selected').data()[1];
 	hash = srHashSent.row('.selected').data()[2];
+	doctors = srHashSent.row('.selected').data()[3];
+	insurances = srHashSent.row('.selected').data()[4];
+	providers = srHashSent.row('.selected').data()[5];
+	patient = srHashSent.row('.selected').data()[6];
+	to = '';
+	if (doctors != 'N/A')
+		to += '<p class="mb-2 font-weight-bold">Doctors: </p> <span class="ml-3">' + doctors + '</span>'; 
+	if (providers != 'N/A')
+		to += '<p class="mb-2 mt-4 font-weight-bold">Providers: </p> <span class="ml-3">' + providers + '</span>';
+	if (insurances != 'N/A')
+		to += '<p class="mb-2 mt-4 font-weight-bold">Insurances: </p> <span class="ml-3">' + insurances + '</span>';
+	if (patient != 'N/A')
+		to += '<p class="mb-2 mt-4 font-weight-bold">Patient: </p> <span class="ml-3">' + patient + '</span>';
+	$('#sr-to').html(to);
 	$('#sr-description').text(description);
 	$('#sr-note').text(note);
 	$('#sr-hash-sent-row').val(hash);
 	$('#modal-sr-viewed-sent').modal('show');
 });
 
+$(document.body).on('click', '.sr-edit-sent', function () {
+	var note, hash;
+	srHashSent.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	note = srHashSent.row('.selected').data()[1];
+	hash = srHashSent.row('.selected').data()[2];
+	$('#sr-note-edit').val(note);
+	$('#sr-hash-sent-row-edit').val(hash);
+	$('#modal-sr-edit-sent').modal('show');
+});
+
 $(document.body).on('click', '.sr-viewed-received', function () {
-	var from, hash;
+	var fromEmail, fromType, description, hash;
 	srHashReceived.$('tr.selected').removeClass('selected');
 	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
 	else $(this).closest('tr').prev().addClass('selected');
-	from = srHashReceived.row('.selected').data()[0];
-	hash = srHashReceived.row('.selected').data()[1];
-	$('#sr-from').text(from)
-	$('#sr-hash-received-row').text(hash);
+	fromEmail = srHashReceived.row('.selected').data()[0];
+	fromType = srHashReceived.row('.selected').data()[1];
+	description = srHashReceived.row('.selected').data()[2];
+	hash = srHashReceived.row('.selected').data()[3];
+	$('#sr-from-email').val(fromEmail);
+	$('#sr-from-type').val(fromType);
+	$('#sr-received-description').text(description);
+	$('#sr-hash-received-row').val(hash);
 	$('#modal-sr-viewed-received').modal('show');
 });
 

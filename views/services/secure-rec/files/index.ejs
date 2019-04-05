@@ -26,7 +26,12 @@
                                     <th>Description</th>
                                     <th>Note</th>
                                     <th>Hash</th>
-                                    <th>View More</th>
+                                    <th>Doctors</th>
+                                    <th>Insurances</th>
+                                    <th>Providers</th>
+                                    <th>Patient</th>
+                                    <th>View Info</th>
+                                    <th>Edit Note</th>
                                     <th>Download</th>
                                 </tr>
                             </thead>
@@ -36,6 +41,41 @@
                                         <td><%= element.description %></td>
                                         <td><%= element.description %></td>
                                         <td><%= element.fileHash %></td>
+                                        <td>
+                                            <% if(element.doctors.length > 0) { %>
+                                                <% element.doctors.forEach(function(doctor)  { %>
+                                                    <%= doctor + ', ' %>
+                                                <% }); %>
+                                            <% }else{ %>
+                                                N/A
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <% if(element.insurances.length > 0) { %>
+                                                <% element.insurances.forEach(function(insurance)  { %>
+                                                    <%= insurance + ', ' %>
+                                                <% }); %>
+                                            <% }else{ %>
+                                                N/A
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <% if(element.providers.length > 0) { %>
+                                                <% element.providers.forEach(function(provider)  { %>
+                                                    <%= provider + ', ' %>
+                                                <% }); %>
+                                            <% }else{ %>
+                                                N/A
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <% if(element.patient) { %>
+                                                <%= element.patient %>
+                                            <% }else{ %>
+                                                N/A
+                                            <% } %>
+                                        </td>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -47,19 +87,21 @@
                         <table id="sr-hash-received" class="table hash-table dt-responsive" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>From</th>
+                                    <th>From Email</th>
+                                    <th>From Type</th>
                                     <th>Description</th>
                                     <th>Hash</th>
-                                    <th>View More</th>
+                                    <th>View Info</th>
                                     <th>Download</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% userSender.hashReceived.forEach(function(element)  { %>
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td><%= element.from.emailAddress %></td>
+                                        <td><%= element.from.type.toUpperCase() %></td>
+                                        <td><%= element.description %></td>
+                                        <td><%= element.fileHash %></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -82,14 +124,22 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12"> 
-                            <div class="form-group">
-                                <label class="service-form-label" for="from">From</label>
-                                <textarea class="form-control textarea-keys" rows="5" id="sr-from" disabled></textarea>
-                            </div>
+                        <div class="col-12">
                             <div class="form-group margin-custom-radio">
                                 <label class="service-form-label" for="hash-received">Hash</label>
-                                <textarea class="form-control textarea-keys" rows="5" id="sr-hash-received-row" disabled></textarea>
+                                <input class="form-control modal-inputs-dis" type="text" id="sr-hash-received-row" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="service-form-label" for="from-email">From email</label>
+                                <input class="form-control modal-inputs-dis" type="text" id="sr-from-email" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="service-form-label" for="from-type">From type</label>
+                                <input class="form-control modal-inputs-dis" type="text" id="sr-from-type" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="service-form-label" for="description">Description</label>
+                                <textarea class="form-control textarea-keys modal-inputs-dis" rows="5" id="sr-received-description" disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -108,19 +158,54 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12"> 
+                        <div class="col-12">
+                            <div class="form-group margin-custom-radio">
+                                <label class="service-form-label" for="hash-sent">Hash</label>
+                                <input class="form-control modal-inputs-dis" type="text" id="sr-hash-sent-row" disabled>
+                            </div>
                             <div class="form-group">
-                                <label class="service-form-label" for="to">Description</label>
-                                <textarea class="form-control textarea-keys" rows="5" id="sr-description" disabled></textarea>
+                                <label class="service-form-label" for="to">To</label>
+                                <div class="to-div noselect modal-inputs-dis textarea-keys" id="sr-to"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="service-form-label" for="description">Description</label>
+                                <textarea class="form-control textarea-keys modal-inputs-dis" rows="5" id="sr-description" disabled></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="service-form-label" for="note">Note</label>
-                                <textarea class="form-control textarea-keys" rows="5" id="sr-note" disabled></textarea>
+                                <textarea class="form-control textarea-keys modal-inputs-dis" rows="5" id="sr-note" disabled></textarea>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-keys" id="modal-sr-edit-sent" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hash Sent</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
                             <div class="form-group margin-custom-radio">
                                 <label class="service-form-label" for="hash-sent">Hash</label>
-                                <input class="form-control" type="text" id="sr-hash-sent-row" disabled>
+                                <input class="form-control modal-inputs-dis" type="text" id="sr-hash-sent-row-edit" disabled>
                             </div>
+                            <div class="form-group">
+                                <label class="service-form-label" for="note">Note</label>
+                                <textarea class="form-control textarea-keys modal-inputs-dis" rows="5" id="sr-note-edit"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4 mb-5">
+                        <div class="col-4 offset-8">
+                            <button id="save-note" type="button" class="btn btn-primary btn-block">Save</button>
                         </div>
                     </div>
                 </div>
