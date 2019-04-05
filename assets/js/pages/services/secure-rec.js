@@ -361,6 +361,25 @@ var secureRecTransaction = $('#form-secure-rec-upload').validate({
 			$(element).prev('label').removeClass('tag-error');
 	}
 });
+
+var secureRecEditNote = $('#form-secure-rec-edit-note').validate({
+	rules: {
+		notes: {
+			required: true,
+			minlength: 15,
+			maxlength: 250,
+		},
+	},
+	errorPlacement: function(error, element) {
+		return true;
+	},
+	highlight: function(element) {
+		$(element).prev('label').addClass('tag-error');
+	},
+	unhighlight: function(element) {
+		$(element).prev('label').removeClass('tag-error');
+	}
+});
 /* END DECLARATION OF FORMS */
 
 /* INIT DECLARATION OF TABLES */
@@ -961,4 +980,35 @@ $('#sr-upload-btn').click(function() {
 		});
 	} else
 		secureRecTransaction.focusInvalid();
+});
+
+$('#edit-note-btn').click(function() {
+	if ($('#form-secure-rec-edit-note').valid()){
+		let sendInfo = {
+			'notesId': $('#sr-hash-sent-row-edit').val(),
+			'newNote': $('#sr-note-edit').val(),
+		};
+		$.ajax({
+			type: 'POST',
+			url: '/services/secure-rec/edit-notes',
+			data: sendInfo,
+			dataType: 'json',
+			error: function (xhr, ajaxOptions, thrownError) {
+				$('#message-error-text').html(xhr.responseJSON.message);
+				$('#message-error').removeClass('d-none');
+				$('#message-error').show();
+			},
+			success: function(result) {
+				if(result.success) {
+					// srHashSent.row('.selected').edit( {
+					// 	Note: $('#sr-note-edit').val()
+					// });
+					$('#message-success-text').html(result.message);
+					$('#message-success').removeClass('d-none');
+					$('#message-success').show();
+				}
+			}
+		});
+	} else
+		secureRecEditNote.focusInvalid();
 });

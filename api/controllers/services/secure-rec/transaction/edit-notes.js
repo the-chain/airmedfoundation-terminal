@@ -39,7 +39,8 @@ module.exports = {
             return exits.invalid();
         }
         return exits.success( {
-            'success': true
+            'success': true,
+            'message': 'Note edited correctly'
         });
     }
 }
