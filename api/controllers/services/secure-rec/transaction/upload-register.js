@@ -117,7 +117,7 @@ module.exports = {
                     };
                     Args.copy = await key.encryptIpfsHash(from,dataHash);
                     // Save notes
-                    var notes = await Note.create(Object.assign({ hash: Args.copy, note: inputs.notes})).fetch();
+                    var notes = await Note.create(Object.assign({ hash: hashFile, note: inputs.notes})).fetch();
                     var doctors = users.doctors, insurances = users.insurances, providers = users.providers;
                     var doctor, insurance, provider, patient = users.patient;
                     // Get all doctors

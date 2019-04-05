@@ -75,9 +75,8 @@ module.exports = {
           var data = await ipfs.asyncDownload(hash);
           data = JSON.parse(data.toString('utf8'));
           try{
-            var notes = await Note.findOne({hash: response.copyToSender[i]});
+            var notes = await Note.findOne({hash: data.fileHash});
             data.notes = notes.note;
-            data.notesId = response.copyToSender[i];
           }catch(err){
             data.notes = '';
           }
