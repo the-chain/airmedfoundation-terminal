@@ -81,7 +81,7 @@
                             <% if(session.auth.type != 'patient') { %>
                                 <div class="form-group mb-4">
                                     <label class="service-form-label mb-2">Patients</label>
-                                    <select id="patients" class="selectpicker form-control" name="patients" title="No patients selected" data-live-search="true">
+                                    <select id="patients" class="selectpicker form-control" name="patients" title="No patient selected" data-live-search="true">
                                         <% patients.forEach(function(patient)  { %>
                                             <option value="<%= patient.user.emailAddress %>"><%= patient.name %> <%= patient.lastName %> - <%= patient.user.emailAddress %></option>
                                         <% }); %> 

@@ -863,6 +863,21 @@ function clearUploadData() {
 	$('#providers').val('');
 }
 
+function resetSelect(selectbox, title) {
+	var selectpicker = selectbox;
+	selectpicker.selectpicker();
+	selectpicker.selectpicker({
+		title: title
+	}).selectpicker('render');
+}
+
+function resetTitles() {
+	resetSelect($('#doctors'), 'No doctors selected');
+	resetSelect($('#patients'), 'No patient selected');
+	resetSelect($('#companies'), 'No insurance companies selected');
+	resetSelect($('#providers'), 'No providers selected');
+}
+
 $('#sr-upload-btn').click(function() {
 	if ($('#form-secure-rec-upload').valid()){
 		var sendInfo, selfPayment, users, description, notes;
@@ -898,8 +913,11 @@ $('#sr-upload-btn').click(function() {
 			processData: false,
 			error: function (xhr, ajaxOptions, thrownError)
 			{
+				clearUploadData();
 				$('#wait-response').addClass('d-none');
-				$('#div-secure-rec-upload').removeClass('d-none'); //Check
+				$('#form-secure-rec-upload').trigger('reset');
+				resetTitles();
+				$('#div-secure-rec-upload').removeClass('d-none');
 				$('#message-error-text').html(xhr.responseJSON.message);
 				$('#message-error').removeClass('d-none');
 				$('#message-error').show();
@@ -908,7 +926,8 @@ $('#sr-upload-btn').click(function() {
 				if (result.success){
 					clearUploadData();
 					$('#wait-response').addClass('d-none');
-					$('#form-secure-rec-upload').trigger('reset'); //Check
+					$('#form-secure-rec-upload').trigger('reset');
+					resetTitles();
 					$('#div-secure-rec-upload').removeClass('d-none');
 					$('#message-success-text').html(result.message);
 					$('#message-success').removeClass('d-none');
