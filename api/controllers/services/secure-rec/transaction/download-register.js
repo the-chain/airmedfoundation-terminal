@@ -40,7 +40,7 @@ module.exports = {
         var file, type;
         // Get file from IPFS
         try{
-            file = ipfs.asyncDownload(inputs.fileHash);
+            file = await ipfs.asyncDownload(inputs.fileHash);
         }catch(err){
             return exits.ipfs();
         }
@@ -58,7 +58,7 @@ module.exports = {
         };
         var path, datetime;
         path = 'assets/images/' + inputs.fileHash + '.' + type.ext;
-        response.image = 'images/' + inputs.fileHash + '.' + type.ext;
+        response.image = '../../images/' + inputs.fileHash + '.' + type.ext;
         response.imageType = type.mime;
         fs.writeFile(path, file, 'binary', (err) => {
           if (err) 
