@@ -493,8 +493,8 @@ $(document.body).on('click', '.sr-download-sent', function () {
 	srHashSent.$('tr.selected').removeClass('selected');
 	if (!$(this).closest('tr').hasClass("child")) $(this).closest('tr').addClass('selected');
 	else $(this).closest('tr').prev().addClass('selected');
-	hash = srHashSent.row('.selected').data()[1];
-	console.log(hash);
+	hash = srHashSent.row('.selected').data()[2];
+	downloadSRFile(hash);
 });
 
 $(document.body).on('click', '.sr-download-received', function () {
@@ -502,9 +502,33 @@ $(document.body).on('click', '.sr-download-received', function () {
 	srHashReceived.$('tr.selected').removeClass('selected');
 	if (!$(this).closest('tr').hasClass("child")) $(this).closest('tr').addClass('selected');
 	else $(this).closest('tr').prev().addClass('selected');
-	hash = srHashReceived.row('.selected').data()[1];
-	console.log(hash);
+	hash = srHashReceived.row('.selected').data()[3];
+	downloadSRFile(hash);
 });
+
+function downloadSRFile(hash) {
+	let sendInfo = {
+		'fileHash': hash
+	};
+	$.ajax({
+		type: 'POST',
+		url: '/services/secure-rec/download-register',
+		data: sendInfo,
+		dataType: 'json',
+		error: function (xhr, ajaxOptions, thrownError) {
+			$('#message-error-text').html(xhr.responseJSON.message);
+			$('#message-error').removeClass('d-none');
+			$('#message-error').show();
+		},
+		success: function(result) {
+			let link = document.createElement('a');
+			link.download = result.imageName;
+			link.href = result.image;
+			link.click();
+		}
+	});
+}
+
 /* END DECLARATION OF TABLES */
 
 $('.selectpicker').change(function () {
