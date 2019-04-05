@@ -77,6 +77,7 @@ module.exports = {
           try{
             var notes = await Note.findOne({hash: response.copyToSender[i]});
             data.notes = notes.note;
+            data.notesId = response.copyToSender[i];
           }catch(err){
             data.notes = '';
           }

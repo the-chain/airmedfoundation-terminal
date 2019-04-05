@@ -60,7 +60,7 @@ module.exports.routes = {
   'POST    /services/secure-rec/change-password':   { action: 'services/secure-rec/user/change-password'},
   'POST    /services/secure-rec/upload-register':   { action: 'services/secure-rec/transaction/upload-register'},
   'POST    /services/secure-rec/download-register': { action: 'services/secure-rec/transaction/download-register'},
-  
+  'POST    /services/secure-rec/edit-notes':        { action: 'services/secure-rec/transaction/edit-notes'},
   // Block model
   'GET    /block/:hash':                            { action: 'block/get' },
   'GET    /block/id/:id':                           { action: 'block/getbyid' },
