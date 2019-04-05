@@ -73,10 +73,17 @@ module.exports = {
         var hash = await ursa.decryptIpfsHash(this.req.session.auth.privateKey,response.copyToSender[i]);
         try{
           var data = await ipfs.asyncDownload(hash);
+          data = JSON.parse(data.toString('utf8'));
+          try{
+            var notes = await Note.findOne({hash: response.copyToSender[i]});
+            data.notes = notes.note;
+          }catch(err){
+            data.notes = '';
+          }
         }catch(err){
           return exits.ipfs();
         }
-        files.hashSent.push(JSON.parse(data.toString('utf8')));
+        files.hashSent.push(data);
       }
     }
     // Download files received 
@@ -95,7 +102,6 @@ module.exports = {
         files.hashReceived.push(data);
       }
     }
-    console.log(files.hashReceived);
     // Send response
     return exits.success(
     { 

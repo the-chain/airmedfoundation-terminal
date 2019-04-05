@@ -94,7 +94,6 @@ module.exports = {
             var dataHash, fileHash, data = {};
             ipfs.upload(path, async (err, hashFile) => {
                 if (err){
-                    console.log(err);
                     return exits.ipfs();
                 }
                 
@@ -105,7 +104,6 @@ module.exports = {
                 data.fileHash = hashFile;
                 ipfs.uploadFromBuffer(Buffer.from(JSON.stringify(data)), async (err,hash) =>{
                     if (err){
-                        console.log(err);
                         return exits.ipfs();
                     }
                     dataHash = hash;
@@ -118,6 +116,8 @@ module.exports = {
                         copy: ''
                     };
                     Args.copy = await key.encryptIpfsHash(from,dataHash);
+                    // Save notes
+                    var notes = await Note.create(Object.assign({ hash: Args.copy, note: inputs.notes})).fetch();
                     var doctors = users.doctors, insurances = users.insurances, providers = users.providers;
                     var doctor, insurance, provider, patient = users.patient;
                     // Get all doctors
@@ -129,7 +129,6 @@ module.exports = {
                                 Args.dataHash.push(await key.encryptIpfsHash(doctor.publicKey,dataHash));
                             }
                         }catch(err){
-                            console.log(err);
                             return exits.internalError();
                         }
                     }
@@ -142,7 +141,6 @@ module.exports = {
                                 Args.dataHash.push(await key.encryptIpfsHash(insurance.publicKey,dataHash));
                             }
                         }catch(err){
-                            console.log(err);
                             return exits.internalError();
                         }
                     }
@@ -155,7 +153,6 @@ module.exports = {
                                 Args.dataHash.push(await key.encryptIpfsHash(provider.publicKey,dataHash));
                             }
                         }catch(err){
-                            console.log(err);
                             return exits.internalError();
                         }
                     }
@@ -166,7 +163,6 @@ module.exports = {
                             Args.to.push(patient.publicKey);
                             Args.dataHash.push(await key.encryptIpfsHash(patient.publicKey,dataHash));
                         }catch(err){
-                            console.log(err);
                             return exits.internalError();
                         }
                     }
@@ -179,7 +175,6 @@ module.exports = {
                         else
                             return exits.success({'success': false, 'message': result});
                     }catch(err){
-                        console.log(err);
                         return exits.fabric();
                     }
                 });
