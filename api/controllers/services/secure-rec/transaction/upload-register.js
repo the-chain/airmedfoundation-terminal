@@ -171,7 +171,7 @@ module.exports = {
                         let args = [from, JSON.stringify(Args)];
                         let result = await fabric.invokeTransaction('mychannel','Org1MSP','secureRec','sendRegister', args);
                         if (result['status'] == 'SUCCESS') 
-                            return exits.success({'success': true});
+                            return exits.success({'success': true, 'message': 'Your file has been sent successfully to every select user.' });
                         else
                             return exits.success({'success': false, 'message': result});
                     }catch(err){
