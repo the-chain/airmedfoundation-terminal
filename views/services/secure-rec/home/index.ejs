@@ -3,45 +3,78 @@
 <main class="container general-container">
     <div class="row h-100">
         <div class="col-12 my-auto">
-            <div class="row align-items-center margin-first">
+            <div class="row align-items-center mt-4 mb-5">
                 <div class="col-md-12 col-lg-6">
                     <h5 class="home-title"><i class="fas fa-heartbeat" aria-hidden="true"></i> Secure <span class="blue-word">Rec</span></span></h5>
                     <hr>
-                    <p class="home-paragraph">The Airmed Foundation is an <span class="font-weight-bold">open source initiative</span> working under the Apache License. We provide a <span class="font-weight-bold">secure channel to store and transfer medical records</span>. We do this through the <span class="font-weight-bold">Interplanetary File System (IPFS)</span> and <span class="font-weight-bold">Hyperledger Fabric</span>. The conjunction of these technologies guarantees the immutability and availability of the data. We replicate all records through the IPFS network, using the <span class="font-weight-bold">Bitttorrent</span> protocol. We achieve secure access to files through <span class="font-weight-bold">asymmetric cryptography</span>. We protect and store access keys in the Hyperledger Fabric <span class="font-weight-bold">blockchain</span>.</p>
+                    <p class="home-paragraph">SecureRec is an <span class="font-weight-bold">Airmed Foundation service</span> that provides a <span class="font-weight-bold">secure channel to store and transfer medical records</span>. This files transaction are made between different users as health professionals, patients, providers (hospitals, pharmacies, laboratories) and insurance companies. Like the example shown on the Airmed Foundation home page, the records are encrypted and stored in <span class="font-weight-bold">InterPlanetary Filesystem and Hyperledger Fabric</span>.
+                    </p>
+                    <p class="home-paragraph">For example, a <span class="font-weight-bold">laboratory</span> can send a <span class="font-weight-bold">    blood test</span> to the <span class="font-weight-bold">patient</span> who performed it, his <span class="font-weight-bold">doctors</span> and if he is insured, also to the <span class="font-weight-bold">insurance company</span> (to cover the cost of the exam). Each of the users mentioned above, have access to the record they received, being able to consult it at any time.
+                    </p>
                 </div>
                 <div class="col-md-12 col-lg-6 justify-content-center">
                     <div class="text-center">
-                        
+                        <img src="../../images/home/form.png" id="record-logo"/></a>
                     </div>
                 </div>
             </div>
-            <div class="row align-items-center margin-top-section">
-                <div class="col-md-12 col-lg-6">
-                    <h5 class="home-title">How does it work?</h5>
-                    <hr>
-                    <p class="home-paragraph">
-                        There are two ways to use Airmed.
-                    </p>
-                    <p class="home-paragraph">
-                        The first and easiest is to upload a file and share it publicly through the <span class="font-weight-bold">hash address</span> that the system returns. This allows you to download it from any InterPlanetary Filesystem client that is connected to the public network. Files also become available through the <span class="font-weight-bold">IPFS gateway</span>. Just attach the hash address to the IPFS url, as shown below.
-                    </p>
-                    <h6 class="home-title">Example</h6>
-                    <ul>
-                        <li class="guide-number">
-                            <p class="guide-paragraph">With a file with IPFS hash being</p>
-                            <p class="p-word-break guide-paragraph"><span class="font-weight-bold">QmNdWbbe3jsHUUYZwq2w9eCkHD1JefV1oM7m4DkSJF4wzp</span></p>
-                        </li>
-                        <li class="guide-number">
-                            <p class="guide-paragraph">https://gateway.ipfs.io/ipfs/<span class="font-weight-bold">&lt;the hash address goes here&gt;</span></p>
-                        </li>
-                        <li class="guide-number">
-                            <p class="guide-paragraph"><span class="font-weight-bold">Like...</span></p>
-                            <p class="p-word-break guide-paragraph"><a href="https://gateway.ipfs.io/ipfs/QmNdWbbe3jsHUUYZwq2w9eCkHD1JefV1oM7m4DkSJF4wzp" target="_blank">https://gateway.ipfs.io/ipfs/QmNdWbbe3jsHUUYZwq2w9eCkHD1JefV1oM7m4DkSJF4wzp</a></p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-12 col-lg-6 justify-content-center">
-                    <div class="text-center">
+            <div class="row align-items-center mt-5 mb-5">
+                <div class="col-12 justify-content-center">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="home-title"><i class="fas fa-users" aria-hidden="true"></i> User Types</span></h5>
+                            <hr>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="text-center mb-5">
+                                <div class="d-inline-block pr-3">
+                                    <div class="user-type-icon home-icon">
+                                        <i class="far fa-hospital user-type-icon-i" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="d-inline-block pr-3">
+                                    <div class="user-type-icon home-icon">
+                                        <i class="fas fa-microscope user-type-icon-i" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="d-inline-block">
+                                    <div class="user-type-icon home-icon">
+                                        <i class="fas fa-capsules user-type-icon-i" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <p class="service-keys-p text-uppercase font-weight-bold text-center mt-3">Providers</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="text-center mb-5">
+                                <div class="d-inline-block">
+                                    <div class="user-type-icon home-icon">
+                                        <i class="fas fa-ambulance user-type-icon-i" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <p class="service-keys-p text-uppercase font-weight-bold text-center mt-3">Insurance Companies</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="text-center mb-5">
+                                <div class="d-inline-block">
+                                    <div class="user-type-icon home-icon">
+                                        <i class="fas fa-user-md user-type-icon-i" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <p class="service-keys-p text-uppercase font-weight-bold text-center mt-3">Doctors</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="text-center mb-5">
+                                <div class="d-inline-block">
+                                    <div class="user-type-icon home-icon">
+                                        <i class="fas fa-user user-type-icon-i" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <p class="service-keys-p text-uppercase font-weight-bold text-center mt-3">Patients</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
