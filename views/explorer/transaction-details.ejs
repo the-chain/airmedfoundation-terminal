@@ -108,13 +108,17 @@
                                 <p class="detail-text">To:</p>
                             </div>
                             <div class="col-12 col-md-8">
-                                <% if(transaction.imputsArgs.length > 0) { %>
+                                <% if(transaction.imputsArgs.length > 0 && transaction.imputsArgs[0] == 'sendHash') { %>
                                     <p class="p-word-breaks detail-text"> 
                                         <a href="../address/<%= transaction.imputsArgs[2] %>"> 
                                             <%= transaction.imputsArgs[2] %>
                                         </a>
                                         <i class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="<%= transaction.imputsArgs[2] %>" title="Copy to clipboard"></i>
                                     </p>
+                                <% }else if(transaction.imputsArgs.length > 0 && transaction.imputsArgs[0] == 'sendRegister') { %>
+                                        <p class="detail-text"> 
+                                            N/A 
+                                        </p>
                                 <% }else{ %>
                                     <p class="detail-text"> 
                                         N/A 

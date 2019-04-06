@@ -127,10 +127,13 @@
                                                 <% if(transaction.imputsArgs.length > 0 && transaction.imputsArgs[0] == 'sendHash') { %>
                                                     <p class="explorer-p">From <a href="explorer/address/<%= transaction.imputsArgs[1] %>"><%= transaction.imputsArgs[1].substr(0, 22) + '…' %></a> To <a href="explorer/address/<%= transaction.imputsArgs[2] %>"><%= transaction.imputsArgs[2].substr(0, 22) + '…' %></a></p>
                                                     <p class="explorer-p">Message <span><%= transaction.imputsArgs[2].substr(0, 22) + '…' %></span></p>
-                                                <% }else{ %>
+                                                <% }else if( transaction.imputsArgs.length > 0 && transaction.imputsArgs[0] ==  'sendRegister'){ %>
+                                                    <p class="explorer-p">From <a href="explorer/address/<%= transaction.imputsArgs[1] %>"><%= transaction.imputsArgs[1].substr(0, 22) + '…' %></a>  To <span class="font-weight-bold">N/A</span></p>
+                                                    <p class="explorer-p">Message <span class="font-weight-bold">N/A</span></p>
+                                                <% } else { %>
                                                     <p class="explorer-p">From <span class="font-weight-bold">N/A</span> To <span class="font-weight-bold">N/A</span></p>
                                                     <p class="explorer-p">Message <span class="font-weight-bold">N/A</span></p>
-                                                <% } %>
+                                                <% }%>
                                             </div>
                                         </div>
                                     </li>

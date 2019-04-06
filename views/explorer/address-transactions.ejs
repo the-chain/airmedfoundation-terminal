@@ -34,7 +34,11 @@
                                         <td><%=transaction.imputsArgs[1] %></td>
                                         <td><i class="fas fa-arrow-right"></i></td>
                                         <td><%=transaction.imputsArgs[2] %></td>
-                                    <% }else{ %>
+                                    <% }else if(transaction.imputsArgs.length > 0 && transaction.imputsArgs[0] == 'sendRegister') { %>
+                                        <td><%=transaction.imputsArgs[1] %></td>
+                                        <td><i class="fas fa-arrow-right"></i></td>
+                                        <td>N/A</td>
+                                    <% }else { %>
                                         <td>N/A</td>
                                         <td><i class="fas fa-arrow-right"></i></td>
                                         <td>N/A</td>
