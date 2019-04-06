@@ -1000,9 +1000,7 @@ $('#edit-note-btn').click(function() {
 			},
 			success: function(result) {
 				if(result.success) {
-					// srHashSent.row('.selected').edit( {
-					// 	Note: $('#sr-note-edit').val()
-					// });
+					srHashSent.row('.selected').data()[1] = $('#sr-note-edit').val();
 					$('#message-success-text').html(result.message);
 					$('#message-success').removeClass('d-none');
 					$('#message-success').show();
