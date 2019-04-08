@@ -41,6 +41,20 @@
                         <div class="row">
                             <div class="col-12 col-md-4">
                                 <p class="detail-text">
+                                    Status:
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <p class="detail-text">
+                                    <%= transaction.status %>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <p class="detail-text">
                                     Block:
                                 </p>
                             </div>
@@ -136,9 +150,13 @@
                             </div>
                             <div class="col-12 col-md-8">
                                 <p class="p-word-breaks detail-text"> 
-                                    <% if(transaction.imputsArgs.length > 0) { %>
+                                    <% if(transaction.imputsArgs.length > 0 && transaction.imputsArgs[0] == 'sendHash') { %>
                                         <p class="p-word-breaks detail-text"> 
                                             <%= transaction.imputsArgs[3] %>
+                                        </p>
+                                    <% }else if(transaction.imputsArgs.length > 0 && transaction.imputsArgs[0] == 'sendRegister') { %>
+                                        <p class="detail-text"> 
+                                            N/A 
                                         </p>
                                     <% }else{ %>
                                         <p class="detail-text"> 
@@ -174,20 +192,6 @@
                                 <pre>
                                     <code>
 <%= JSON.stringify(transaction.write, null, 4) %>    
-                                    </code>
-                                </pre>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-12 col-md-4">
-                                <span>Read Chainode:</span>
-                            </div>
-                            <div class="col-12 col-md-8">
-                                <pre>
-                                    <code>
-<%= JSON.stringify(transaction.readChaincode, null, 4) %>    
                                     </code>
                                 </pre>
                             </div>

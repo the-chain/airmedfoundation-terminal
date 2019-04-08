@@ -44,6 +44,10 @@ module.exports = {
             responseType: 'bad-combo',
             description: 'The parameters provided are invalid.'
         },
+        conflict: {
+            responseType: 'conflict',
+            description: 'Los parámetros proporcionados no son únicos.'
+        },
         upload: {
             responseType: 'error-upload',
             description: 'Error uploading the image'
@@ -117,7 +121,10 @@ module.exports = {
                     };
                     Args.copy = await key.encryptIpfsHash(from,dataHash);
                     // Save notes
-                    var notes = await Note.create(Object.assign({ hash: hashFile, note: inputs.notes})).fetch();
+                    var notes = await Note.create(Object.assign({ hash: Args.copy, note: inputs.notes}))
+                    .intercept('E_UNIQUE', 'conflict')
+                    .intercept({name: 'UsageError'}, 'invalid')
+                    .fetch();
                     var doctors = users.doctors, insurances = users.insurances, providers = users.providers;
                     var doctor, insurance, provider, patient = users.patient;
                     // Get all doctors
@@ -171,7 +178,7 @@ module.exports = {
                         let args = [from, JSON.stringify(Args)];
                         let result = await fabric.invokeTransaction('mychannel','Org1MSP','secureRec','sendRegister', args);
                         if (result['status'] == 'SUCCESS') 
-                            return exits.success({'success': true, 'message': 'Your file has been sent successfully to every select user.' });
+                            return exits.success({'success': true, 'message': 'Your file has been sent successfully to every select user. Hyperledger transaction hash: ' + result['hash'] });
                         else
                             return exits.success({'success': false, 'message': result});
                     }catch(err){

@@ -3,6 +3,7 @@
 <main class="container general-container">
     <div class="row h-100">
         <div class="col-12 my-auto">
+            <% include ../../../layouts/flash-message %>
             <% include ../../../layouts/wait %>
             <h5 class="detail-title">
                 Files
@@ -26,6 +27,7 @@
                                     <th>Description</th>
                                     <th>Note</th>
                                     <th>Hash</th>
+                                    <th>NoteId</th>
                                     <th>Doctors</th>
                                     <th>Insurances</th>
                                     <th>Providers</th>
@@ -41,8 +43,9 @@
                                         <td><%= element.description %></td>
                                         <td><%= element.notes %></td>
                                         <td><%= element.fileHash %></td>
+                                        <td><%= element.noteId %></td>
                                         <td>
-                                            <% if(element.doctors.length > 0) { %>
+                                            <% if(element.doctors && element.doctors.length > 0) { %>
                                                 <% element.doctors.forEach(function(doctor)  { %>
                                                     <%= doctor + ', ' %>
                                                 <% }); %>
@@ -51,7 +54,7 @@
                                             <% } %>
                                         </td>
                                         <td>
-                                            <% if(element.insurances.length > 0) { %>
+                                            <% if(element.insurances && element.insurances.length > 0) { %>
                                                 <% element.insurances.forEach(function(insurance)  { %>
                                                     <%= insurance + ', ' %>
                                                 <% }); %>
@@ -60,7 +63,7 @@
                                             <% } %>
                                         </td>
                                         <td>
-                                            <% if(element.providers.length > 0) { %>
+                                            <% if(element.providers && element.providers.length > 0) { %>
                                                 <% element.providers.forEach(function(provider)  { %>
                                                     <%= provider + ', ' %>
                                                 <% }); %>
@@ -207,7 +210,7 @@
                     </form>
                     <div class="row mt-4 mb-5">
                         <div class="col-4 offset-8">
-                            <button id="edit-note-btn" type="button" class="btn btn-primary btn-block close" data-dismiss="modal" aria-label="save">Save</button>
+                            <button id="edit-note-btn" type="button" class="btn btn-primary btn-block">Save</button>
                         </div>
                     </div>
                 </div>

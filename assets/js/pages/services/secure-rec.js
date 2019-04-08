@@ -400,22 +400,22 @@ var srHashSent = $('#sr-hash-sent').DataTable({
 			}
 		},
 		{
-			'targets': [3, 4, 5, 6],
+			'targets': [3, 4, 5, 6, 7],
 			'visible': false,
             'searchable': false
 		},
 		{
-			'targets': 7,
+			'targets': 8,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-viewed-sent'><i class='fa fa-eye' aria-hidden='true'></i></button>"
 		},
 		{
-			'targets': 8,
+			'targets': 9,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-edit-sent'><i class='far fa-edit' aria-hidden='true'></i></button>"
 		},
 		{
-			'targets': 9,
+			'targets': 10,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-download-sent'><i class='fas fa-download' aria-hidden='true'></i></button>"
 		}
@@ -459,10 +459,10 @@ $(document.body).on('click', '.sr-viewed-sent', function () {
 	description = srHashSent.row('.selected').data()[0];
 	note = srHashSent.row('.selected').data()[1];
 	hash = srHashSent.row('.selected').data()[2];
-	doctors = srHashSent.row('.selected').data()[3];
-	insurances = srHashSent.row('.selected').data()[4];
-	providers = srHashSent.row('.selected').data()[5];
-	patient = srHashSent.row('.selected').data()[6];
+	doctors = srHashSent.row('.selected').data()[4];
+	insurances = srHashSent.row('.selected').data()[5];
+	providers = srHashSent.row('.selected').data()[6];
+	patient = srHashSent.row('.selected').data()[7];
 	to = '';
 	if (doctors != 'N/A')
 		to += '<p class="mb-2 font-weight-bold">Doctors: </p> <span class="ml-3">' + doctors + '</span>'; 
@@ -541,6 +541,7 @@ function downloadSRFile(hash) {
 		},
 		success: function(result) {
 			let link = document.createElement('a');
+			document.body.appendChild(link);
 			link.download = result.imageName;
 			link.href = result.image;
 			link.click();
@@ -985,7 +986,7 @@ $('#sr-upload-btn').click(function() {
 $('#edit-note-btn').click(function() {
 	if ($('#form-secure-rec-edit-note').valid()){
 		let sendInfo = {
-			'notesId': $('#sr-hash-sent-row-edit').val(),
+			'notesId': srHashSent.row('.selected').data()[3],
 			'newNote': $('#sr-note-edit').val(),
 		};
 		$.ajax({
@@ -1000,7 +1001,11 @@ $('#edit-note-btn').click(function() {
 			},
 			success: function(result) {
 				if(result.success) {
-					srHashSent.row('.selected').data()[1] = $('#sr-note-edit').val();
+					let test = srHashSent.row('.selected').data();
+					test[1] = $('#sr-note-edit').val();
+					srHashSent.row('.selected').data(test);
+					srHashSent.draw();
+					$('#modal-sr-edit-sent').modal('hide');
 					$('#message-success-text').html(result.message);
 					$('#message-success').removeClass('d-none');
 					$('#message-success').show();
