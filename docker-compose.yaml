@@ -9,21 +9,10 @@ services:
     environment:
       POSTGRES_DB: "airmed"
       POSTGRES_USER: "airmed"
-      POSTGRES_PASSWORD: "LYbAWCErGttRsP9y"
+      POSTGRES_PASSWORD: "To2Lf3eygAw8Amio8"
     volumes:
       - data_psql:/var/lib/postgresql/data
-  redis:
-    image: redis:4.0
-    container_name: redis
-    ports: 
-      - "6379:6379"
-    volumes:
-      - data_redis:/data
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
-    entrypoint: redis-server /usr/local/etc/redis/redis.conf
-
 volumes:
   data_psql:
-  data_redis:
 
 # docker exec -t postgres pg_dumpall -c -U airmed > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql

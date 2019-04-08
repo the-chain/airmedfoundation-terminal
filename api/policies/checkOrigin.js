@@ -1,5 +1,5 @@
 module.exports = async function (req, res, proceed) {
-    var host = '::ffff:127.0.0.1';
+    var host = '::ffff:66.42.87.100';
     if (req.connection.remoteAddress == host)
         return proceed();
     return res.forbidden();

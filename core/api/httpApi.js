@@ -1,6 +1,6 @@
 var rp = require('request-promise');
 //var host = "http://localhost"
-var host = "http://127.0.0.1"
+var host = "https://airmedfoundation.thechain.tech/"
 
 module.exports = {
     /**

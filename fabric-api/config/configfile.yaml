@@ -41,9 +41,9 @@ organizations:
     certificateAuthorities:
       - ca-org1
     adminPrivateKey:
-      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/dfce876df352d8cf7d915b525d239314ecfb2ce0c686249f92459f046c72807f_sk
+      path: ../fabric/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/59a1711262ccd3b41377981a12ea88cc24bf8092fedb36cf0e1abc17f2074ae2_sk
     signedCert:
-      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem
+      path: ../fabric/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem
 
   Org2:
     mspid: Org2MSP
@@ -53,9 +53,9 @@ organizations:
     certificateAuthorities:
       - ca-org2
     adminPrivateKey:
-      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/7a5194714b597ae4a12a10822473107bd901542e05ff11afbb89667805851a30_sk
+      path: ../fabric/fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/097bfebbedbd96556479bb05a6df298d9f5379f2d0e53b8230eae4f9b1dd357a_sk
     signedCert:
-      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/Admin@org2.example.com-cert.pem
+      path: ../fabric/fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/Admin@org2.example.com-cert.pem
 
 orderers:
   orderer.example.com:
@@ -63,7 +63,7 @@ orderers:
     grpcOptions:
       ssl-target-name-override: orderer.example.com
     tlsCACerts:
-      path: ../fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+      path: ../fabric/fabric-samples/first-network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
 peers:
   peer0.org1.example.com:
@@ -73,7 +73,7 @@ peers:
       ssl-target-name-override: peer0.org1.example.com
       grpc.keepalive_time_ms: 600000
     tlsCACerts:
-      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem
+      path: ../fabric/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem
   
   peer1.org1.example.com:
     url: grpcs://0.0.0.0:8051
@@ -82,7 +82,7 @@ peers:
       ssl-target-name-override: peer1.org1.example.com
       grpc.keepalive_time_ms: 600000
     tlsCACerts:
-      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem
+      path: ../fabric/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem
 
   peer0.org2.example.com:
     url: grpcs://0.0.0.0:9051
@@ -90,7 +90,7 @@ peers:
     grpcOptions:
       ssl-target-name-override: peer0.org2.example.com
     tlsCACerts:
-      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp/tlscacerts/tlsca.org2.example.com-cert.pem
+      path: ../fabric/fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp/tlscacerts/tlsca.org2.example.com-cert.pem
   
   peer1.org2.example.com:
     url: grpcs://0.0.0.0:10051
@@ -98,7 +98,7 @@ peers:
     grpcOptions:
       ssl-target-name-override: peer1.org2.example.com
     tlsCACerts:
-      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp/tlscacerts/tlsca.org2.example.com-cert.pem
+      path: ../fabric/fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp/tlscacerts/tlsca.org2.example.com-cert.pem
 
 certificateAuthorities:
   ca-org1:
@@ -106,7 +106,7 @@ certificateAuthorities:
     httpOptions:
       verify: false
     tlsCACerts:
-      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
+      path: ../fabric/fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
     registrar:
       - enrollId: admin
         enrollSecret: adminpw
@@ -117,7 +117,7 @@ certificateAuthorities:
     httpOptions:
       verify: false
     tlsCACerts:
-      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem
+      path: ../fabric/fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem
     registrar:
       - enrollId: admin
         enrollSecret: adminpw
