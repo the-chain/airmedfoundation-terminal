@@ -27,6 +27,9 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
+    if (sails.config.email.emailVerification == 0)
+      return this.res.redirect('/services/secure-rec');
+
     if ( inputs.hash === undefined ) {
       this.req.flash('error', 'Invalid data provided');
       return this.res.redirect('/services/secure-rec/login');
@@ -88,7 +91,21 @@ module.exports = {
         this.req.flash('error', 'Internal Error');
         return this.res.redirect('/services/secure-rec/login');
       }
-
+      // Send success registration email
+      let messageBody = {
+        email: user.emailAddress,
+        errorMessage: 'An error has occurred.',
+        successMessage: 'Success',
+        titleMessage: 'Welcome to Secure Rec!',
+        message: 'Thank you for verifying your account! Now you can login.',
+        subject: 'Welcome to Secure Rec!'
+      }
+      mailer.successRegistration(messageBody,(err, json)=>{
+        if (err)
+          console.group(err,json);
+        //else
+          //console.log(json);
+      });
       this.req.flash('success', 'Welcome to Secure Rec! Thank you for verifying your account! Now you can login.');
       return this.res.redirect('/services/secure-rec/login');
     }

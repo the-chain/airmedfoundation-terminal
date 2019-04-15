@@ -51,3 +51,23 @@ module.exports.passwordRecovery = function(data, cb) {
     }
   );
 }
+
+module.exports.successRegistration = function(data,cb){
+  return sails.hooks.email.send(
+    'successRegistration', 
+    {
+      title:  data.titleMessage,
+      message: data.message
+    },
+    {
+      to: data.email,
+      subject: data.subject
+    },
+    function(err) {
+        if (err)
+          cb(err, { status: 'error', message: data.errorMessage });
+        else
+          cb(null, { status: 'info', message: data.infoMessage });
+    }
+  );
+};
