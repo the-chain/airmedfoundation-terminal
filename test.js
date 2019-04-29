@@ -26,7 +26,7 @@ describe('Crypto Library test', function(){
     crypto.assertPublicKeyTest();
     crypto.assertPrivateKeyTest();
 });
-Airmed Test
+// Airmed Test
 describe('Airmed Foundation Test', function(){
     this.timeout(20000);
     airmed.uploadFileTest();
