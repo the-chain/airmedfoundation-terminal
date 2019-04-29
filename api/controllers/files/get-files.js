@@ -42,21 +42,15 @@ module.exports = {
     }else{
       return exits.ursa();
     }
-    resp1 = response[0].toString('utf8');
-    resp2 = response[1].toString('utf8');
-    if (!resp1)
-      resp1 = '{"hashSent":[],"hashReceived":[]}';
-    if (!resp2)
-      resp2 = '{"hashSent":[],"hashReceived":[]}';
+    fabricResp = response[0].toString('utf8');
+    if (!fabricResp)
+      fabricResp = '{"hashSent":[],"hashReceived":[]}';
+
     // Check response from Fabric Peer
     try{
-      response = JSON.parse(resp1);
+      response = JSON.parse(fabricResp);
     }catch(err){
-      try{
-        response = JSON.parse(resp2);
-      }catch(err){
         return exits.fabric();
-      }
     }
     // Send response
     return exits.success(
