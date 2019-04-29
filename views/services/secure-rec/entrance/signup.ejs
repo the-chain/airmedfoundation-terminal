@@ -109,6 +109,10 @@
                                     <label class="service-form-label mb-2">Website</label>
                                     <input id="websiteProvider" class="form-control service-form-input" type="text" name="websiteProvider" placeholder="Website link" autocomplete="none">
                                 </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">EIN</label>
+                                    <input id="EINProvider" class="form-control service-form-input bfh-phone" type="text" name="EINProvider" placeholder="12-3456789" autocomplete="none" data-format="dd-ddddddd">
+                                </div>
                                 <div class="form-group col-12"> 
                                     <label class="service-form-label mb-3">* Enrolling as</label>
                                     <div class="row">
@@ -155,12 +159,24 @@
                                     <label class="service-form-label mb-2">Website</label>
                                     <input id="websiteInsurance" class="form-control service-form-input" type="text" name="website" placeholder="Website link" autocomplete="none">
                                 </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">EIN</label>
+                                    <input id="EINInsurance" class="form-control service-form-input bfh-phone" type="text" name="EINInsurance" placeholder="12-3456789" autocomplete="none" data-format="dd-ddddddd">
+                                </div>
                             </div>
                         </section>
                     </form>
                     <form id="form-secure-rec-doctor" class="d-none">
                         <section id="doctor-info">
                             <div class="form-row mb-2">
+                                <div class="form-group col-12 mb-4">
+                                    <div class="profile-img-container">
+                                        <div id="profile-img-d" class="profile-img">
+                                            <img src="../../images/general/default-profile-img.png" class="profile-img-src" id="profile-img-preview-doctor">
+                                        </div>
+                                        <label class="service-form-label mb-2">Foto de perfil</label>
+                                    </div>
+                                </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* First name</label>
                                     <input id="firstNameDoctor" class="form-control service-form-input" type="text" name="firstName" placeholder="First name" autocomplete="none">
@@ -174,9 +190,10 @@
                                     <input id="specialty" class="form-control service-form-input" type="text" name="specialty" placeholder="Specialty" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">* Social Security Number</label>
-                                    <input id="socialSecurityNumber" class="form-control service-form-input bfh-phone" type="text" name="socialSecurityNumber" placeholder="ie. 123-45-6789" autocomplete="none" data-format="ddd-dd-dddd">
+                                    <label class="service-form-label mb-2">Social Security Number</label>
+                                    <input id="socialSecurityNumberDoctor" class="form-control service-form-input bfh-phone" type="text" name="socialSecurityNumberDoctor" placeholder="123-45-6789" autocomplete="none" data-format="ddd-dd-dddd">
                                 </div>
+                                <input id="profile-img-hidden-doctor" type="file" name="profile-img" class="profile-img-hidden d-none">
                             </div>
                         </section>
                     </form>
@@ -184,12 +201,24 @@
                         <section id="patient-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
+                                    <div class="profile-img-container">
+                                        <div id="profile-img-p" class="profile-img">
+                                            <img src="../../images/general/default-profile-img.png" class="profile-img-src" id="profile-img-preview-patient">
+                                        </div>
+                                        <label class="service-form-label mb-2">Foto de perfil</label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* First name</label>
                                     <input id="firstNamePatient" class="form-control service-form-input" type="text" name="firstName" placeholder="First name" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* Last name</label>
                                     <input id="lastNamePatient" class="form-control service-form-input" type="text" name="lastName" placeholder="Last name" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Social Security Number</label>
+                                    <input id="socialSecurityNumberPatient" class="form-control service-form-input bfh-phone" type="text" name="socialSecurityNumber" placeholder="123-45-6789" autocomplete="none" data-format="ddd-dd-dddd">
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* Blood type</label>
@@ -210,6 +239,7 @@
                                         <label class="custom-control-label service-form-label mb-2 pt-1 font-weight-normal" for="customRadio2">No</label>
                                     </div>
                                 </div>
+                                <input id="profile-img-hidden-patient" type="file" name="profile-img" class="profile-img-hidden d-none">
                             </div>
                         </section>
                     </form>
