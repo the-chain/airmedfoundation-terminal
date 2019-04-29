@@ -142,6 +142,44 @@ a:hover {
     z-index: 0;   
 }
 
+.profile-img-container{
+    position: relative;
+    text-align: center; 
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    background-color: #fff;
+    border: 3px solid #7a7a7a;
+    color: #fff;
+    border-radius: 50%;
+    margin: 5px auto;
+    overflow: hidden;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    cursor: pointer;
+}
+
+.profile-img:hover {
+    border-color: #30a5ff; 
+}
+
+.profile-img input[type="file"] {
+    cursor: pointer;
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: 0 !important;
+    position: absolute;
+    top: 0;
+    width: 100%; 
+}
+
+.profile-img-src {
+    width: 100%;
+}
+
 .hidden-element-container {
     position: relative;
     text-align: center; 

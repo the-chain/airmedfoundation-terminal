@@ -104,6 +104,9 @@ var secureRecProviderInfo = $('#form-secure-rec-provider').validate({
 		website: {
             maxlength: 100
 		},
+		EINProvider: {
+			maxlength: 10
+		},
 		providerType: {
 			required: true
         }
@@ -133,6 +136,9 @@ var secureRecInsuranceInfo = $('#form-secure-rec-insurance').validate({
 		},
 		website: {
             maxlength: 120
+		},
+		EINInsurance: {
+			maxlength: 10
 		}
 	},
 	errorPlacement: function(error,element) {
@@ -161,7 +167,6 @@ var secureRecDoctorInfo = $('#form-secure-rec-doctor').validate({
 			maxlength: 120
 		},
 		socialSecurityNumber: {
-			required: true,
 			maxlength: 11
 		}
 	},
@@ -189,6 +194,9 @@ var secureRecPatientInfo = $('#form-secure-rec-patient').validate({
 		bloodType: {
 			required: true,
 			maxlength: 20
+		},
+		socialSecurityNumber: {
+			maxlength: 11
 		},
 		allergies: {
 			required: true,
@@ -564,6 +572,32 @@ $(function() {
     });
 });
 
+$('#profile-img-d').click(function(){
+    $('#profile-img-hidden-doctor').trigger('click');
+});
+
+$('#profile-img-p').click(function(){
+    $('#profile-img-hidden-patient').trigger('click');
+});
+
+$('.profile-img-hidden').change(function(){
+    readURL(this);
+});
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+			console.log($(input).attr('id'));
+			if($(input).attr('id') == 'profile-img-hidden-patient')
+				$('#profile-img-preview-patient').attr('src', e.target.result).fadeIn('slow');
+			else
+				$('#profile-img-preview-doctor').attr('src', e.target.result).fadeIn('slow');
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 function clearSecureRecData() {
 	$('.hidden-element').removeClass('hidden-element-active');
 	$('#previus').addClass('d-none');
@@ -688,7 +722,7 @@ $(document.body).on('click', '#next', function () {
 						sendInfo.name = $('#firstNameDoctor').val();
 						sendInfo.lastName = $('#lastNameDoctor').val();
 						sendInfo.specialty = $('#specialty').val();
-						sendInfo.socialSecurityNumber = $('#socialSecurityNumber').val();
+						sendInfo.socialSecurityNumber = $('#socialSecurityNumberDoctor').val();
 						$('#form-secure-rec-doctor').addClass('d-none');
 					} else {
 						secureRecDoctorInfo.focusInvalid();
