@@ -383,8 +383,7 @@ function postImage() {
 		complete: function() {
 			$dropZone.removeClass('is-uploading');
 		},
-		error: function (xhr, ajaxOptions, thrownError)
-		{
+		error: function (xhr, ajaxOptions, thrownError){
 			clearUploadData();
 			$('#custom-upload-input').removeClass('d-none');
 			$('#wait-response').addClass('d-none');

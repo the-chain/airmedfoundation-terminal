@@ -20,6 +20,12 @@ module.exports = {
       maxLength: 120
     },
 
+    EIN: {
+      type: 'string',
+      minLength: 10,
+      maxLength: 10
+    }, 
+
     // reference to user
     user: {
       model: 'user'

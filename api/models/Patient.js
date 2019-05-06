@@ -21,6 +21,12 @@ module.exports = {
       maxLength: 120
     },
 
+    birthdate: {
+      type: 'ref',
+      columnType: 'date',
+      required: true,
+    },
+
     bloodType: {
       type: 'string',
       required: true,
@@ -35,6 +41,17 @@ module.exports = {
     donor: {
       type: 'boolean',
       defaultsTo: false
+    },
+
+    socialSecurityNumber: {
+      type: 'string',
+      minLength: 11,
+      maxLength: 11
+    },
+
+    profilePicture: {
+      type: 'string',
+      maxLength: 256
     },
 
     // reference to user

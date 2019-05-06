@@ -27,7 +27,7 @@ module.exports.http = {
     order: [
       'cookieParser',
       'session',
-      'flash', // <-- add this
+      'flash',
       'bodyParser',
       'compress',
       'poweredBy',

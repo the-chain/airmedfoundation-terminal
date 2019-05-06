@@ -6,6 +6,8 @@ module.exports = {
 
   description: 'New user secure rec.',
 
+  files: ['profileImageData'],
+
   inputs: {
     emailAddress: {
       type: 'string',
@@ -53,6 +55,12 @@ module.exports = {
       maxLength: 120
     },
 
+    ein: {
+      type: 'string',
+      minLength: 10,
+      maxLength: 10
+    },
+
     providerType: {
       type: 'string',
       maxLength: 10
@@ -61,6 +69,11 @@ module.exports = {
     lastName: {
       type: 'string',
       maxLength: 120
+    },
+
+    birthdate:{
+      type: 'ref',
+      columnType: 'date',
     },
 
     specialty: {
@@ -72,6 +85,15 @@ module.exports = {
       type: 'string',
       minLength: 11,
       maxLength: 11
+    },
+
+    profileImageType: {
+      type: 'string'
+    },
+
+    profileImageData:{
+      type: 'ref',
+      description: 'Profile picture'
     },
 
     bloodType: {
@@ -91,7 +113,7 @@ module.exports = {
 
   exits: {
     invalid: {
-      responseType: 'badRequest',
+      responseType: 'bad-combo',
       description: 'Los parámetros proporcionados son inválidos.'
     },
 
@@ -106,17 +128,20 @@ module.exports = {
     if(inputs.emailAddress === undefined || inputs.password === undefined || inputs.phone === undefined || inputs.country === undefined || inputs.state === undefined || inputs.address === undefined || inputs.type === undefined) 
       return exits.invalid();
 
-    let newEmailAddress, newPassword, hashToVerify, website, newUserObject, newUserRecord, emailVerification;
+    let newEmailAddress, newPassword, hashToVerify, website, ein, socialSecurityNumber, fileName, newUserObject, newUserRecord, emailVerification;
     const keys = await crypto.generateKeys();
 
     newEmailAddress = inputs.emailAddress.toLowerCase();
     newPassword = await sails.helpers.passwords.hashPassword(inputs.password);
     hashToVerify = await sails.helpers.strings.random('url-friendly');
     website = inputs.website === undefined ? 'none' : inputs.website;
+    ein = inputs.ein === undefined ? '00-0000000' : inputs.ein;
+    socialSecurityNumber = inputs.socialSecurityNumber === undefined ? '000-00-0000' : inputs.socialSecurityNumber;
+    fileName = inputs.profileImageType === undefined ? 'default-profile-img.png' : await sails.helpers.strings.random('url-friendly') + '.' + inputs.profileImageType.split('/').pop();
 
     // Email verfication
     if (sails.config.email.emailVerification == 0) 
-      emailVerification = 'active'; // ONLY FOR TESTING
+      emailVerification = 'active';
     else 
       emailVerification = 'unconfirmed';
     
@@ -136,12 +161,17 @@ module.exports = {
       emailProofTokenExpiresAt: Date.now() + sails.config.custom.emailProofTokenTTL
     });
 
+    await inputs.profileImageData.upload({ dirname: require('path').resolve(sails.config.appPath, 'assets/images/profiles/'), saveAs: fileName }, function (err, uploadedFile){
+      if (err) 
+        return exits.internalError();
+    });
+
     switch (inputs.type) {
         case 'provider':
           // If one of required parameters is missing
           if(inputs.name === undefined || inputs.providerType === undefined)
             return exits.invalid();
-          
+
           newUserRecord = await User.create(newUserObject)
           .intercept('E_UNIQUE', 'emailAlreadyInUse')
           .intercept({name: 'UsageError'}, 'invalid')
@@ -151,6 +181,7 @@ module.exports = {
               user: newUserRecord.id,
               name: inputs.name,
               website: website,
+              ein: ein,
               type: inputs.providerType
           }))
           .intercept({name: 'UsageError'}, 'invalid');
@@ -166,17 +197,18 @@ module.exports = {
           .intercept({name: 'UsageError'}, 'invalid')
           .fetch();
   
-         await Insurance.create(Object.assign({
+          await Insurance.create(Object.assign({
               user: newUserRecord.id,
               name: inputs.name,
-              website: website
+              website: website,
+              ein: ein
           }))
           .intercept({name: 'UsageError'}, 'invalid');
         break;
 
         case 'doctor':
           // If one of required parameters is missing
-          if(inputs.name === undefined || inputs.lastName === undefined || inputs.specialty === undefined || inputs.socialSecurityNumber === undefined)
+          if(inputs.name === undefined || inputs.lastName === undefined || inputs.specialty === undefined || inputs.birthdate === undefined)
             return exits.invalid();
           
           newUserRecord = await User.create(newUserObject)
@@ -188,15 +220,17 @@ module.exports = {
             user: newUserRecord.id,
             name: inputs.name,
             lastName: inputs.lastName,
+            birthdate: inputs.birthdate,
             specialty: inputs.specialty,
-            socialSecurityNumber: inputs.socialSecurityNumber,
+            socialSecurityNumber: socialSecurityNumber,
+            profilePicture: fileName
           }))
           .intercept({name: 'UsageError'}, 'invalid');
         break;
 
         case 'patient':
           // If one of required parameters is missing
-          if(inputs.name === undefined || inputs.lastName === undefined || inputs.bloodType === undefined || inputs.allergies === undefined || inputs.donor === undefined)
+          if(inputs.name === undefined || inputs.lastName === undefined || inputs.birthdate === undefined || inputs.bloodType === undefined || inputs.allergies === undefined || inputs.donor === undefined)
             return exits.invalid();
           
           newUserRecord = await User.create(newUserObject)
@@ -208,9 +242,12 @@ module.exports = {
             user: newUserRecord.id,
             name: inputs.name,
             lastName: inputs.lastName,
+            birthdate: inputs.birthdate,
             bloodType: inputs.bloodType,
             allergies: inputs.allergies,
-            donor: inputs.donor
+            donor: inputs.donor,
+            socialSecurityNumber: socialSecurityNumber,
+            profilePicture: fileName
           }))
           .intercept({name: 'UsageError'}, 'invalid');
         break;

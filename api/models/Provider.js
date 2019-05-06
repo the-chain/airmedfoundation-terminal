@@ -21,6 +21,12 @@ module.exports = {
       defaultsTo: 'none'
     },
 
+    EIN: {
+      type: 'string',
+      minLength: 10,
+      maxLength: 10
+    }, 
+
     type: {
       type: 'string',
       isIn: ['clinic', 'laboratory', 'pharmacy'],
