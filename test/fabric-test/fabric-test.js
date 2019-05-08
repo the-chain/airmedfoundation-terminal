@@ -25,7 +25,7 @@ module.exports = {
         describe('queryChaincode', function(){
             it('Should query a transaction chaincode', function(done){
                 let args = 'LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUh3d0RRWUpLb1pJaHZjTkFRRUJCUUFEYXdBd2FBSmhBUEF6ZkgrQ2VmVjVDVWtUYWc0OWg4NDduVERCb1JFMQp4WjluY3Z2M0d5eEtXLzdtWEVsTUZxQzdTT29KdHVFSWRKZzRnNlhhOXpqMTBlODg0TXowMFVYVmhFMGV3U3VQCk9CVGJwN1NCT0RPdDY0ejNaN1NWRkV4aEFEejFNQllnMXdJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==';
-                transactions.queryChaincode('mychannel','Org1MSP','airmed','query',args)
+                transactions.queryChaincode('mychannel','Org1MSP','airmed','query',[args])
                 .then(function(result){
                     expect((result[0].toString()).includes('Error')).to.not.be.true;
                     done();
