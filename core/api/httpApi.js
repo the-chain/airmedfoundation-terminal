@@ -53,23 +53,6 @@ module.exports = {
         await rp(options);
     },
     /**
-     * @async
-     * @param {Object} key Input key 
-     * @description Block chaincode reads
-     */
-    async createKeyInChaincode(key) {
-        var options = {
-            method: 'POST',
-            uri: host + '/read-chaincode',
-            body: {
-                keys: key.keys,
-                transaction: key.id
-            },
-            json: true
-        };
-        await rp(options);
-    },
-    /**
      * @async 
      * @param {Object} key
      * @description Create key-out

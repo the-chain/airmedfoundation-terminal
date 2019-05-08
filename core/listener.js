@@ -85,12 +85,6 @@ module.exports = {
             }
             // Create Transaction
             await httpClient.createTransaction(Transaction);
-            let key = {
-                id: Transaction.id,
-                keys: {}
-            }
-            // Create from chaincode
-            await httpClient.createKeyInChaincode(key);
             var a,M,tempKey = [];
             try {
                 M = block.data.data[j].payload.data.actions[0].payload.action.proposal_response_payload.extension.results.ns_rwset.length;

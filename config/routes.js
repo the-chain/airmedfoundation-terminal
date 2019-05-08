@@ -82,9 +82,6 @@ module.exports.routes = {
   'POST   /key-in':                                  { action: 'key-in/new' },
 
   // KeyOut model
-  'POST   /key-out':                                 { action: 'key-out/new' },
-
-  // ReadChaincode model
-  'POST   /read-chaincode':                          { action: 'read-chaincode/new' },
+  'POST   /key-out':                                 { action: 'key-out/new' }
 
 };
