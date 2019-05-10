@@ -46,5 +46,8 @@ module.exports.policies = {
   // Transactions
   'services/secure-rec/transaction/upload-register': 'login',
   'services/secure-rec/transaction/download-register': 'login',
-  'services/secure-rec/transaction/edit-notes': 'login'
+  'services/secure-rec/transaction/edit-notes': 'login',
+
+   // Authorizations
+   'services/secure-rec/authorizations/index': 'login',
 };

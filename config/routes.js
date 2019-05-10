@@ -52,6 +52,7 @@ module.exports.routes = {
   'GET    /services/secure-rec/dashboard':          { action: 'services/secure-rec/user/dashboard' },
   'GET    /services/secure-rec/files':              { action: 'services/secure-rec/files/index' },
   'GET    /services/secure-rec/transaction':        { action: 'services/secure-rec/transaction/index' },
+  'GET    /services/secure-rec/authorizations':     { action: 'services/secure-rec/authorizations/index' },
   'GET    /services/secure-rec/session/destroy':    { action: 'services/secure-rec/session/destroy' },
 
   'POST    /services/secure-rec/user/new':          { action: 'services/secure-rec/user/new' },
@@ -61,7 +62,10 @@ module.exports.routes = {
   'POST    /services/secure-rec/upload-register':   { action: 'services/secure-rec/transaction/upload-register'},
   'POST    /services/secure-rec/download-register': { action: 'services/secure-rec/transaction/download-register'},
   'POST    /services/secure-rec/edit-notes':        { action: 'services/secure-rec/transaction/edit-notes'},
+  'POST    /services/secure-rec/authorizations/new':{ action: 'services/secure-rec/authorizations/new' },
   
+  'DELETE  /services/secure-rec/authorizations/user/:id': { action: 'services/secure-rec/authorizations/delete' },
+
   // Block model
   'GET    /block/:hash':                            { action: 'block/get' },
   'GET    /block/id/:id':                           { action: 'block/getbyid' },
