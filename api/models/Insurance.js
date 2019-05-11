@@ -35,6 +35,18 @@ module.exports = {
     patients: {
       collection: 'patient',
       via: 'insurances'
+    },
+
+    // reference to doctors
+    doctors: {
+      collection: 'doctor',
+      via: 'insurances'
+    },
+
+    // reference to providers
+    providers: {
+      collection: 'provider',
+      via: 'insurances'
     }
 
   },
