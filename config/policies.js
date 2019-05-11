@@ -50,4 +50,5 @@ module.exports.policies = {
 
    // Authorizations
    'services/secure-rec/authorizations/index': 'login',
+   'services/secure-rec/authorizations/new': 'login'
 };
