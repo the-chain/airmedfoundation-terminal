@@ -87,7 +87,7 @@ module.exports = {
 
         return exits.success({
             success: true,
-            message: 'Successfully authorized the '+user.type
+            message: 'Successfully authorized the ' + user.type
         });
   
     }
