@@ -56,6 +56,7 @@ module.exports = {
                         await Doctor.addToCollection(authUser.id, 'insurances').members([user.id]);
                     else if (user.type == 'provider')
                         await Doctor.addToCollection(authUser.id, 'providers').members([user.id]);
+                    break;
                 case 'patient':
                     user.id = user[user.type][0].id;
                     if ( user.type == 'doctor' )
@@ -64,6 +65,7 @@ module.exports = {
                         await Patient.addToCollection(authUser.id, 'insurances').members([user.id]);
                     else if (user.type == 'provider')
                         await Patient.addToCollection(authUser.id, 'providers').members([user.id]);
+                    break;
                 case 'insurance':
                     user.id = user[user.type][0].id;
                     if ( user.type == 'patient' )
@@ -72,6 +74,7 @@ module.exports = {
                         await Insurance.addToCollection(authUser.id, 'doctors').members([user.id]);
                     else if (user.type == 'provider')
                         await Insurance.addToCollection(authUser.id, 'providers').members([user.id]);
+                    break;
                 case 'provider':
                     user.id = user[user.type][0].id;
                     if ( user.type == 'patient' )
@@ -80,6 +83,7 @@ module.exports = {
                         await Provider.addToCollection(authUser.id, 'doctors').members([user.id]);
                     else if (user.type == 'insurance')
                         await Provider.addToCollection(authUser.id, 'insurances').members([user.id]);
+                    break;
             }            
         }catch(err){
             return exits.internalError();
