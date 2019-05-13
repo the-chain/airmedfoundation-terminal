@@ -89,9 +89,17 @@ module.exports = {
             return exits.internalError();
         }
 
+        // Send updated user
+        var updatedUser = await User.findOne({ emailAddress: this.req.session.auth.emailAddress })
+        .populate('doctor')
+        .populate('patient')
+        .populate('insurance')
+        .populate('provider');
+
         return exits.success({
             success: true,
-            message: 'Successfully authorized the ' + user.type
+            message: 'Successfully authorized the ' + user.type,
+            user: updatedUser
         });
   
     }
