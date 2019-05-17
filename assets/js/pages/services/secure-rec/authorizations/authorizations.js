@@ -166,33 +166,33 @@ var srPatients = $('#sr-patients').DataTable({
 
 $('#sr-providers-auto-btn').click(function() {
 	if ($('#sr-autorize-provider-form').valid())
-		newAuthorization($('#autorize-provider').val());
+		newAuthorization($('#autorize-provider').val(), 'provider');
 	else
 		srAutorizeProviderForm.focusInvalid();
 });
 
 $('#sr-insurances-auto-btn').click(function() {
 	if ($('#sr-autorize-insurance-form').valid())
-		newAuthorization($('#autorize-insurance').val());
+		newAuthorization($('#autorize-insurance').val(), 'insurance');
 	else
 		srAutorizeInsuranceForm.focusInvalid();
 });
 
 $('#sr-doctors-auto-btn').click(function() {
 	if ($('#sr-autorize-doctor-form').valid())
-		newAuthorization($('#autorize-doctor').val());
+		newAuthorization($('#autorize-doctor').val(), 'doctor');
 	else
 		srAutorizeDoctorForm.focusInvalid();
 });
 
 $('#sr-patients-auto-btn').click(function() {
 	if ($('#sr-autorize-patient-form').valid())
-		newAuthorization($('#autorize-patient').val());
+		newAuthorization($('#autorize-patient').val(), 'patient');
 	else
 		srAutorizePatientForm.focusInvalid();
 });
 
-function newAuthorization(email) {
+function newAuthorization(email, userType) {
 	let sendInfo = {
 		'authorizationEmail': email
 	};
@@ -209,8 +209,42 @@ function newAuthorization(email) {
 		},
 		success: function(result) {
 			if(result.success) {
-				// Insertar en tabla
-				// Cambiar por generico $('#sr-autorize-patient-modal').modal('hide');
+				switch (userType) {
+					case 'provider':
+						let einp = result.user.provider['EIN'] === '' ? '00-0000000' : result.user.provider['EIN'];
+						srProviders.row.add({ 
+							'0': result.user['emailAddress'],
+							'1': result.user.provider['name'],
+							'2': einp,
+							'3': result.user.provider['type']
+						}).draw().node();
+						break;
+					case 'insurance':
+						let eini = result.user.insurance['EIN'] === '' ? '00-0000000' : result.insurance['EIN'];
+						srInsurances.row.add({ 
+							'0': result.user['emailAddress'],
+							'1': result.user.insurance['name'],
+							'2': eini,
+						}).draw().node();
+						break;
+					case 'doctor':
+						let ssnd = result.user.doctor[0]['socialSecurityNumber'] === '' ? '000-00-0000' : result.user.doctor[0]['socialSecurityNumber'];
+						srDoctors.row.add({ 
+							'0': result.user['emailAddress'],
+							'1': (result.user.doctor[0]['name'] + ' ' + result.user.doctor[0]['lastName']),
+							'2': ssnd,
+						}).draw().node();
+						break;
+					case 'patient':
+						let ssnp = result.user.patient[0]['socialSecurityNumber'] === '' ? '000-00-0000' : result.user.patient[0]['socialSecurityNumber'];
+						srPatients.row.add({ 
+							'0': result.user['emailAddress'],
+							'1': (result.user.patient[0]['name'] + ' ' + result.user.patient[0]['lastName']),
+							'2': ssnp,
+						}).draw().node();
+						break;
+				}
+				$('#sr-autorize-'+userType+'-modal').modal('hide');
 				$('#message-success-text').text(result.message);
 				$('#message-success').removeClass('d-none');
 				$('#message-success').show();

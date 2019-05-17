@@ -223,7 +223,7 @@ jQuery.validator.addMethod('passwordCheck',
 		if (!/[!@#$/%^&*?.]/.test(value)) condition = false;
 		else $('#special-condition').addClass('tag-check');
 
-		if (value.length <= 8)condition = false;
+		if (value.length < 8) condition = false;
 		else $('#length-condition').addClass('tag-check');
 
 		if(condition) $('#password-conditions').collapse('hide');

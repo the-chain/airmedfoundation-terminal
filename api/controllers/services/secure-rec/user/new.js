@@ -179,6 +179,7 @@ module.exports = {
   
           await Provider.create(Object.assign({
               user: newUserRecord.id,
+              emailAddress: newEmailAddress,
               name: inputs.name,
               website: website,
               ein: ein,
@@ -199,6 +200,7 @@ module.exports = {
   
           await Insurance.create(Object.assign({
               user: newUserRecord.id,
+              emailAddress: newEmailAddress,
               name: inputs.name,
               website: website,
               ein: ein
@@ -218,6 +220,7 @@ module.exports = {
 
           await Doctor.create(Object.assign({
             user: newUserRecord.id,
+            emailAddress: newEmailAddress,
             name: inputs.name,
             lastName: inputs.lastName,
             birthdate: inputs.birthdate,
@@ -240,6 +243,7 @@ module.exports = {
   
           await Patient.create(Object.assign({
             user: newUserRecord.id,
+            emailAddress: newEmailAddress,
             name: inputs.name,
             lastName: inputs.lastName,
             birthdate: inputs.birthdate,

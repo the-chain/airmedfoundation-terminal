@@ -90,7 +90,7 @@ module.exports = {
         }
 
         // Send updated user
-        var updatedUser = await User.findOne({ emailAddress: this.req.session.auth.emailAddress })
+        var updatedUser = await User.findOne({ emailAddress: inputs.authorizationEmail })
         .populate('doctor')
         .populate('patient')
         .populate('insurance')

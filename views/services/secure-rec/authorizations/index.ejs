@@ -40,7 +40,14 @@
                 <div class="tab-content" id="sr-authorizations-tables">
                     <% if(session.auth.type != 'provider') { %>
                         <div class="tab-pane fade show active authorizations-table-div" id="sr-providers-table" role="tabpanel" aria-labelledby="sr-providers-tab">
-                            <button class="box-button btn btn-primary mt-4" type="button" data-toggle="modal" data-target="#sr-autorize-provider-modal"><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                            <% if(allUsers.providers.length > 0) { %>
+                                <button class="box-button btn btn-primary mt-4" type="button" data-toggle="modal" data-target="#sr-autorize-provider-modal"><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                            <% } else { %>
+                                <div class="mt-4">
+                                    <button class="box-button btn btn-primary" type="button" data-toggle="modal" data-target="#sr-autorize-provider-modal" disabled><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                                    <small> No providers available</small>
+                                </div>
+                            <% } %>
                             <table id="sr-providers" class="table hash-table dt-responsive" style="width:100%;">
                                 <thead>
                                     <tr>
@@ -66,7 +73,14 @@
                         </div>
                     <% }else{ %>
                         <div class="tab-pane fade show active authorizations-table-div" id="sr-insurances-table" role="tabpanel" aria-labelledby="sr-insurances-tab">
-                            <button class="box-button btn btn-primary mt-4" type="button" data-toggle="modal" data-target="#sr-autorize-insurance-modal"><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                            <% if(allUsers.insurances.length > 0) { %>
+                                <button class="box-button btn btn-primary mt-4" type="button" data-toggle="modal" data-target="#sr-autorize-insurance-modal"><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                            <% } else { %>
+                                <div class="mt-4">
+                                    <button class="box-button btn btn-primary" type="button" data-toggle="modal" data-target="#sr-autorize-insurance-modal" disabled><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                                    <small> No insurance companies available</small>
+                                </div>
+                            <% } %>
                             <table id="sr-insurances" class="table hash-table dt-responsive" style="width:100%;">
                                 <thead>
                                     <tr>
@@ -91,7 +105,14 @@
                     <% } %>
                     <% if(session.auth.type != 'insurance' && session.auth.type != 'provider') { %>
                         <div class="tab-pane fade authorizations-table-div" id="sr-insurances-table" role="tabpanel" aria-labelledby="sr-insurances-tab">
-                            <button class="box-button btn btn-primary mt-4" type="button" data-toggle="modal" data-target="#sr-autorize-insurance-modal"><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                            <% if(allUsers.insurances.length > 0) { %>
+                                <button class="box-button btn btn-primary mt-4" type="button" data-toggle="modal" data-target="#sr-autorize-insurance-modal"><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                            <% } else { %>
+                                <div class="mt-4">
+                                    <button class="box-button btn btn-primary" type="button" data-toggle="modal" data-target="#sr-autorize-insurance-modal" disabled><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                                    <small> No insurance companies available</small>
+                                </div>
+                            <% } %>
                             <table id="sr-insurances" class="table hash-table dt-responsive" style="width:100%;">
                                 <thead>
                                     <tr>
@@ -116,7 +137,14 @@
                     <% } %>
                     <% if(session.auth.type != 'doctor') { %>
                         <div class="tab-pane fade authorizations-table-div" id="sr-doctors-table" role="tabpanel" aria-labelledby="sr-doctors-tab">
-                            <button class="box-button btn btn-primary mt-4" type="button" data-toggle="modal" data-target="#sr-autorize-doctor-modal"><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                            <% if(allUsers.doctors.length > 0) { %>
+                                <button class="box-button btn btn-primary mt-4" type="button" data-toggle="modal" data-target="#sr-autorize-doctor-modal"><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                            <% } else { %>
+                                <div class="mt-4">
+                                    <button class="box-button btn btn-primary" type="button" data-toggle="modal" data-target="#sr-autorize-doctor-modal" disabled><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                                    <small> No doctors available</small>
+                                </div>
+                            <% } %>
                             <table id="sr-doctors" class="table hash-table dt-responsive" style="width:100%">
                                 <thead>
                                     <tr>
@@ -129,9 +157,13 @@
                                 <tbody>
                                     <% authorized.doctors.forEach(function(doctor)  { %>
                                         <tr>
-                                            <td></td>
+                                            <td><%= doctor.emailAddress %></td>
                                             <td><%= doctor.name %> <%= doctor.lastName %></td>
-                                            <td><%= doctor.socialSecurityNumber %></td>
+                                            <% if(doctor.socialSecurityNumber != '') { %>
+                                                <td><%= doctor.socialSecurityNumber %></td>
+                                            <% } else { %>
+                                                <td>00-0000000</td>
+                                            <% } %>
                                             <td></td>
                                         </tr>
                                     <% }); %> 
@@ -141,7 +173,14 @@
                     <% } %>
                     <% if(session.auth.type != 'patient') { %>
                         <div class="tab-pane fade authorizations-table-div" id="sr-patients-table" role="tabpanel" aria-labelledby="sr-patients-tab">
-                            <button class="box-button btn btn-primary mt-4" type="button" data-toggle="modal" data-target="#sr-autorize-patient-modal"><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                            <% if(allUsers.patients.length > 0) { %>
+                                <button class="box-button btn btn-primary mt-4" type="button" data-toggle="modal" data-target="#sr-autorize-patient-modal"><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                            <% } else { %>
+                                <div class="mt-4">
+                                    <button class="box-button btn btn-primary" type="button" data-toggle="modal" data-target="#sr-autorize-patient-modal" disabled><i class="fas fa-user-plus" aria-hidden="true"></i> Add</button>
+                                    <small> No patients available</small>
+                                </div>
+                            <% } %>
                             <table id="sr-patients" class="table hash-table dt-responsive" style="width:100%">
                                 <thead>
                                     <tr>
@@ -154,9 +193,13 @@
                                 <tbody>
                                     <% authorized.patients.forEach(function(patient)  { %>
                                         <tr>
-                                            <td></td>
+                                            <td><%= patient.emailAddress %></td>
                                             <td><%= patient.name %> <%= patient.lastName %></td>
-                                            <td><%= patient.socialSecurityNumber %></td>
+                                            <% if(patient.socialSecurityNumber != '') { %>
+                                                <td><%= patient.socialSecurityNumber %></td>
+                                            <% } else { %>
+                                                <td>00-0000000</td>
+                                            <% } %>
                                             <td></td>
                                         </tr>
                                     <% }); %> 
@@ -168,28 +211,30 @@
             </div>
         </div>
     </div>
-    <div class="modal fade modal-keys" id="sr-autorize-provider-modal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Authorize Provider</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <form id="sr-autorize-provider-form">
-                                <div class="form-group margin-custom-radio">
-                                    <label class="service-form-label mb-2">Providers</label>
-                                    <select id="autorize-provider" class="selectpicker form-control" name="provider" title="No provider selected" data-live-search="true">
-                                    </select>
-                                </div>
-                            </form>
-                            <div class="row mt-4 mb-5">
-                                <div class="col-4 offset-8">
-                                    <button id="sr-providers-auto-btn" type="button" class="btn btn-primary btn-block">Authorize</button>
+    <% if(session.auth.type != 'provider') { %>
+        <div class="modal fade modal-keys" id="sr-autorize-provider-modal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Authorize Provider</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <form id="sr-autorize-provider-form">
+                                    <div class="form-group margin-custom-radio">
+                                        <label class="service-form-label mb-2">Providers</label>
+                                        <select id="autorize-provider" class="selectpicker form-control" name="provider" title="No provider selected" data-live-search="true">
+                                        </select>
+                                    </div>
+                                </form>
+                                <div class="row mt-4 mb-5">
+                                    <div class="col-4 offset-8">
+                                        <button id="sr-providers-auto-btn" type="button" class="btn btn-primary btn-block">Authorize</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -197,29 +242,31 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade modal-keys" id="sr-autorize-insurance-modal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Authorize Health Insurance Company</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <form id="sr-autorize-insurance-form">
-                                <div class="form-group margin-custom-radio">
-                                    <label class="service-form-label mb-2">Health Insurance Companies</label>
-                                    <select id="autorize-insurance" class="selectpicker form-control" name="insurance" title="No insurance company selected" data-live-search="true">
-                                    </select>
-                                </div>
-                            </form>
-                            <div class="row mt-4 mb-5">
-                                <div class="col-4 offset-8">
-                                    <button id="sr-insurances-auto-btn" type="button" class="btn btn-primary btn-block">Authorize</button>
+    <% } %>
+    <% if(session.auth.type != 'insurance') { %>
+        <div class="modal fade modal-keys" id="sr-autorize-insurance-modal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Authorize Health Insurance Company</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <form id="sr-autorize-insurance-form">
+                                    <div class="form-group margin-custom-radio">
+                                        <label class="service-form-label mb-2">Health Insurance Companies</label>
+                                        <select id="autorize-insurance" class="selectpicker form-control" name="insurance" title="No insurance company selected" data-live-search="true">
+                                        </select>
+                                    </div>
+                                </form>
+                                <div class="row mt-4 mb-5">
+                                    <div class="col-4 offset-8">
+                                        <button id="sr-insurances-auto-btn" type="button" class="btn btn-primary btn-block">Authorize</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -227,29 +274,34 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade modal-keys" id="sr-autorize-doctor-modal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Authorize doctor</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <form id="sr-autorize-doctor-form">
-                                <div class="form-group margin-custom-radio">
-                                    <label class="service-form-label mb-2">Doctors</label>
-                                    <select id="autorize-doctor" class="selectpicker form-control" name="doctor" title="No doctor selected" data-live-search="true">
-                                    </select>
-                                </div>
-                            </form>
-                            <div class="row mt-4 mb-5">
-                                <div class="col-4 offset-8">
-                                    <button id="sr-doctors-auto-btn" type="button" class="btn btn-primary btn-block">Authorize</button>
+    <% } %>
+    <% if(session.auth.type != 'doctor') { %>
+        <div class="modal fade modal-keys" id="sr-autorize-doctor-modal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Authorize doctor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <form id="sr-autorize-doctor-form">
+                                    <div class="form-group margin-custom-radio">
+                                        <label class="service-form-label mb-2">Doctors</label>
+                                        <select id="autorize-doctor" class="selectpicker form-control" name="doctor" title="No doctor selected" data-live-search="true">
+                                            <% allUsers.doctors.forEach(function(doctor)  { %>
+                                                <option value="<%= doctor.user.emailAddress %>"><%= doctor.name %> <%= doctor.lastName %> - <%= doctor.user.emailAddress %></option>
+                                            <% }); %>
+                                        </select>
+                                    </div>
+                                </form>
+                                <div class="row mt-4 mb-5">
+                                    <div class="col-4 offset-8">
+                                        <button id="sr-doctors-auto-btn" type="button" class="btn btn-primary btn-block">Authorize</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -257,29 +309,34 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade modal-keys" id="sr-autorize-patient-modal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Authorize patient</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <form id="sr-autorize-patient-form">
-                                <div class="form-group margin-custom-radio">
-                                    <label class="service-form-label mb-2">Patients</label>
-                                    <select id="autorize-patient" class="selectpicker form-control" name="patient" title="No patient selected" data-live-search="true">
-                                    </select>
-                                </div>
-                            </form>
-                            <div class="row mt-4 mb-5">
-                                <div class="col-4 offset-8">
-                                    <button id="sr-patients-auto-btn" type="button" class="btn btn-primary btn-block">Authorize</button>
+    <% } %>
+    <% if(session.auth.type != 'patient') { %>
+        <div class="modal fade modal-keys" id="sr-autorize-patient-modal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Authorize patient</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <form id="sr-autorize-patient-form">
+                                    <div class="form-group margin-custom-radio">
+                                        <label class="service-form-label mb-2">Patients</label>
+                                        <select id="autorize-patient" class="selectpicker form-control" name="patient" title="No patient selected" data-live-search="true">
+                                            <% allUsers.patients.forEach(function(patient)  { %>
+                                                <option value="<%= patient.user.emailAddress %>"><%= patient.name %> <%= patient.lastName %> - <%= patient.user.emailAddress %></option>
+                                            <% }); %>
+                                        </select>
+                                    </div>
+                                </form>
+                                <div class="row mt-4 mb-5">
+                                    <div class="col-4 offset-8">
+                                        <button id="sr-patients-auto-btn" type="button" class="btn btn-primary btn-block">Authorize</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -287,7 +344,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    <% } %>
 </main>
 
 <% include ../../../layouts/footer %>
