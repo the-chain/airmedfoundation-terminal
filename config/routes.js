@@ -63,8 +63,7 @@ module.exports.routes = {
   'POST    /services/secure-rec/download-register': { action: 'services/secure-rec/transaction/download-register'},
   'POST    /services/secure-rec/edit-notes':        { action: 'services/secure-rec/transaction/edit-notes'},
   'POST    /services/secure-rec/authorizations/new':{ action: 'services/secure-rec/authorizations/new' },
-  
-  'DELETE  /services/secure-rec/authorizations/user/:id': { action: 'services/secure-rec/authorizations/delete' },
+  'DELETE  /services/secure-rec/authorizations/delete':{action: 'services/secure-rec/authorizations/delete'},
 
   // Block model
   'GET    /block/:hash':                            { action: 'block/get' },
