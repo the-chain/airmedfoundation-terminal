@@ -22,6 +22,10 @@ module.exports = {
         internalError: {
             responseType: 'internal-error',
             description: 'Error escribiendo el archivo'
+        },
+        dataExist: {
+            responseType: 'data-exist',
+            description: 'El dato existe'
         }
     },
   
@@ -31,7 +35,11 @@ module.exports = {
             return exits.invalid();
 
         // Find users
-        var authUser = await User.findOne({ emailAddress: this.req.session.auth.emailAddress });
+        var authUser = await User.findOne({ emailAddress: this.req.session.auth.emailAddress })
+        .populate('doctor')
+        .populate('patient')
+        .populate('insurance')
+        .populate('provider');
         var user = await User.findOne({ emailAddress: inputs.authorizationEmail })
         .populate('doctor')
         .populate('patient')
@@ -46,43 +54,45 @@ module.exports = {
         if ( user.type ==  authUser.type )
             return exits.invalid();
         
+        // Validate if is inside the collection
+        var validAuth;
+        switch( authUser.type ){
+            case 'patient':
+                validAuth = await Patient.findOne({emailAddress: this.req.session.auth.emailAddress})
+                .populate(user.type+'s', { where: { emailAddress: inputs.authorizationEmail }});
+                break;
+            case 'doctor':
+                validAuth = await Doctor.findOne({emailAddress: this.req.session.auth.emailAddress})
+                .populate(user.type+'s', { where: { emailAddress: inputs.authorizationEmail }});
+                break;
+            case 'provider':
+                validAuth = await Provider.findOne({emailAddress: this.req.session.auth.emailAddress})
+                .populate(user.type+'s', { where: { emailAddress: inputs.authorizationEmail }});
+                break;
+            case 'insurance':
+                validAuth = await Insurance.findOne({emailAddress: this.req.session.auth.emailAddress})
+                .populate(user.type+'s', { where: { emailAddress: inputs.authorizationEmail }});
+                break;
+        }
+        if (validAuth[user.type+'s'].length > 0)
+            return exits.dataExist();
+            
+        // Add new authorization
+        user.id = user[user.type][0].id;
+        authUser.id = authUser[authUser.type][0].id; 
         try{
             switch( authUser.type ) {
                 case 'doctor':
-                    user.id = user[user.type][0].id; 
-                    if ( user.type == 'patient' )
-                        await Doctor.addToCollection(authUser.id, 'patients').members([user.id]);
-                    else if (user.type == 'insurance')
-                        await Doctor.addToCollection(authUser.id, 'insurances').members([user.id]);
-                    else if (user.type == 'provider')
-                        await Doctor.addToCollection(authUser.id, 'providers').members([user.id]);
+                    await Doctor.addToCollection(authUser.id, user.type + 's').members([user.id]);
                     break;
                 case 'patient':
-                    user.id = user[user.type][0].id;
-                    if ( user.type == 'doctor' )
-                        await Patient.addToCollection(authUser.id, 'doctors').members([user.id]);
-                    else if (user.type == 'insurance')
-                        await Patient.addToCollection(authUser.id, 'insurances').members([user.id]);
-                    else if (user.type == 'provider')
-                        await Patient.addToCollection(authUser.id, 'providers').members([user.id]);
+                    await Patient.addToCollection(authUser.id, user.type + 's').members([user.id]);
                     break;
                 case 'insurance':
-                    user.id = user[user.type][0].id;
-                    if ( user.type == 'patient' )
-                        await Insurance.addToCollection(authUser.id, 'patients').members([user.id]);
-                    else if (user.type  == 'doctor')
-                        await Insurance.addToCollection(authUser.id, 'doctors').members([user.id]);
-                    else if (user.type == 'provider')
-                        await Insurance.addToCollection(authUser.id, 'providers').members([user.id]);
+                    await Insurance.addToCollection(authUser.id, user.type + 's').members([user.id]);
                     break;
                 case 'provider':
-                    user.id = user[user.type][0].id;
-                    if ( user.type == 'patient' )
-                        await Provider.addToCollection(authUser.id, 'patients').members([user.id]);
-                    else if (user.type == 'doctor')
-                        await Provider.addToCollection(authUser.id, 'doctors').members([user.id]);
-                    else if (user.type == 'insurance')
-                        await Provider.addToCollection(authUser.id, 'insurances').members([user.id]);
+                    await Provider.addToCollection(authUser.id, user.type + 's').members([user.id]);
                     break;
             }            
         }catch(err){
