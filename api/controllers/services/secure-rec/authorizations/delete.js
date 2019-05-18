@@ -57,7 +57,7 @@ module.exports = {
                     await Doctor.removeFromCollection(deleteAuth.id, authUser.type + 's').members([authUser.id]);
                     break;
                 case 'insurance':
-                    await Isurance.removeFromCollection(deleteAuth.id, authUser.type + 's').members([authUser.id]);
+                    await Insurance.removeFromCollection(deleteAuth.id, authUser.type + 's').members([authUser.id]);
                     break;
                 case 'provider':
                     await Provider.removeFromCollection(deleteAuth.id, authUser.type + 's').members([authUser.id]);
@@ -72,7 +72,7 @@ module.exports = {
 
         return exits.success({
             success: true,
-            message: 'Deleted'
+            message: 'Deleted '+deleteAuth.type+' authorized',
         });
   
     }
