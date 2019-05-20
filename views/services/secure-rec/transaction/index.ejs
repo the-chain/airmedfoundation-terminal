@@ -31,17 +31,17 @@
                                     <select id="providers" class="selectpicker form-control" multiple name="providers[]" data-selected-text-format="count" title="No providers selected" data-live-search="true">
                                         <optgroup label="Clinics">
                                             <% clinics.forEach(function(clinic)  { %>    
-                                                <option value="<%= clinic.user.emailAddress %>"><%= clinic.name %> - <%= clinic.user.emailAddress %></option>
+                                                <option value="<%= clinic.emailAddress %>"><%= clinic.name %> - <%= clinic.emailAddress %></option>
                                             <% }); %> 
                                         </optgroup>
                                         <optgroup label="Laboratories">
                                             <% laboratories.forEach(function(laboratory)  { %>   
-                                                <option value="<%= laboratory.user.emailAddress %>"><%= laboratory.name %> - <%= laboratory.user.emailAddress %></option>
+                                                <option value="<%= laboratory.emailAddress %>"><%= laboratory.name %> - <%= laboratory.emailAddress %></option>
                                             <% }); %> 
                                         </optgroup>
                                         <optgroup label="Pharmacies">
                                             <% pharmacies.forEach(function(pharmacy)  { %>   
-                                                <option value="<%= pharmacy.user.emailAddress %>"><%= pharmacy.name %> - <%= pharmacy.user.emailAddress %></option>
+                                                <option value="<%= pharmacy.emailAddress %>"><%= pharmacy.name %> - <%= pharmacy.emailAddress %></option>
                                             <% }); %> 
                                         </optgroup>
                                     </select>
@@ -63,7 +63,7 @@
                                     <label class="service-form-label mb-2">Insurance Companies</label>
                                     <select id="companies" class="selectpicker form-control" multiple name="companies[]" data-selected-text-format="count" title="No insurance companies selected" data-live-search="true">
                                         <% insuranceCompanies.forEach(function(insuranceCompany)  { %>   
-                                            <option value="<%= insuranceCompany.user.emailAddress %>"><%= insuranceCompany.name %> - <%= insuranceCompany.user.emailAddress %></option>
+                                            <option value="<%= insuranceCompany.emailAddress %>"><%= insuranceCompany.name %> - <%= insuranceCompany.emailAddress %></option>
                                         <% }); %> 
                                     </select>
                                 </div>
@@ -73,7 +73,7 @@
                                     <label class="service-form-label mb-2">Doctors</label>
                                     <select id="doctors" class="selectpicker form-control" multiple name="doctors[]" data-selected-text-format="count" title="No doctors selected" data-live-search="true">
                                         <% doctors.forEach(function(doctor)  { %>   
-                                            <option value="<%= doctor.user.emailAddress %>"><%= doctor.name %> <%= doctor.lastName %> - <%= doctor.user.emailAddress %></option>
+                                            <option value="<%= doctor.emailAddress %>"><%= doctor.name %> <%= doctor.lastName %> - <%= doctor.emailAddress %></option>
                                         <% }); %> 
                                     </select>
                                 </div>
@@ -83,7 +83,7 @@
                                     <label class="service-form-label mb-2">Patients</label>
                                     <select id="patients" class="selectpicker form-control" name="patients" title="No patient selected" data-live-search="true">
                                         <% patients.forEach(function(patient)  { %>
-                                            <option value="<%= patient.user.emailAddress %>"><%= patient.name %> <%= patient.lastName %> - <%= patient.user.emailAddress %></option>
+                                            <option value="<%= patient.emailAddress %>"><%= patient.name %> <%= patient.lastName %> - <%= patient.emailAddress %></option>
                                         <% }); %> 
                                     </select>
                                 </div>
