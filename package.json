@@ -39,6 +39,7 @@
     "sails-hook-sockets": "^1.4.0",
     "sails-postgresql": "^1.0.2",
     "sleep": "^5.2.4",
+    "supertest": "^4.0.2",
     "ursa": "^0.9.4"
   },
   "devDependencies": {
@@ -46,7 +47,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=production node app.js",
-    "test": "./node_modules/mocha/bin/mocha test.js",
+    "test": "node ./node_modules/mocha/bin/mocha test.js",
     "lint": "eslint . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
     "custom-tests": "echo \"(No other custom tests yet.)\" && echo"
   },
