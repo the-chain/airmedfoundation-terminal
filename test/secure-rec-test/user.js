@@ -2,6 +2,7 @@ var request = require('supertest');
 var chai = require('chai');
 var expect = require('chai').expect;
 var chaiHttp = require('chai-http');
+var fs = require('fs');
 chai.use(chaiHttp)
 
 function makeid(length, type) {
@@ -21,12 +22,7 @@ function makeid(length, type) {
 }
 
 const url = 'https://localhost';
-var authenticated, user;
-user = {
-    emailAddress: 'doctor@email.com', 
-    password: 'Qtl1Xf.0',
-    newPassword: 'A56789.c'
-}
+var authenticated;
 var patientEmail = 'patient_' + makeid(5, 'email') + '@gmail.com';
 var doctorEmail = 'doctor_' + makeid(5, 'email') + '@gmail.com';
 var insuranceEmail = 'insurance_' + makeid(5, 'email') + '@gmail.com';
@@ -201,14 +197,65 @@ module.exports = {
             });
         })
     },
+    login() {
+        describe('Login test', function(){
+            it('Should Login', function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: doctorEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
+
+    logout() {
+        describe('Logout test', function(){
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: doctorEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should Logout', function(done){
+                authenticated.get('/services/secure-rec/session/destroy')
+                .then(function(res){
+                    expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
     profile() {
         describe('Profile test', function(){
             before(function(done){
                 authenticated = request.agent(url);
                 authenticated.post('/services/secure-rec/session/new')
                 .send({
-                    emailAddress: user.emailAddress, 
-                    password: user.password 
+                    emailAddress: doctorEmail, 
+                    password: password 
                 })
                 .then(function(res){
                     expect(res.body.success).to.be.equal(true);
@@ -247,8 +294,8 @@ module.exports = {
                 authenticated = request.agent(url);
                 authenticated.post('/services/secure-rec/session/new')
                 .send({
-                    emailAddress: user.emailAddress, 
-                    password: user.password 
+                    emailAddress: doctorEmail, 
+                    password: password 
                 })
                 .then(function(res){
                     expect(res.body.success).to.be.equal(true);
@@ -262,8 +309,8 @@ module.exports = {
             it('Should change actual password', function(done){
                 authenticated.post('/services/secure-rec/change-password')
                 .send({
-                    oldPassword: user.password,
-                    newPassword: user.newPassword
+                    oldPassword: password,
+                    newPassword: password
                 })
                 .then(function(res){
                     expect(res.body.success).to.be.equal(true);
@@ -278,8 +325,8 @@ module.exports = {
             afterEach(function(done) {
                 authenticated.post('/services/secure-rec/change-password')
                 .send({
-                    oldPassword: user.newPassword,
-                    newPassword: user.password
+                    oldPassword: password,
+                    newPassword: password
                 })
                 .then(function(res){
                     expect(res.body.success).to.be.equal(true);
@@ -307,7 +354,7 @@ module.exports = {
         var secretKey = '';
         var emailTest = 'patient_' + makeid(5,'email') + '@email.com';
         describe('Recovery password', function(){
-            this.timeout(5000);
+            this.timeout(25000);
             before(function(done){
                 chai.request(url)
                 .post('/services/secure-rec/user/new')
@@ -334,6 +381,7 @@ module.exports = {
                 .catch(function(err){
                     done(err);
                 });
+
             });
             it('Should recovery password', function(done){
                 chai.request(url)
@@ -347,6 +395,248 @@ module.exports = {
                     .catch(function(err){
                         done(err);
                     })
+            });
+        });
+    },
+    newAuth() {
+        describe('New authorization test', function(){
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: doctorEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should authorize the user', function(done){
+                authenticated.post('/services/secure-rec/authorizations/new')
+                .send({
+                    authorizationEmail: patientEmail
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.body.message).to.be.equal('Successfully authorized the patient');
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            after(function(done) {
+                authenticated.get('/services/secure-rec/session/destroy')
+                .then(function(res){
+                    expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
+    uploadFile() {
+        describe('Upload file (create transaccition)', function(){
+            this.timeout(10000);
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: doctorEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    authenticated.post('/services/secure-rec/authorizations/new')
+                    .send({
+                        authorizationEmail: clinicEmail
+                    })
+                    .then(function(res){
+                        expect(res.body.success).to.be.equal(true);
+                        expect(res.status).to.be.equal(200);
+                        done();
+                    })
+                    .catch(function(err){
+                        done(err);
+                    });
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should upload file', function(done){
+                var array = {
+                    patient: patientEmail,
+                    insurances: [],
+                    providers: [clinicEmail]
+                }
+                authenticated.post('/services/secure-rec/upload-register')
+                .field('fileName', 'registro')
+                .field('pay', false)
+                .field('description', 'Test Test Test Test Test')
+                .field('notes', 'Test Test Test Test Test2')
+                .field('users', JSON.stringify(array))
+                .attach('file','./test/secure-rec-test/files/test1.jpg')
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    done();
+                })
+                .catch(function(err){
+                    console.log(err);
+                    done(err);
+                });
+            });
+            after(function(done) {
+                authenticated.get('/services/secure-rec/session/destroy')
+                .then(function(res){
+                    expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
+    downloadFile(){
+        describe('Download register', function(){
+            this.timeout(10000);
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: doctorEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should download register', function(done){
+                authenticated.post('/services/secure-rec/download-register')
+                .send({
+                    fileHash: 'QmejZcwERLuZJ5uUu4AUaPQVnPHHFhsoVeBGnTsBrXreMS'
+                })
+                .then(function(res){
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            after(function(done) {
+                authenticated.get('/services/secure-rec/session/destroy')
+                .then(function(res){
+                    expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
+    editNote(){
+        describe('Edit notes',function(){
+            this.timeout(10000);
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: doctorEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should edit note', function(done){
+                authenticated.post('/services/secure-rec/edit-notes')
+                .send({
+                    notesId: 'QmejZcwERLuZJ5uUu4AUaPQVnPHHFhsoVeBGnTsBrXreMS',
+                    newNote: 'New notes'
+                })
+                .then(function(res){
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            after(function(done) {
+                authenticated.get('/services/secure-rec/session/destroy')
+                .then(function(res){
+                    expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
+    deleteAuth() {
+        describe('Delete authorization test', function(){
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: doctorEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should unauthorize the user', function(done){
+                authenticated.delete('/services/secure-rec/authorizations/delete')
+                .send({
+                    emailAddress: patientEmail
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.body.message).to.be.equal('Deleted patient authorized');
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            after(function(done) {
+                authenticated.get('/services/secure-rec/session/destroy')
+                .then(function(res){
+                    expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
             });
         });
     }

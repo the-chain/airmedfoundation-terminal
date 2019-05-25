@@ -4,9 +4,7 @@ var fabric = require('./test/fabric-test/fabric-test');
 var crypto = require('./test/crypto/key-test');
 var airmed = require('./test/airmed-test/airmed-test');
 var explorer = require('./test/airmed-test/blockchain-explorer/blockchain-explorer');
-var secureRecSession = require('./test/secure-rec-test/session');
 var secureRecUser = require('./test/secure-rec-test/user');
-var secureRecAuthorizations = require('./test/secure-rec-test/authorizations');
 
 // IPFS TEST
 describe('InterPlanetary Filesystem API TEST', function() {
@@ -54,25 +52,21 @@ describe("Airmed Foundation Blockchain Explorer Test", function(){
         explorer.getBlockByNumber();
     });
 });
-// SECURE REC SESSION TEST
-describe('SECURE REC SESSION TEST', function() {
-    secureRecSession.login();
-    secureRecSession.logout();
-});
 // SECURE REC USER TEST
 describe('SECURE REC USER TEST', function() {
-    secureRecUser.profile();
-    secureRecUser.changePassword();
     secureRecUser.newUserPatient();
     secureRecUser.newUserDoctor();
     secureRecUser.newUserInsurance();
     secureRecUser.newUserProviderClinic();
     secureRecUser.newUserProviderPharmacy();
     secureRecUser.newUserProviderLaboratory();
+    secureRecUser.login();
+    secureRecUser.logout();
+    secureRecUser.profile();
+    secureRecUser.changePassword();
     secureRecUser.passwordRecovery();
-});
-// SECURE REC AUTHORIZATIONS TEST
-describe('SECURE REC AUTHORIZATIONS TEST', function() {
-    secureRecAuthorizations.new();
-    secureRecAuthorizations.delete();
+    secureRecUser.newAuth();
+    secureRecUser.uploadFile();
+    secureRecUser.downloadFile();
+    secureRecUser.deleteAuth();
 });
