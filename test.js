@@ -63,9 +63,13 @@ describe('SECURE REC SESSION TEST', function() {
 describe('SECURE REC USER TEST', function() {
     secureRecUser.profile();
     secureRecUser.changePassword();
-    // secureRecUser.new();
-    // secureRecUser.verifyEmail();
-    // secureRecUser.passwordRecovery();
+    secureRecUser.newUserPatient();
+    secureRecUser.newUserDoctor();
+    secureRecUser.newUserInsurance();
+    secureRecUser.newUserProviderClinic();
+    secureRecUser.newUserProviderPharmacy();
+    secureRecUser.newUserProviderLaboratory();
+    secureRecUser.passwordRecovery();
 });
 // SECURE REC AUTHORIZATIONS TEST
 describe('SECURE REC AUTHORIZATIONS TEST', function() {
