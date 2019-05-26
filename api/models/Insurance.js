@@ -9,6 +9,14 @@ module.exports = {
 
   attributes: {
 
+    emailAddress: {
+      type: 'string',
+      required: true,
+      unique: true,
+      isEmail: true,
+      maxLength: 200
+    },
+
     name: {
       type: 'string',
       required: true,
@@ -20,6 +28,12 @@ module.exports = {
       maxLength: 120
     },
 
+    EIN: {
+      type: 'string',
+      minLength: 10,
+      maxLength: 10
+    }, 
+
     // reference to user
     user: {
       model: 'user'
@@ -28,6 +42,18 @@ module.exports = {
     // reference to patient
     patients: {
       collection: 'patient',
+      via: 'insurances'
+    },
+
+    // reference to doctors
+    doctors: {
+      collection: 'doctor',
+      via: 'insurances'
+    },
+
+    // reference to providers
+    providers: {
+      collection: 'provider',
       via: 'insurances'
     }
 

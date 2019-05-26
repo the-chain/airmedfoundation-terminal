@@ -10,7 +10,7 @@
 
 module.exports.custom = {
 
-  baseUrl: 'http://localhost',
+  baseUrl: 'https://airmedfoundation.thechain.tech',
 
   passwordResetTokenTTL: 24*60*60*1000,
   emailProofTokenTTL:    24*60*60*1000,

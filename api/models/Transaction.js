@@ -78,12 +78,6 @@ module.exports = {
     write: {
       collection: 'keyOut',
       via: 'transaction'
-    },
-
-    // reference to ReadChaincode
-    readChaincode: {
-      collection: 'readChaincode',
-      via: 'transaction'
     }
 
   },

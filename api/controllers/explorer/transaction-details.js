@@ -26,7 +26,6 @@ module.exports = {
       let transaction = await Transaction.findOne({ id: inputs.hash })
       .populate('read')
       .populate('write')
-      .populate('readChaincode');
 
       if (!transaction) throw 'notFound';
   

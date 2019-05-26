@@ -34,7 +34,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
-    var response, resp1, resp2, publicKey;
+    var response, resp, publicKey;
 
     // Check private key
     try {
@@ -45,22 +45,17 @@ module.exports = {
 
     // Send transaction
     response = await fabric.queryChaincode('mychannel','Org1MSP','secureRec','query',[publicKey]);
-    resp1 = response[0].toString('utf8');
-    resp2 = response[1].toString('utf8');
-    if (!resp1)
-      resp1 = '{"hashSent":[],"hashReceived":[], "copyToSender": []}';
-    if (!resp2)
-      resp2 = '{"hashSent":[],"hashReceived":[], "copyToSender": []}';
+    resp = response[0].toString('utf8');
+
+    if (!resp)
+      resp = '{"hashSent":[],"hashReceived":[], "copyToSender": []}';
+
 
     // Check response from Fabric Peer
     try{
-      response = JSON.parse(resp1);
+      response = JSON.parse(resp);
     }catch(err){
-      try{
-        response = JSON.parse(resp2);
-      }catch(err){
-        return exits.fabric();
-      }
+      return exits.fabric();
     }
     let files = {
       hashSent: [],

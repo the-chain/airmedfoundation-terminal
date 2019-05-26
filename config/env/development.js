@@ -13,9 +13,9 @@
 module.exports = {
 
   ssl: {
-    ca: require('fs').readFileSync('./config/ssl/chain.pem', 'utf8').toString(),
-    key: require('fs').readFileSync('./config/ssl/privkey.pem', 'utf8').toString(),
-    cert: require('fs').readFileSync('./config/ssl/cert.pem', 'utf8').toString()
+    ca: require('fs').readFileSync('/etc/letsencrypt/live/airmedfoundation.thechain.tech/chain.pem', 'utf8').toString(),
+    key: require('fs').readFileSync('/etc/letsencrypt/live/airmedfoundation.thechain.tech/privkey.pem', 'utf8').toString(),
+    cert: require('fs').readFileSync('/etc/letsencrypt/live/airmedfoundation.thechain.tech/cert.pem', 'utf8').toString()
   },
 
   port: 443,

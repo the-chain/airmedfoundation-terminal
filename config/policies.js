@@ -22,7 +22,6 @@ module.exports.policies = {
   // API Rest
   'key-in/new':        'checkOrigin', 
   'key-out/new':        'checkOrigin',                         
-  'read-chaincode/new':  'checkOrigin',
   'transaction/new': 'checkOrigin',
   'block/new': 'checkOrigin',
 
@@ -47,5 +46,10 @@ module.exports.policies = {
   // Transactions
   'services/secure-rec/transaction/upload-register': 'login',
   'services/secure-rec/transaction/download-register': 'login',
-  'services/secure-rec/transaction/edit-notes': 'login'
+  'services/secure-rec/transaction/edit-notes': 'login',
+
+   // Authorizations
+   'services/secure-rec/authorizations/index': 'login',
+   'services/secure-rec/authorizations/new': 'login',
+   'services/secure-rec/authorizations/delete': 'login'
 };

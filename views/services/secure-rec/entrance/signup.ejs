@@ -6,11 +6,11 @@
             <% include ../../../layouts/wait %>
             <% include ../../../layouts/flash-message %>
             <div class="row">
-                <div id="signup-secure-rec" class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                <div id="signup-sr" class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
                     <p class="text-center"><small>Step <span id="step">1</span> of 3</small></p>
                     <h5 class="mb-5 text-center">Join Secure Rec</h5>
                     <p class="tag-error mb-4"><small>* Required field</small></p>
-                    <form id="form-secure-rec-primary">
+                    <form id="sr-primary-form">
                         <section id="user-primary-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
@@ -22,15 +22,15 @@
                                     <input id="password" class="form-control service-form-input" type="password" name="password" placeholder="Password" passwordCheck="passwordCheck">
                                 </div>
                                 <div id="password-conditions" data-toggle="collapse" aria-expanded="false" class="collapse container mb-4">
-                                    <p class="mt-2"><i id="uppCond" class="fas fa-check-circle"></i> At least one uppercase character</p>                         
-                                    <p><i id="lowCond" class="fas fa-check-circle"></i> At least one lowercase character</p>                     
-                                    <p><i id="numCond" class="fas fa-check-circle"></i> At least one number </p>
-                                    <p><i id="speCond" class="fas fa-check-circle"></i> At least one special character (!.@#$/%^&*?)</p>        
-                                    <p><i id="lenCond" class="fas fa-check-circle"></i> At least 8 characters</p>          
+                                    <p class="mt-2"><i id="upp-condition" class="fas fa-check-circle"></i> At least one uppercase character</p>                         
+                                    <p><i id="low-condition" class="fas fa-check-circle"></i> At least one lowercase character</p>                     
+                                    <p><i id="number-condition" class="fas fa-check-circle"></i> At least one number </p>
+                                    <p><i id="special-condition" class="fas fa-check-circle"></i> At least one special character (!.@#$/%^&*?)</p>        
+                                    <p><i id="length-condition" class="fas fa-check-circle"></i> At least 8 characters</p>          
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* Repeat password</label>
-                                    <input id="passwordRepeat" class="form-control service-form-input" type="password" name="passwordRepeat" placeholder="Password confirmation">
+                                    <input id="password-repeat" class="form-control service-form-input" type="password" name="passwordRepeat" placeholder="Password confirmation">
                                 </div>
                                 <div class="form-group col-12"> 
                                     <label class="service-form-label mb-3">* Enrolling as</label>
@@ -76,12 +76,12 @@
                             </div>
                         </section>
                     </form>
-                    <form id="form-secure-rec-secundary" class="d-none">
+                    <form id="sr-secundary-form" class="d-none">
                         <section id="user-secundary-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* Country</label>
-                                    <select id="countries_phone" class="form-control bfh-countries service-form-input"  name="country" data-country="US"></select>
+                                    <select id="country" class="form-control bfh-countries service-form-input"  name="country" data-country="US"></select>
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* State</label>
@@ -89,25 +89,29 @@
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* Phone</label>
-                                    <input id="phone" class="form-control bfh-phone service-form-input" type="text" placeholder="phone" name="phone" autocomplete="off" data-country="countries_phone">
+                                    <input id="phone" class="form-control bfh-phone service-form-input" type="text" placeholder="phone" name="phone" autocomplete="off" data-country="country">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label class="service-form-label mb-2">* Address</label>
-                                    <textarea id="address" name="address" cols="40" rows="5" class="form-control service-form-textarea" autocomplete="none" placeholder="ie. Headquarters 1120 N Street Sacramento 916-654-5266"></textarea>
+                                    <textarea id="address" name="address" cols="40" rows="5" class="form-control service-form-textarea" autocomplete="none" placeholder="Headquarters 1120 N Street Sacramento 916-654-5266"></textarea>
                                 </div>
                             </div>
                         </section>
                     </form>
-                    <form id="form-secure-rec-provider" class="d-none">
+                    <form id="sr-provider-form" class="d-none">
                         <section id="provider-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* Legal name</label>
-                                    <input id="legalNameProvider" class="form-control service-form-input" type="text" name="legalNameProvider" placeholder="Legal Name" autocomplete="none">
+                                    <input id="legal-name-provider" class="form-control service-form-input" type="text" name="legalNameProvider" placeholder="Legal Name" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">Website</label>
-                                    <input id="websiteProvider" class="form-control service-form-input" type="text" name="websiteProvider" placeholder="Website link" autocomplete="none">
+                                    <input id="website-provider" class="form-control service-form-input" type="text" name="websiteProvider" placeholder="Website link" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">EIN</label>
+                                    <input id="EIN-provider" class="form-control service-form-input bfh-phone" type="text" name="EIN" placeholder="12-3456789" autocomplete="none" data-format="dd-ddddddd">
                                 </div>
                                 <div class="form-group col-12"> 
                                     <label class="service-form-label mb-3">* Enrolling as</label>
@@ -144,72 +148,116 @@
                             </div>
                         </section>
                     </form>
-                    <form id="form-secure-rec-insurance" class="d-none">
+                    <form id="sr-insurance-form" class="d-none">
                         <section id="insurance-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* Legal name</label>
-                                    <input id="legalNameInsurance" class="form-control service-form-input" type="text" name="legalName" placeholder="Legal Name" autocomplete="none">
+                                    <input id="legal-name-insurance" class="form-control service-form-input" type="text" name="legalName" placeholder="Legal Name" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">Website</label>
-                                    <input id="websiteInsurance" class="form-control service-form-input" type="text" name="website" placeholder="Website link" autocomplete="none">
+                                    <input id="website-insurance" class="form-control service-form-input" type="text" name="website" placeholder="Website link" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">EIN</label>
+                                    <input id="EIN-insurance" class="form-control service-form-input bfh-phone" type="text" name="EIN" placeholder="12-3456789" autocomplete="none" data-format="dd-ddddddd">
                                 </div>
                             </div>
                         </section>
                     </form>
-                    <form id="form-secure-rec-doctor" class="d-none">
+                    <form id="sr-doctor-form" class="d-none">
                         <section id="doctor-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
+                                    <div class="profile-img-container">
+                                        <div id="profile-img-d" class="profile-img">
+                                            <img id="profile-img-preview-doctor" class="profile-img-src" src="../../images/profiles/default-profile-img.png">
+                                        </div>
+                                        <label class="service-form-label mb-2">Foto de perfil</label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* First name</label>
-                                    <input id="firstNameDoctor" class="form-control service-form-input" type="text" name="firstName" placeholder="First name" autocomplete="none">
+                                    <input id="first-name-doctor" class="form-control service-form-input" type="text" name="firstName" placeholder="First name" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* Last name</label>
-                                    <input id="lastNameDoctor" class="form-control service-form-input" type="text" name="lastName" placeholder="Last name" autocomplete="none">
+                                    <input id="last-name-doctor" class="form-control service-form-input" type="text" name="lastName" placeholder="Last name" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">* Birthdate</label>
+                                    <div class="input-group date">
+                                        <input id="birthdate-doctor" type="text" class="form-control service-form-input birthdate" data-provide="datepicker" placeholder="yyyy-mm-dd" aria-describedby="date-addon">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="date-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* Specialty</label>
                                     <input id="specialty" class="form-control service-form-input" type="text" name="specialty" placeholder="Specialty" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
-                                    <label class="service-form-label mb-2">* Social Security Number</label>
-                                    <input id="socialSecurityNumber" class="form-control service-form-input bfh-phone" type="text" name="socialSecurityNumber" placeholder="ie. 123-45-6789" autocomplete="none" data-format="ddd-dd-dddd">
+                                    <label class="service-form-label mb-2">Social Security Number</label>
+                                    <input id="social-security-number-doctor" class="form-control service-form-input bfh-phone" type="text" name="socialSecurityNumberDoctor" placeholder="123-45-6789" autocomplete="none" data-format="ddd-dd-dddd">
                                 </div>
+                                <input id="profile-img-hidden-doctor" type="file" name="profile-img" class="profile-img-hidden d-none">
                             </div>
                         </section>
                     </form>
-                    <form id="form-secure-rec-patient" class="d-none">
+                    <form id="sr-patient-form" class="d-none">
                         <section id="patient-info">
                             <div class="form-row mb-2">
                                 <div class="form-group col-12 mb-4">
+                                    <div class="profile-img-container">
+                                        <div id="profile-img-p" class="profile-img">
+                                            <img id="profile-img-preview-patient" class="profile-img-src" src="../../images/profiles/default-profile-img.png">
+                                        </div>
+                                        <label class="service-form-label mb-2">Foto de perfil</label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* First name</label>
-                                    <input id="firstNamePatient" class="form-control service-form-input" type="text" name="firstName" placeholder="First name" autocomplete="none">
+                                    <input id="first-name-patient" class="form-control service-form-input" type="text" name="firstName" placeholder="First name" autocomplete="none">
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* Last name</label>
-                                    <input id="lastNamePatient" class="form-control service-form-input" type="text" name="lastName" placeholder="Last name" autocomplete="none">
+                                    <input id="last-name-patient" class="form-control service-form-input" type="text" name="lastName" placeholder="Last name" autocomplete="none">
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">* Birthdate</label>
+                                    <div class="input-group date">
+                                        <input id="birthdate-patient" type="text" class="form-control service-form-input birthdate" data-provide="datepicker" placeholder="yyyy-mm-dd" aria-describedby="date-addon">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="date-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 mb-4">
+                                    <label class="service-form-label mb-2">Social Security Number</label>
+                                    <input id="social-security-number-patient" class="form-control service-form-input bfh-phone" type="text" name="socialSecurityNumber" placeholder="123-45-6789" autocomplete="none" data-format="ddd-dd-dddd">
                                 </div>
                                 <div class="form-group col-12 mb-4">
                                     <label class="service-form-label mb-2">* Blood type</label>
-                                    <input id="bloodType" class="form-control service-form-input" type="text" name="bloodType" placeholder="Blood type" autocomplete="none">
+                                    <input id="blood-type" class="form-control service-form-input" type="text" name="bloodType" placeholder="Blood type" autocomplete="none">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label class="service-form-label mb-2">* Allergies</label>
-                                    <textarea id="allergies" name="allergies" cols="40" rows="5" class="form-control service-form-textarea" autocomplete="none" placeholder="Separates allergies by coma. ie. fruit, peanut, pollen"></textarea>
+                                    <textarea id="allergies" name="allergies" cols="40" rows="5" class="form-control service-form-textarea" autocomplete="none" placeholder="Separates allergies by coma. Example fruit, peanut, pollen"></textarea>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label class="service-form-label mb-2">* Organ donor</label>
                                     <div class="custom-control custom-radio">
-                                        <input id="customRadio1" type="radio" name="organDonor" class="custom-control-input" value="true">
-                                        <label class="custom-control-label service-form-label mb-2 pt-1 font-weight-normal" for="customRadio1">Yes</label>
+                                        <input id="organ-donor-yes" type="radio" name="organDonor" class="custom-control-input" value="true">
+                                        <label class="custom-control-label service-form-label mb-2 pt-1 font-weight-normal" for="organ-donor-yes">Yes</label>
                                     </div>
                                     <div class="custom-control custom-radio">
-                                        <input id="customRadio2" type="radio" name="organDonor" class="custom-control-input" value="false">
-                                        <label class="custom-control-label service-form-label mb-2 pt-1 font-weight-normal" for="customRadio2">No</label>
+                                        <input id="organ-donor-no" type="radio" name="organDonor" class="custom-control-input" value="false">
+                                        <label class="custom-control-label service-form-label mb-2 pt-1 font-weight-normal" for="organ-donor-no">No</label>
                                     </div>
                                 </div>
+                                <input id="profile-img-hidden-patient" type="file" name="profile-img" class="profile-img-hidden d-none">
                             </div>
                         </section>
                     </form>
@@ -227,11 +275,11 @@
                         </div>
                     </div>
                 </div>
-                <div id="signup-secure-rec-response" class="col-12 d-none">
-                    <p class="service-form-label mb-2"><i class="fa fa-user-secret icon-color" aria-hidden="true"></i> Private Key <i id="secure-rec-secret-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></p>
-                    <p class="p-word-break mb-4 service-keys-p"><span id="secure-rec-secret-key" class="ajax-text-message"></span></p>
-                    <p class="service-form-label mb-2"><i class="fa fa-key icon-color" aria-hidden="true"></i> Public Key <i id="secure-rec-public-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></p>
-                    <p class="p-word-break service-keys-p"><span id="secure-rec-public-key" class="ajax-text-message"></span></p>
+                <div id="signup-sr-response" class="col-12 d-none">
+                    <p class="service-form-label mb-2"><i class="fa fa-user-secret icon-color" aria-hidden="true"></i> Private Key <i id="sr-secret-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></p>
+                    <p class="p-word-break mb-4 service-keys-p"><span id="sr-secret-key" class="ajax-text-message"></span></p>
+                    <p class="service-form-label mb-2"><i class="fa fa-key icon-color" aria-hidden="true"></i> Public Key <i id="sr-public-btn" class="fas fa-paste js-tooltip js-copy" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" data-copy="" title="Copy to clipboard"></i></p>
+                    <p class="p-word-break service-keys-p"><span id="sr-public-key" class="ajax-text-message"></span></p>
                 </div>
             </div>
         </div>

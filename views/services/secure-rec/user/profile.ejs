@@ -10,15 +10,15 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="profile-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="personal-info-tab" data-toggle="tab" href="#personal-info" role="tab" aria-controls="personal-info" aria-selected="true">Personal info</a>
+                            <a class="nav-link active" id="user-info-tab" data-toggle="tab" href="#user-info" role="tab" aria-controls="user-info" aria-selected="true">User info</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="user-info-tab" data-toggle="tab" href="#user-info" role="tab" aria-controls="user-info" aria-selected="false">User info</a>
+                            <a class="nav-link" id="personal-info-tab" data-toggle="tab" href="#personal-info" role="tab" aria-controls="personal-info" aria-selected="false">Personal info</a>
                         </li>
                     </ul>
                 </div>
                 <div class="tab-content" id="profile-tab-content">
-                    <div class="tab-pane fade show active" id="personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
+                    <div class="tab-pane fade show active" id="user-info" role="tabpanel" aria-labelledby="user-info-tab">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <div class="row">
@@ -107,30 +107,25 @@
                             
                         </ul>
                     </div>
-                    <div class="tab-pane fade" id="user-info" role="tabpanel" aria-labelledby="user-info-tab">
+                    <div class="tab-pane fade" id="personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-12 col-md-4">
-                                        <p class="detail-text profile-label">User Type:</p>
-                                    </div>
-                                    <div class="col-12 col-md-8">
-                                        <p class="detail-text text-uppercase blue-word font-weight-bold"> 
-                                            <% if(user.type == 'provider') { %>
-                                                <i class="fas fa-clinic-medical" aria-hidden="true"></i>
-                                            <% }else if(user.type == 'insurance') { %>
-                                                <i class="fas fa-ambulance" aria-hidden="true"></i>
-                                            <% }else if(user.type == 'doctor') { %>
-                                                <i class="fas fa-user-md" aria-hidden="true"></i>
-                                            <% } else { %>
-                                                <i class="fas fa-user" aria-hidden="true"></i>
-                                            <% } %>
-                                            <%= user.type %>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
                             <% if(user.type == 'patient' || user.type == 'doctor') { %>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-12 col-md-4">
+                                            <p class="detail-text profile-label">
+                                                Profile Picture:
+                                            </p>
+                                        </div>
+                                        <div class="col-12 col-md-8">
+                                            <% if(user.type == 'patient') { %>
+                                                <img class="rounded-circle dashboard-img" src="../../images/profiles/<%= user.patient[0].profilePicture %>">
+                                            <% }else{ %>
+                                                <img class="rounded-circle dashboard-img" src="../../images/profiles/<%= user.doctor[0].profilePicture %>">
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </li>
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-12 col-md-4">
@@ -167,6 +162,48 @@
                                         </div>
                                     </div>
                                 </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-12 col-md-4">
+                                            <p class="detail-text profile-label">
+                                                Birthday:
+                                            </p>
+                                        </div>
+                                        <div class="col-12 col-md-8">
+                                            <p class="detail-text"> 
+                                                <% if(user.type == 'patient') { %>
+                                                    <%= user.patient[0].birthdate.toISOString().split('T')[0] %>
+                                                <% }else{ %>
+                                                    <%= user.doctor[0].birthdate.toISOString().split('T')[0] %>
+                                                <% } %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-12 col-md-4">
+                                            <p class="detail-text profile-label">Social security number:</p>
+                                        </div>
+                                        <div class="col-12 col-md-8">
+                                            <p class="detail-text">
+                                                <% if(user.type == 'patient') { %>
+                                                    <% if(user.patient[0].socialSecurityNumber != '') { %>
+                                                        <%= user.patient[0].socialSecurityNumber %>
+                                                    <% }else{ %>
+                                                        000-00-0000
+                                                    <% } %>
+                                                <% }else{ %>
+                                                    <% if(user.doctor[0].socialSecurityNumber != '') { %>
+                                                        <%= user.doctor[0].socialSecurityNumber %>
+                                                    <% }else{ %>
+                                                        000-00-0000
+                                                    <% } %>
+                                                <% } %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
                             <% }else{ %>
                                 <li class="list-group-item">
                                     <div class="row">
@@ -181,6 +218,54 @@
                                                     <%= user.insurance[0].name %>
                                                 <% }else{ %>
                                                     <%= user.provider[0].name %>
+                                                <% } %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-12 col-md-4">
+                                            <p class="detail-text profile-label">Website:</p>
+                                        </div>
+                                        <div class="col-12 col-md-8">
+                                            <p class="detail-text"> 
+                                                <% if(user.type == 'insurance') { %>
+                                                    <% if(user.insurance[0].website != '') { %>
+                                                        <a href="<%= user.insurance[0].website %>" target="_blank"><%= user.insurance[0].website %></a>
+                                                    <% }else{ %>
+                                                        None
+                                                    <% } %>
+                                                <% }else{ %>
+                                                    <% if(user.provider[0].website != '') { %>
+                                                        <a href="<%= user.provider[0].website %>" target="_blank"><%= user.provider[0].website %></a>
+                                                    <% }else{ %>
+                                                        None
+                                                    <% } %>
+                                                <% } %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-12 col-md-4">
+                                            <p class="detail-text profile-label">EIN:</p>
+                                        </div>
+                                        <div class="col-12 col-md-8">
+                                            <p class="detail-text"> 
+                                                <% if(user.type == 'insurance') { %>
+                                                    <% if(user.insurance[0].EIN != '') { %>
+                                                        <%= user.insurance[0].EIN %>
+                                                    <% }else{ %>
+                                                        00-0000000
+                                                    <% } %>
+                                                <% }else{ %>
+                                                    <% if(user.provider[0].EIN != '') { %>
+                                                        <%= user.provider[0].EIN %>
+                                                    <% }else{ %>
+                                                        00-0000000
+                                                    <% } %>
                                                 <% } %>
                                             </p>
                                         </div>
@@ -208,32 +293,27 @@
                                     </div>
                                 </li>
                             <% } %>
-                            <% if(user.type == 'insurance' || user.type == 'provider') { %>
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-12 col-md-4">
-                                            <p class="detail-text profile-label">Website:</p>
-                                        </div>
-                                        <div class="col-12 col-md-8">
-                                            <p class="detail-text"> 
-                                                <% if(user.type == 'insurance') { %>
-                                                    <% if(user.insurance[0].website != '') { %>
-                                                        <a href="<%= user.insurance[0].website %>" target="_blank"><%= user.insurance[0].website %></a>
-                                                    <% }else{ %>
-                                                        None
-                                                    <% } %>
-                                                <% }else{ %>
-                                                    <% if(user.provider[0].website != '') { %>
-                                                        <a href="<%= user.provider[0].website %>" target="_blank"><%= user.provider[0].website %></a>
-                                                    <% }else{ %>
-                                                        None
-                                                    <% } %>
-                                                <% } %>
-                                            </p>
-                                        </div>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <p class="detail-text profile-label">User Type:</p>
                                     </div>
-                                </li>
-                            <% } %>
+                                    <div class="col-12 col-md-8">
+                                        <p class="detail-text text-uppercase blue-word font-weight-bold"> 
+                                            <% if(user.type == 'provider') { %>
+                                                <i class="fas fa-clinic-medical" aria-hidden="true"></i>
+                                            <% }else if(user.type == 'insurance') { %>
+                                                <i class="fas fa-ambulance" aria-hidden="true"></i>
+                                            <% }else if(user.type == 'doctor') { %>
+                                                <i class="fas fa-user-md" aria-hidden="true"></i>
+                                            <% } else { %>
+                                                <i class="fas fa-user" aria-hidden="true"></i>
+                                            <% } %>
+                                            <%= user.type %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
                             <% if(user.type == 'doctor') { %>
                                 <li class="list-group-item">
                                     <div class="row">
@@ -243,18 +323,6 @@
                                         <div class="col-12 col-md-8">
                                             <p class="detail-text"> 
                                                 <%= user.doctor[0].specialty %>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-12 col-md-4">
-                                            <p class="detail-text profile-label">Social security number:</p>
-                                        </div>
-                                        <div class="col-12 col-md-8">
-                                            <p class="detail-text"> 
-                                                <%= user.doctor[0].socialSecurityNumber %>
                                             </p>
                                         </div>
                                     </div>
@@ -276,16 +344,22 @@
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-12 col-md-4">
-                                            <p class="detail-text profile-label">Blood Type:</p>
+                                            <p class="detail-text profile-label">Allergies:</p>
                                         </div>
                                         <div class="col-12 col-md-8">
-                                            <ul id="allergies-ul">
-                                                <% user.patient[0].allergies.forEach(function(allergy)  { %>
-                                                    <li class="detail-text text-capitalize"> 
-                                                        <%= allergy %>
-                                                    </li>
-                                                <% }); %>
-                                            </ul>
+                                            <% if(Array.isArray(user.patient[0].allergies)) { %>
+                                                <ul id="allergies-ul">
+                                                    <% user.patient[0].allergies.forEach(function(allergy)  { %>
+                                                        <li class="detail-text text-capitalize"> 
+                                                            <%= allergy %>
+                                                        </li>
+                                                    <% }); %>
+                                                </ul>
+                                            <% }else{ %>
+                                                <p class="detail-text"> 
+                                                    <%= user.patient[0].allergies %>
+                                                </p>
+                                            <% } %>
                                         </div>
                                     </div>
                                 </li>

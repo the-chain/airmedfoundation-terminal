@@ -9,6 +9,14 @@ module.exports = {
 
   attributes: {
     
+    emailAddress: {
+      type: 'string',
+      required: true,
+      unique: true,
+      isEmail: true,
+      maxLength: 200
+    },
+
     name: {
       type: 'string',
       required: true,
@@ -19,6 +27,12 @@ module.exports = {
       type: 'string',
       required: true,
       maxLength: 120
+    },
+
+    birthdate: {
+      type: 'ref',
+      columnType: 'date',
+      required: true,
     },
 
     bloodType: {
@@ -37,6 +51,17 @@ module.exports = {
       defaultsTo: false
     },
 
+    socialSecurityNumber: {
+      type: 'string',
+      minLength: 11,
+      maxLength: 11
+    },
+
+    profilePicture: {
+      type: 'string',
+      maxLength: 256
+    },
+
     // reference to user
     user: {
       model: 'user'
@@ -51,6 +76,12 @@ module.exports = {
     // reference to insurance
     insurances: {
       collection: 'insurance',
+      via: 'patients'
+    },
+
+    // reference to provider
+    providers: {
+      collection: 'provider',
       via: 'patients'
     }
 
