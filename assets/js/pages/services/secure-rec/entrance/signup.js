@@ -297,7 +297,7 @@ $(document.body).on('click', '.hidden-element', function () {
 
 function clearSecureRecData() {
 	$('.hidden-element').removeClass('hidden-element-active');
-	$('#previus').addClass('d-none');
+	$('#previous').addClass('d-none');
 	$('#next').html('Next');	
 	removePasswordConditionsCheck();
 	$('#sr-primary-form').trigger('reset');
@@ -319,7 +319,7 @@ $(document.body).on('click', '#next', function () {
 				$('#step').text('2');
 				$('#sr-primary-form').addClass('d-none');
 				$('#sr-secundary-form').removeClass('d-none');
-				$('#previus').removeClass('d-none');
+				$('#previous').removeClass('d-none');
 				$('html, body').animate({ scrollTop: 0 }, 'slow');
 			} else {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -477,7 +477,7 @@ $(document.body).on('click', '#next', function () {
 	}
 });
 
-$(document.body).on('click', '#previus', function () {
+$(document.body).on('click', '#previous', function () {
 	let step = $('#step').text();
 	let userType = $('input[name=userType]:checked', '#sr-primary-form').val();
 	switch (step) {
@@ -485,7 +485,7 @@ $(document.body).on('click', '#previus', function () {
 			$('#step').text('1');
 			$('#sr-secundary-form').addClass('d-none');
 			$('#sr-primary-form').removeClass('d-none');
-			$('#previus').addClass('d-none');
+			$('#previous').addClass('d-none');
 			$('html, body').animate({ scrollTop: 0 }, 'slow');
 			break;
 	
