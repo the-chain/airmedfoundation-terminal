@@ -41,7 +41,7 @@ organizations:
     certificateAuthorities:
       - ca-org1
     adminPrivateKey:
-      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/dfce876df352d8cf7d915b525d239314ecfb2ce0c686249f92459f046c72807f_sk
+      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/35043677bfb9a1515bd38b8cc26fd53591bbb74d1f1de927a1148eb3f4feaf86_sk
     signedCert:
       path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem
 
@@ -53,7 +53,7 @@ organizations:
     certificateAuthorities:
       - ca-org2
     adminPrivateKey:
-      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/7a5194714b597ae4a12a10822473107bd901542e05ff11afbb89667805851a30_sk
+      path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/00ff5dad4b74215bb80c1c73f0d2a886c6d59aabea2a97f1b03ef50e04932cee_sk
     signedCert:
       path: ../fabric-samples/first-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/Admin@org2.example.com-cert.pem
 
