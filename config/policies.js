@@ -48,8 +48,12 @@ module.exports.policies = {
   'services/secure-rec/transaction/download-register': 'login',
   'services/secure-rec/transaction/edit-notes': 'login',
 
-   // Authorizations
-   'services/secure-rec/authorizations/index': 'login',
-   'services/secure-rec/authorizations/new': 'login',
-   'services/secure-rec/authorizations/delete': 'login'
+  // Authorizations
+  'services/secure-rec/authorizations/index': 'login',
+  'services/secure-rec/authorizations/new': 'login',
+  'services/secure-rec/authorizations/delete': 'login',
+
+  // Prescription
+  'services/secure-rec/prescription/new-index': ['login', 'isDoctor'],
+  'services/secure-rec/prescription/new': ['login', 'isDoctor']
 };

@@ -8,6 +8,16 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-pills" aria-hidden="true"></i> Prescriptions
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <% if(session.auth.type === 'doctor') { %>
+                            <li><a class="dropdown-item" href="/services/secure-rec/prescription/new"><i class="fas fa-plus icon-color" aria-hidden="true"></i> New</a></li>
+                        <% } %>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-wrench" aria-hidden="true"></i> Tools
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
