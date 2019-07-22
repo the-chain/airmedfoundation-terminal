@@ -143,6 +143,45 @@ var secureRecEditNote = $('#form-secure-rec-edit-note').validate({
 		$(element).prev('label').removeClass('tag-error');
 	}
 });
+
+var secureRecNewPrescription = $('#form-secure-rec-new-prescription').validate({
+	ignore: ':hidden:not(input[type="file"])',
+	rules: {
+		medicalFile: {
+			required: true
+		},
+		patients: {
+			required: true
+		}
+	},
+	errorPlacement: function(error, element) {
+		return true;
+	},
+	highlight: function(element) {
+		let inputType = $(element).attr('type');
+		if (inputType != undefined) {
+			switch (inputType) {
+				case 'file':
+					$(element).parent().parent().prev('label').addClass('tag-error');
+					$(element).parent().parent().addClass('box-error');
+					break;
+			}
+		} else if ($(element).hasClass('selectpicker'))
+			$(element).parent().prev('label').addClass('tag-error');
+	},
+	unhighlight: function(element) {
+		let inputType = $(element).attr('type');
+		if (inputType != undefined) {
+			switch (inputType) {
+				case 'file':
+					$(element).parent().parent().prev('label').removeClass('tag-error');
+					$(element).parent().parent().removeClass('box-error');
+					break;
+			}
+		} else if ($(element).hasClass('selectpicker'))
+			$(element).parent().prev('label').removeClass('tag-error');
+	}
+});
 /* END DECLARATION OF FORMS */
 
 /* INIT DECLARATION OF TABLES */
@@ -412,7 +451,8 @@ function clearUploadData() {
 	$image.attr('src', '../../images/general/upload.png');
 	$('#file-name').text('');
 	$('#file-name').addClass('d-none');
-	$('#providers').val('');
+	if($('#providers'))
+		$('#providers').val('');
 }
 
 function resetSelect(selectbox, title) {
@@ -522,4 +562,48 @@ $('#edit-note-btn').click(function() {
 		});
 	} else
 		secureRecEditNote.focusInvalid();
+});
+
+/* Prescriptions */
+$('#sr-new-prescription-btn').click(function() {
+	if ($('#form-secure-rec-new-prescription').valid()){
+		let sendInfo = new FormData();
+		sendInfo.append('user', $('#patients').val());
+		sendInfo.append('fileName', $('input[type=file]')[0].files[0].name);
+		sendInfo.append('file', $('input[type=file]')[0].files[0]);
+		$('#wait-response').removeClass('d-none');
+		$('#div-secure-rec-upload').addClass('d-none');
+		$.ajax({
+			type: 'POST',
+			url: '/services/secure-rec/prescription/new',
+			data: sendInfo,
+			dataType: 'json',
+			cache: false,
+			contentType: false,
+			processData: false,
+			error: function (xhr, ajaxOptions, thrownError) {
+				clearUploadData();
+				$('#wait-response').addClass('d-none');
+				$('#form-secure-rec-new-prescription').trigger('reset');
+				resetSelect($('#patients'), 'No patient selected');
+				$('#div-secure-rec-upload').removeClass('d-none');
+				$('#message-error-text').html(xhr.responseJSON.message);
+				$('#message-error').removeClass('d-none');
+				$('#message-error').show();
+			},
+			success: function(result) {
+				if (result.success){
+					clearUploadData();
+					$('#wait-response').addClass('d-none');
+					$('#form-secure-rec-new-prescription').trigger('reset');
+					resetSelect($('#patients'), 'No patient selected');
+					$('#div-secure-rec-upload').removeClass('d-none');
+					$('#message-success-text').html(result.message);
+					$('#message-success').removeClass('d-none');
+					$('#message-success').show();
+				}
+			}
+		});
+	} else
+		secureRecNewPrescription.focusInvalid();
 });
