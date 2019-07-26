@@ -76,28 +76,29 @@ var Chaincode = class {
 
   // SecureRec V1.1 - Prescription functions
   async createPrescription(stub, args){
-    if ( args.length != 4 )
-      throw new Error('Incorrect number of arguments. Expecting 4');
+    // args[0] = patient, args[1] = doctor, args[2] = ipfsHash
+    if ( args.length != 3 )
+      throw new Error('Incorrect number of arguments. Expecting 3');
     
     let test;
     try{
-      test = await stub.getState(args[3]);
+      test = await stub.getState(args[2]);
       test = JSON.parse(test.toString());
     }catch(err){
     }
-    if ( test.hash == args[3] )
+    if ( test.hash == args[2] )
       throw new Error('Prescriptions exist in the blockchain');
     // Prepare and create prescription
     let prescription = {
       patient: args[0],
       doctor: args[1],
-      insurance: args[2],
+      insurance: '',
       status: 'UNSPENT',
       provider: '',
-      hash: args[3]
+      hash: args[2]
     }
 
-    await stub.putState(prescription.hash, Buffer.from(JSON.stringify(prescription)));
+    await stub.putState(args[2], Buffer.from(JSON.stringify(prescription)));
 
     // Get and update patient
     let patient = await stub.getState(args[0]+'_prescriptions');
@@ -122,27 +123,14 @@ var Chaincode = class {
     }
     doctor.prescriptions.push(prescription.hash);
     await stub.putState(args[1]+'_prescriptions', Buffer.from(JSON.stringify(doctor)));
-
-    // Get and update insurance
-    if ( args[2].length > 0) {
-      let insurance = await stub.getState(args[2]+'_prescriptions');
-      try{
-        insurance = JSON.parse(insurance.toString());
-      }catch(err){
-        insurance = {
-          prescriptions: new Array()
-        }
-      }
-      insurance.prescriptions.push(prescription.hash);
-      await stub.putState(args[2]+'_prescriptions', Buffer.from(JSON.stringify(insurance)));
-    }
   }
 
   async consumePrescription(stub, args){
-    if ( args.length != 2 )
-      throw new Error('Incorrect number of arguments. Expecting 2');
+    // args[0] = provider, args[1] = insurance, args[2] = prescriptionHash
+    if ( args.length != 3 )
+      throw new Error('Incorrect number of arguments. Expecting 3');
     // Get and update prescription
-    let prescription = await stub.getState(args[1]);
+    let prescription = await stub.getState(args[2]);
     try{
       prescription = JSON.parse(prescription.toString());
     }catch(err){
@@ -151,8 +139,9 @@ var Chaincode = class {
     if ( prescription.status != 'UNSPENT')
       throw new Error('Prescription status should be UNSPENT')
     prescription.provider = args[0];
+    prescription.insurance = args[1];
     prescription.status = 'SPENT';
-    await stub.putState(args[1], Buffer.from(JSON.stringify(prescription)));
+    await stub.putState(args[2], Buffer.from(JSON.stringify(prescription)));
     // Get and update pharmacy
     let provider = await stub.getState(args[0]+'_prescriptions');
     try{
@@ -162,11 +151,25 @@ var Chaincode = class {
         prescriptions: new Array()
       }
     }
-    provider.prescriptions.push(args[1]);
+    provider.prescriptions.push(args[0]);
     await stub.putState(args[0]+'_prescriptions', Buffer.from(JSON.stringify(provider)));
+    // Get and update insurance
+    if ( args[1].length > 0) {
+      let insurance = await stub.getState(args[1]+'_prescriptions');
+      try{
+        insurance = JSON.parse(insurance.toString());
+      }catch(err){
+        insurance = {
+          prescriptions: new Array()
+        }
+      }
+      insurance.prescriptions.push(prescription.hash);
+      await stub.putState(args[1]+'_prescriptions', Buffer.from(JSON.stringify(insurance)));
+    }
   }
 
   async deletePrescription(stub, args){
+    // args[0] = doctor, args[1] = ipfsHash
     if ( args.length != 2 )
       throw new Error('Incorrect number of arguments. Expecting 2');
     // Get and update prescription
@@ -185,6 +188,7 @@ var Chaincode = class {
   }
 
   async queryPrescriptions(stub, args){
+    // args[0] = A user.
     if ( args.length != 1 )
       throw new Error('Incorrect number of arguments. Expecting 1');
     let user = await stub.getState(args[0]+'_prescriptions');
