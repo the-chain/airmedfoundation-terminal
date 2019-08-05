@@ -1,8 +1,8 @@
 module.exports = {
 
-    friendlyName: 'Secure rec prescription',
+    friendlyName: 'Secure Rec new prescription',
     
-    description: 'Secure Rec prescription.',
+    description: 'Secure Rec new prescription.',
     
     exits: {
       success: {

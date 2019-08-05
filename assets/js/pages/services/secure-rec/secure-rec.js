@@ -147,39 +147,29 @@ var secureRecEditNote = $('#form-secure-rec-edit-note').validate({
 var secureRecNewPrescription = $('#form-secure-rec-new-prescription').validate({
 	ignore: ':hidden:not(input[type="file"])',
 	rules: {
-		medicalFile: {
-			required: true
-		},
 		patients: {
 			required: true
+		},
+		description: {
+			required: true,
+			minlength: 25,
+			maxlength: 250,
 		}
 	},
 	errorPlacement: function(error, element) {
 		return true;
 	},
 	highlight: function(element) {
-		let inputType = $(element).attr('type');
-		if (inputType != undefined) {
-			switch (inputType) {
-				case 'file':
-					$(element).parent().parent().prev('label').addClass('tag-error');
-					$(element).parent().parent().addClass('box-error');
-					break;
-			}
-		} else if ($(element).hasClass('selectpicker'))
+		if ($(element).hasClass('selectpicker'))
 			$(element).parent().prev('label').addClass('tag-error');
+		else
+			$(element).prev('label').addClass('tag-error');
 	},
 	unhighlight: function(element) {
-		let inputType = $(element).attr('type');
-		if (inputType != undefined) {
-			switch (inputType) {
-				case 'file':
-					$(element).parent().parent().prev('label').removeClass('tag-error');
-					$(element).parent().parent().removeClass('box-error');
-					break;
-			}
-		} else if ($(element).hasClass('selectpicker'))
+		if ($(element).hasClass('selectpicker'))
 			$(element).parent().prev('label').removeClass('tag-error');
+		else
+			$(element).prev('label').removeClass('tag-error');
 	}
 });
 /* END DECLARATION OF FORMS */
@@ -569,8 +559,11 @@ $('#sr-new-prescription-btn').click(function() {
 	if ($('#form-secure-rec-new-prescription').valid()){
 		let sendInfo = new FormData();
 		sendInfo.append('user', $('#patients').val());
-		sendInfo.append('fileName', $('input[type=file]')[0].files[0].name);
-		sendInfo.append('file', $('input[type=file]')[0].files[0]);
+		sendInfo.append('description', $('#description').val());
+		if($('input[type=file]')[0].files.length){
+			sendInfo.append('fileName', $('input[type=file]')[0].files[0].name);
+			sendInfo.append('file', $('input[type=file]')[0].files[0]);
+		}
 		$('#wait-response').removeClass('d-none');
 		$('#div-secure-rec-upload').addClass('d-none');
 		$.ajax({
@@ -582,7 +575,9 @@ $('#sr-new-prescription-btn').click(function() {
 			contentType: false,
 			processData: false,
 			error: function (xhr, ajaxOptions, thrownError) {
-				clearUploadData();
+				$image.attr('src', '../../../images/general/upload.png');
+				$('#file-name').text('');
+				$('#file-name').addClass('d-none');
 				$('#wait-response').addClass('d-none');
 				$('#form-secure-rec-new-prescription').trigger('reset');
 				resetSelect($('#patients'), 'No patient selected');
@@ -593,7 +588,9 @@ $('#sr-new-prescription-btn').click(function() {
 			},
 			success: function(result) {
 				if (result.success){
-					clearUploadData();
+					$image.attr('src', '../../../images/general/upload.png');
+					$('#file-name').text('');
+					$('#file-name').addClass('d-none');
 					$('#wait-response').addClass('d-none');
 					$('#form-secure-rec-new-prescription').trigger('reset');
 					resetSelect($('#patients'), 'No patient selected');
