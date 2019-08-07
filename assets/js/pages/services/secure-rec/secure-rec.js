@@ -604,3 +604,151 @@ $('#sr-new-prescription-btn').click(function() {
 	} else
 		secureRecNewPrescription.focusInvalid();
 });
+
+var srNewPrescriptionsDoctors = $('#sr-new-prescriptions-doctors').DataTable({
+	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1, 2],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		},
+		{
+			'targets': 3,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-danger btn-block sr-authorizations-delete sr-auto-pro-del'><i class='fas fa-trash-alt' aria-hidden='true'></i></button>"
+		}
+	]
+});
+
+var srHistoryPrescriptionsDoctors = $('#sr-history-prescriptions-doctors').DataTable({
+	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1, 2],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		}
+	]
+});
+
+var srNewPrescriptionsPatients = $('#sr-new-prescriptions-patients').DataTable({
+	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1, 2, 3, 4],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		},
+		{
+			'targets': 5,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block view-prescription'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		}
+	]
+});
+
+var srHistoryPrescriptionsPatients = $('#sr-history-prescriptions-patients').DataTable({
+	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1, 2, 3, 4],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		}
+	]
+});
+
+var srNewPrescriptionsProviders = $('#sr-new-prescriptions-providers').DataTable({
+	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1, 2, 3, 4],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		},
+		{
+			'targets': 5,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block view-prescription'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		}
+	]
+});
+
+var srHistoryPrescriptionsProviders = $('#sr-history-prescriptions-providers').DataTable({
+	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1, 2, 3, 4],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		}
+	]
+});
+
+var srPrescriptionsInsurance = $('#sr-prescriptions-insurance').DataTable({
+	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
+         	'<"row"<"col-sm-12"tr>>' +
+			 '<"row"<"col-sm-12 pagination-margin"p>>',
+	'pagingType': 'full_numbers',
+	'bLengthChange': false,
+	'bSort': false,
+	'columnDefs': [
+		{
+			'targets': [0, 1, 2, 3, 4],
+			render: function (data, type, row) {
+				return data.length > 40 ?
+				data.substr(0, 40) +'…' :
+				data;
+			}
+		}
+	]
+});

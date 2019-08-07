@@ -1,0 +1,143 @@
+<% include ../layouts/navigation-bar-dashboard %>
+
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <% include ../../../layouts/flash-message %>
+            <% include ../../../layouts/wait %>
+            <div id="div-secure-rec-upload">
+                <h5 class="detail-title mb-5">
+                    Prescriptions
+                </h5>
+                <% if(session.auth.type !== 'insurance') { %>
+                    <div id="sr-prescriptions-card" class="card explorer-detail tabs-card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="sr-prescriptions-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="sr-news-prescriptions-tab" data-toggle="tab" href="#sr-news-prescriptions-table" role="tab" aria-controls="sr-news-prescriptions-table" aria-selected="true">News</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="sr-history-prescriptions-tab" data-toggle="tab" href="#sr-history-prescriptions-table" role="tab" aria-controls="sr-history-prescriptions-table" aria-selected="true">History</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content" id="sr-prescriptions-tables">
+                            <div class="tab-pane fade show active authorizations-table-div" id="sr-news-prescriptions-table" role="tabpanel" aria-labelledby="sr-news-prescriptions-tab">
+                                <% if(session.auth.type === 'doctor') { %>
+                                    <table id="sr-new-prescriptions-doctors" class="table hash-table dt-responsive" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Hash</th>
+                                                <th>Status</th>
+                                                <th>Patient</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                <% } else if(session.auth.type === 'patient'){ %>
+                                    <table id="sr-new-prescriptions-patients" class="table hash-table dt-responsive" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Hash</th>
+                                                <th>Status</th>
+                                                <th>Doctor</th>
+                                                <th>Insurance</th>
+                                                <th>Provider</th>
+                                                <th>Spend</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                <% } else if(session.auth.type === 'provider'){ %>
+                                    <table id="sr-new-prescriptions-providers" class="table hash-table dt-responsive" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Hash</th>
+                                                <th>Status</th>
+                                                <th>Patient</th>
+                                                <th>Doctor</th>
+                                                <th>Insurance</th>
+                                                <th>Spend</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                <% } %>
+                            </div>
+                            <div class="tab-pane fade authorizations-table-div" id="sr-history-prescriptions-table" role="tabpanel" aria-labelledby="sr-history-prescriptions-tab">
+                                <% if(session.auth.type === 'doctor') { %>
+                                    <table id="sr-history-prescriptions-doctors" class="table hash-table dt-responsive" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Hash</th>
+                                                <th>Status</th>
+                                                <th>Patient</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                <% } else if(session.auth.type === 'patient'){ %>
+                                    <table id="sr-history-prescriptions-patients" class="table hash-table dt-responsive" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Hash</th>
+                                                <th>Status</th>
+                                                <th>Doctor</th>
+                                                <th>Insurance</th>
+                                                <th>Provider</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                <% } else if(session.auth.type === 'provider'){ %>
+                                    <table id="sr-history-prescriptions-providers" class="table hash-table dt-responsive" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Hash</th>
+                                                <th>Status</th>
+                                                <th>Patient</th>
+                                                <th>Doctor</th>
+                                                <th>Insurance</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <table id="sr-prescriptions-insurance" class="table hash-table dt-responsive" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Hash</th>
+                                <th>Status</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Provider</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</main>
+
+<% include ../../../layouts/footer %>
