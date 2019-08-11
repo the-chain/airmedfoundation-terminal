@@ -34,7 +34,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
                                         </tbody>
                                     </table>
                                 <% } else if(session.auth.type === 'patient'){ %>
@@ -44,13 +43,12 @@
                                                 <th>Hash</th>
                                                 <th>Status</th>
                                                 <th>Doctor</th>
-                                                <th>Insurance</th>
                                                 <th>Provider</th>
+                                                <th>Insurance</th>
                                                 <th>Spend</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
                                         </tbody>
                                     </table>
                                 <% } else if(session.auth.type === 'provider'){ %>
@@ -66,7 +64,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
                                         </tbody>
                                     </table>
                                 <% } %>
@@ -131,13 +128,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
                         </tbody>
                     </table>
                 <% } %>
             </div>
         </div>
     </div>
+
+    <% include ./delete %>
+
+    <% include ./edit %>
+
 </main>
 
 <% include ../../../layouts/footer %>

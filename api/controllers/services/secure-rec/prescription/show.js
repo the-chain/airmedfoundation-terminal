@@ -12,6 +12,15 @@ module.exports = {
     },
     
     fn: async function (inputs, exits) {
-      return exits.success();
+        let user = this.req.session.auth;
+        if (user.type == 'patient'){
+            let insuranceCompanies, pharmacies;
+            insuranceCompanies = await Patient.findOne({ emailAddress: user.emailAddress }).populate('insurances');
+            insuranceCompanies = insuranceCompanies.insurances;
+            pharmacies = await Patient.findOne({ emailAddress: user.emailAddress }).populate('providers', { where: { type: 'pharmacy'}});
+            pharmacies = pharmacies.providers;
+            return exits.success({ 'insuranceCompanies': insuranceCompanies, 'pharmacies': pharmacies });
+        }
+        return exits.success();
     }    
 };

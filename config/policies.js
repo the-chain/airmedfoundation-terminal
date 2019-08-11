@@ -55,6 +55,8 @@ module.exports.policies = {
 
   // Prescription
   'services/secure-rec/prescription/new-index': ['login', 'isDoctor'],
+  'services/secure-rec/prescription/show': 'login',
   'services/secure-rec/prescription/new': ['login', 'isDoctor'],
-  'services/secure-rec/prescription/show': 'login'
+  'services/secure-rec/prescription/edit-patient': ['login', 'isPatient'],
+  'services/secure-rec/prescription/delete': ['login', 'isDoctor'],
 };

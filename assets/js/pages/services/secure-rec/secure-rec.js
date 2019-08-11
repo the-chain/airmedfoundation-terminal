@@ -172,6 +172,44 @@ var secureRecNewPrescription = $('#form-secure-rec-new-prescription').validate({
 			$(element).prev('label').removeClass('tag-error');
 	}
 });
+
+var secureRecEditPrescription = $('#sr-edit-prescription-form').validate({
+	rules: {
+		hash: {
+			required: true
+		},
+		pharmacy: {
+			required: true
+		},
+		selfPayment: {
+			required: true
+		},
+		company: {
+			required: true
+		},
+	},
+	errorPlacement: function(error, element) {
+		return true;
+	},
+	highlight: function(element) {
+		let inputType = $(element).attr('type');
+		if (inputType !== undefined && inputType === 'radio')
+			$(element).parent().prev('label').addClass('tag-error');
+		else if ($(element).hasClass('selectpicker'))
+			$(element).parent().prev('label').addClass('tag-error');
+		else
+			$(element).prev('label').addClass('tag-error');
+	},
+	unhighlight: function(element) {
+		let inputType = $(element).attr('type');
+		if (inputType !== undefined && inputType === 'radio')
+			$(element).parent().prev('label').removeClass('tag-error');
+		else if ($(element).hasClass('selectpicker'))
+			$(element).parent().prev('label').removeClass('tag-error');
+		else
+			$(element).prev('label').removeClass('tag-error');
+	}
+});
 /* END DECLARATION OF FORMS */
 
 /* INIT DECLARATION OF TABLES */
@@ -624,7 +662,7 @@ var srNewPrescriptionsDoctors = $('#sr-new-prescriptions-doctors').DataTable({
 		{
 			'targets': 3,
 			'data': null,
-			'defaultContent': "<button type='button' class='btn btn-danger btn-block sr-authorizations-delete sr-auto-pro-del'><i class='fas fa-trash-alt' aria-hidden='true'></i></button>"
+			'defaultContent': "<button type='button' class='btn btn-danger btn-block sr-prescriptions-delete sr-auto-pro-del'><i class='fas fa-trash-alt' aria-hidden='true'></i></button>"
 		}
 	]
 });
@@ -667,7 +705,7 @@ var srNewPrescriptionsPatients = $('#sr-new-prescriptions-patients').DataTable({
 		{
 			'targets': 5,
 			'data': null,
-			'defaultContent': "<button type='button' class='btn btn-primary btn-block view-prescription'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-use-prescription'><i class='fas fa-check' aria-hidden='true'></i></button>"
 		}
 	]
 });
@@ -710,7 +748,7 @@ var srNewPrescriptionsProviders = $('#sr-new-prescriptions-providers').DataTable
 		{
 			'targets': 5,
 			'data': null,
-			'defaultContent': "<button type='button' class='btn btn-primary btn-block view-prescription'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-spend-prescription'><i class='fas fa-check' aria-hidden='true'></i></button>"
 		}
 	]
 });
@@ -751,4 +789,145 @@ var srPrescriptionsInsurance = $('#sr-prescriptions-insurance').DataTable({
 			}
 		}
 	]
+});
+
+$(document.body).on('click', '.sr-prescriptions-delete', function () {
+	srNewPrescriptionsDoctors.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	let hash = srNewPrescriptionsDoctors.row('.selected').data()[0];
+	$('#sr-prescription-delete-hash').val(hash);
+	$('#sr-delete-prescription-modal').modal('show');
+});
+
+$('#sr-delete-prescription-btn').click(function() {
+	let sendInfo = {
+		'hash': $('#sr-prescription-delete-hash').val()
+	};
+
+	$.ajax({
+		type: 'DELETE',
+		url: '/services/secure-rec/prescription/delete',
+		data: sendInfo,
+		dataType: 'json',
+		error: function (xhr, ajaxOptions, thrownError) {
+			$('#message-error-text').html(xhr.responseJSON.message);
+			$('#message-error').removeClass('d-none');
+			$('#message-error').show();
+		},
+		success: function(result) {
+			if(result.success) {
+				srNewPrescriptionsDoctors.row('.selected').remove().draw(false);
+				$('#sr-delete-prescription-modal').modal('hide');
+				$('#message-success-text').text(result.message);
+				$('#message-success').removeClass('d-none');
+				$('#message-success').show();
+			}
+		}
+	});
+});
+
+$(document.body).on('click', '.sr-use-prescription', function () {
+	srNewPrescriptionsPatients.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	let hash = srNewPrescriptionsPatients.row('.selected').data()[0];
+	let provider = srNewPrescriptionsPatients.row('.selected').data()[3];
+	let insurance = srNewPrescriptionsPatients.row('.selected').data()[4];
+	
+	if(insurance === ''){
+		if(provider !== ''){
+			$('input[name="selfPayment"][value="true"]').prop('checked', true);
+			let pharmacy = $('#use-pharmacy');
+			pharmacy.selectpicker('val', provider);
+			pharmacy.selectpicker('refresh');
+		}
+	}else{
+		$('input[name="selfPayment"][value="false"]').prop('checked', true);
+		$('#insurance-companies-container').removeClass('d-none');
+		let pharmacy = $('#use-pharmacy');
+		pharmacy.selectpicker('val', provider);
+		pharmacy.selectpicker('refresh');
+		let companies = $('#use-companies');
+		companies.selectpicker('val', insurance);
+		companies.selectpicker('refresh');
+	}
+	$('#sr-prescription-use-hash').val(hash);
+	$('#sr-use-prescription-modal').modal('show');
+});
+
+$('#sr-use-prescription-btn').click(function() {
+	if ($('#sr-edit-prescription-form').valid()){
+		let sendInfo = {
+			'hash': $('#sr-prescription-use-hash').val(),
+			'pharmacy': $('#use-pharmacy').val(),
+			'selfPayment': ($('input[name=selfPayment]:checked').val() === 'true'),
+			'insurance': $('#use-companies').val()
+		};
+
+		$.ajax({
+			type: 'POST',
+			url: '/services/secure-rec/prescription/edit-patient',
+			data: sendInfo,
+			dataType: 'json',
+			error: function (xhr, ajaxOptions, thrownError) {
+				$('#message-error-text').html(xhr.responseJSON.message);
+				$('#message-error').removeClass('d-none');
+				$('#message-error').show();
+			},
+			success: function(result) {
+				if(result.success) {
+					let test = srNewPrescriptionsPatients.row('.selected').data();
+					// AQUI FALTARIA EL NUEVO ESTADO
+					test[3] = $('#use-pharmacy').val();
+					test[4] = $('#use-companies').val();
+					srNewPrescriptionsPatients.row('.selected').data(test);
+					srNewPrescriptionsPatients.draw();
+					$('#sr-use-prescription-modal').modal('hide');
+					$('#message-success-text').text(result.message);
+					$('#message-success').removeClass('d-none');
+					$('#message-success').show();
+				}
+			}
+		});
+	} else
+		secureRecEditPrescription.focusInvalid();
+});
+
+$(document.body).on('click', '.sr-spend-prescription', function () {
+	srNewPrescriptionsProviders.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	let hash = srNewPrescriptionsProviders.row('.selected').data()[0];
+	$('#sr-prescription-confirm-hash').val(hash);
+	$('#sr-confirm-prescription-modal').modal('show');
+});
+
+$('#sr-confirm-prescription-btn').click(function() {
+	let sendInfo = {
+		'hash': $('#sr-prescription-confirm-hash').val()
+	};
+
+	$.ajax({
+		type: 'POST',
+		url: '/services/secure-rec/prescription/edit-provider',
+		data: sendInfo,
+		dataType: 'json',
+		error: function (xhr, ajaxOptions, thrownError) {
+			$('#message-error-text').html(xhr.responseJSON.message);
+			$('#message-error').removeClass('d-none');
+			$('#message-error').show();
+		},
+		success: function(result) {
+			if(result.success) {
+				let test = srNewPrescriptionsProviders.row('.selected').data();
+				srHistoryPrescriptionsProviders.row.add(test).draw().node();
+				srNewPrescriptionsProviders.row('.selected').remove().draw(false);
+				$('#sr-confirm-prescription-modal').modal('hide');
+				$('#message-success-text').text(result.message);
+				$('#message-success').removeClass('d-none');
+				$('#message-success').show();
+			}
+		}
+	});
 });
