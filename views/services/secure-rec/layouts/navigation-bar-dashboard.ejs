@@ -6,28 +6,27 @@
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-pills" aria-hidden="true"></i> Prescriptions
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <% if(session.auth.type === 'doctor') { %>
-                            <li><a class="dropdown-item" href="/services/secure-rec/prescription/new"><i class="fas fa-plus icon-color" aria-hidden="true"></i> New</a></li>
-                        <% } %>
-                        <li><a class="dropdown-item" href="/services/secure-rec/prescription/"><i class="fas fa-clipboard-list icon-color" aria-hidden="true"></i> View all</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown mr-5">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-wrench" aria-hidden="true"></i> Tools
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/services/secure-rec/authorizations"><i class="fas fa-address-card icon-color" aria-hidden="true"></i> Authorizations</a></li>
+                        <li><a class="dropdown-item" href="/services/secure-rec/authorizations"><i class="fas fa-address-card icon-color" aria-hidden="true"></i> Authorization</a></li>
                         <li><a class="dropdown-item" href="/services/secure-rec/transaction"><i class="fas fa-exchange-alt icon-color" aria-hidden="true"></i> Transaction</a></li>
+                        <% if(session.auth.providerType !== 'clinic' && session.auth.providerType !== 'laboratory') { %>
+                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#"><i class="fas fa-pills icon-color" aria-hidden="true"></i> Prescription</a>
+                                <ul class="dropdown-menu">
+                                    <% if(session.auth.type === 'doctor') { %>
+                                        <li><a class="dropdown-item" href="/services/secure-rec/prescription/new"><i class="fa fa-plus icon-color" aria-hidden="true"></i> New</a></li>
+                                    <% } %>
+                                    <li><a class="dropdown-item" href="/services/secure-rec/prescription/"><i class="fas fa-clipboard-list icon-color" aria-hidden="true"></i> View all</a></li>
+                                </ul>
+                            </li>
+                        <% } %>
                         <li><a class="dropdown-item" href="/services/secure-rec/files"><i class="fas fa-file icon-color" aria-hidden="true"></i> Files</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown mr-5">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user icon-color" aria-hidden="true"></i>  <%= session.auth.emailAddress.split('@')[0].substring(0, 10) %>
                     </a>
