@@ -126,24 +126,25 @@ var Chaincode = class {
   }
 
   async consumePrescription(stub, args){
-    // args[0] = provider, args[1] = insurance, args[2] = prescriptionHash
-    if ( args.length != 3 )
-      throw new Error('Incorrect number of arguments. Expecting 3');
+    // args[0] = provider, args[1] = prescriptionHash
+    if ( args.length != 2 )
+      throw new Error('Incorrect number of arguments. Expecting 2');
     // Get and update prescription
-    let prescription = await stub.getState(args[2]);
+    let prescription = await stub.getState(args[1]);
     try{
       prescription = JSON.parse(prescription.toString());
     }catch(err){
       throw new Error('Prescription does not exist');
     }
     if ( prescription.status != 'UNSPENT')
-      throw new Error('Prescription status should be UNSPENT')
-    prescription.provider = args[0];
-    prescription.insurance = args[1];
+      throw new Error('Prescription status should be UNSPENT');
+    if ( prescription.provider != args[0] )
+      throw new Error('Incorrect provider');
     prescription.status = 'SPENT';
-    await stub.putState(args[2], Buffer.from(JSON.stringify(prescription)));
+    await stub.putState(args[1], Buffer.from(JSON.stringify(prescription)));
+    
     // Get and update pharmacy
-    let provider = await stub.getState(args[0]+'_prescriptions');
+    let provider = await stub.getState(prescription.provider+'_prescriptions');
     try{
       provider = JSON.parse(provider.toString());
     }catch(err){
@@ -151,11 +152,12 @@ var Chaincode = class {
         prescriptions: new Array()
       }
     }
-    provider.prescriptions.push(args[0]);
-    await stub.putState(args[0]+'_prescriptions', Buffer.from(JSON.stringify(provider)));
+    provider.prescriptions.push(prescription.hash);
+    await stub.putState(prescription.provider+'_prescriptions', Buffer.from(JSON.stringify(provider)));
+
     // Get and update insurance
-    if ( args[1].length > 0) {
-      let insurance = await stub.getState(args[1]+'_prescriptions');
+    if ( prescription.insurance.length > 0) {
+      let insurance = await stub.getState(prescription.insurance+'_prescriptions');
       try{
         insurance = JSON.parse(insurance.toString());
       }catch(err){
@@ -164,8 +166,29 @@ var Chaincode = class {
         }
       }
       insurance.prescriptions.push(prescription.hash);
-      await stub.putState(args[1]+'_prescriptions', Buffer.from(JSON.stringify(insurance)));
+      await stub.putState(prescription.insurance+'_prescriptions', Buffer.from(JSON.stringify(insurance)));
     }
+  }
+
+  async updatePrescription(stub, args){
+    // args[0] = patient, args[1] = provider, args[2] = insurance,  args[3] = prescriptionHash
+    if ( args.length != 4 )
+      throw new Error('Incorrect number of arguments. Expecting 4');
+    // Get and update prescription
+    let prescription = await stub.getState(args[3]);
+    try{
+      prescription = JSON.parse(prescription.toString());
+    }catch(err){
+      throw new Error('Prescription does not exist');
+    }
+    if ( prescription.status != 'UNSPENT')
+      throw new Error('Prescription status should be UNSPENT');
+    if ( prescription.patient != args[0] )
+      throw new Error('Incorrect patient');
+    prescription.provider = args[1];
+    if ( args[2].length > 0)
+      prescription.insurance = args[2];
+    await stub.putState(args[3], Buffer.from(JSON.stringify(prescription)));
   }
 
   async deletePrescription(stub, args){
@@ -185,6 +208,18 @@ var Chaincode = class {
       throw new Error('Only the doctor who created the prescription can delete it');
     prescription.status = 'DELETED';
     await stub.putState(args[1], Buffer.from(JSON.stringify(prescription)));
+  }
+
+  async queryPrescription(stub,args){
+    if ( args.length != 1 )
+      throw new Error('Incorrect number of arguments. Expecting 1');
+    let prescription = await stub.getState(args[0]);
+    try{
+      prescription = JSON.parse(prescription.toString());
+    }catch(err){
+      throw new Error('Prescription does not exist');
+    }
+    return Buffer.from(JSON.stringify(prescription));
   }
 
   async queryPrescriptions(stub, args){
