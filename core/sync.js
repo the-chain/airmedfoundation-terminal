@@ -14,7 +14,7 @@ module.exports = {
     async startSync(channelName, mspId, peerNumber) {
         console.log("Start sync process");
         // Leer la cantidad de bloques de la base de datos y la blockchain
-        const totalBlocks = await httpClient.getTotalBlocks();
+        const totalBlocks = +await httpClient.getTotalBlocks();
         const ledgerHeight = await ledgerQuery.ledgerHeight(channelName,mspId,peerNumber);
         // Caso 1: Comenzar desde 0.
         if (totalBlocks == 0) {
@@ -38,7 +38,7 @@ module.exports = {
         }
 
         // Caso #4: Actualizar la base de datos
-        const lastBlockBD = JSON.parse(await httpClient.getBlockByNumber(totalBlocks-1));
+        const lastBlockBD = JSON.parse(await httpClient.getBlockByNumber(totalBlocks));
         const lastBlockDBinLedger = await ledgerQuery.queryBlock(channelName,mspId,peerNumber,totalBlocks-1);
         if (lastBlockBD.dataHash == lastBlockDBinLedger.header.data_hash ) {
             console.log("Sync the database from Block #" + totalBlocks.toString());
