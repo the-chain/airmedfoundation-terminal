@@ -32,7 +32,7 @@ module.exports = {
     // If one of required parameters is missing
     if(!inputs.key)
       return exits.invalid();
-    var response, resp1, resp2;
+    var response;
     // Check private/public key
     if (await ursa.isPrivateKey(inputs.key)) {
       var arg = await ursa.getPublicKey(inputs.key);
