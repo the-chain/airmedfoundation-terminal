@@ -77,6 +77,7 @@ module.exports = {
               status: result.prescriptions[i].status,
               description: data.description,
               doctor: doctor.emailAddress,
+              patient: patient.emailAddress,
               insurance: insurance,
               provider: provider,
               ipfsHash: data.hashFile,
@@ -90,7 +91,6 @@ module.exports = {
             } else if ( prescription.status === 'DELETED' ){
               prescriptions.push(prescription);
             }
-            console.log(prescription);
           }
         }
         if (user.type == 'patient'){

@@ -1,3 +1,6 @@
+const fabric = require('../../../../../fabric-api/chaincodeTransactions');
+const ursa = require('../../../../../crypto/keys');
+
 module.exports = {
 
     friendlyName: 'Secure Rec edit prescription patient',
@@ -27,6 +30,14 @@ module.exports = {
         invalid: {
             responseType: 'bad-combo',
             description: 'Los parámetros proporcionados son inválidos.'
+        },
+        fabric: {
+            responseType: 'fabric-error',
+            description: 'Error Hyperledger Fabric' 
+        },
+        internalError: {
+            responseType: 'internal-error',
+            description: 'Error changing password'
         }
     },
   
@@ -34,15 +45,31 @@ module.exports = {
 
         if (inputs.hash === undefined || inputs.pharmacy === undefined || inputs.pharmacy === '' || inputs.selfPayment === undefined)
             return exits.invalid();
-
-        console.log(inputs.hash);
-        console.log(inputs.pharmacy);
-        console.log(inputs.selfPayment);
-        console.log(inputs.insurance);
+        
+        let owner = this.req.session.auth, pubKey = await ursa.getPublicKey(owner.privateKey);
+        let provider;
+        let result, Args;
+        try{
+            provider = await User.findOne({ emailAddress: inputs.pharmacy});
+            if ( inputs.selfPayment ) {
+                Args = [pubKey, provider.publicKey, "", inputs.hash];
+            }else{
+                let insurance = await User.findOne({ emailAddress: inputs.insurance});
+                Args = [pubKey, provider.publicKey, insurance.publicKey, inputs.hash];
+            }
+        }catch(err){
+            return exits.internalError();
+        }
+        try {
+            result = await fabric.invokeTransaction('mychannel','Org1MSP','secureRec', 'updatePrescription', Args);
+        }catch(err){
+            return exits.fabric();
+        }
         
         return exits.success({
             success: true,
             message: 'Edit prescription',
+            hash: result.hash
         });
   
     }
