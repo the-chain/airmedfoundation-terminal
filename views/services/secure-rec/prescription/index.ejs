@@ -34,6 +34,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <% unusedPrescriptions.forEach(function(prescription)  { %>
+                                                <tr>
+                                                    <td><%= prescription.hash %></td>
+                                                    <td><%= prescription.status %></td>
+                                                    <td><%= prescription.patient %></td>
+                                                    <td></td>
+                                                </tr>
+                                            <% }); %> 
                                         </tbody>
                                     </table>
                                 <% } else if(session.auth.type === 'patient'){ %>
@@ -49,23 +57,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <% unusedPrescriptions.forEach(function(prescription)  { %>
+                                                <tr>
+                                                    <td><%= prescription.hash %></td>
+                                                    <td><%= prescription.status %></td>
+                                                    <td><%= prescription.doctor %></td>
+                                                    <td><%= prescription.provider %></td>
+                                                    <td><%= prescription.insurance %></td>
+                                                    <td></td>
+                                                </tr>
+                                            <% }); %> 
                                         </tbody>
                                     </table>
                                 <% } else if(session.auth.type === 'provider'){ %>
-                                    <table id="sr-new-prescriptions-providers" class="table hash-table dt-responsive" style="width:100%;">
-                                        <thead>
-                                            <tr>
-                                                <th>Hash</th>
-                                                <th>Status</th>
-                                                <th>Patient</th>
-                                                <th>Doctor</th>
-                                                <th>Insurance</th>
-                                                <th>Spend</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                                    
                                 <% } %>
                             </div>
                             <div class="tab-pane fade authorizations-table-div" id="sr-history-prescriptions-table" role="tabpanel" aria-labelledby="sr-history-prescriptions-tab">
@@ -79,7 +84,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            <% prescriptions.forEach(function(prescription)  { %>
+                                                <tr>
+                                                    <td><%= prescription.hash %></td>
+                                                    <td><%= prescription.status %></td>
+                                                    <td><%= prescription.patient %></td>
+                                                </tr>
+                                            <% }); %> 
                                         </tbody>
                                     </table>
                                 <% } else if(session.auth.type === 'patient'){ %>
@@ -89,12 +100,20 @@
                                                 <th>Hash</th>
                                                 <th>Status</th>
                                                 <th>Doctor</th>
-                                                <th>Insurance</th>
                                                 <th>Provider</th>
+                                                <th>Insurance</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            <% prescriptions.forEach(function(prescription)  { %>
+                                                <tr>
+                                                    <td><%= prescription.hash %></td>
+                                                    <td><%= prescription.status %></td>
+                                                    <td><%= prescription.doctor %></td>
+                                                    <td><%= prescription.provider %></td>
+                                                    <td><%= prescription.insurance %></td>
+                                                </tr>
+                                            <% }); %> 
                                         </tbody>
                                     </table>
                                 <% } else if(session.auth.type === 'provider'){ %>
@@ -109,7 +128,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            <% prescriptions.forEach(function(prescription)  { %>
+                                                <tr>
+                                                    <td><%= prescription.hash %></td>
+                                                    <td><%= prescription.status %></td>
+                                                    <td><%= prescription.patient %></td>
+                                                    <td><%= prescription.doctor %></td>
+                                                    <td><%= prescription.insurance %></td>
+                                                </tr>
+                                            <% }); %> 
                                         </tbody>
                                     </table>
                                 <% } %>
@@ -128,6 +155,15 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <% prescriptions.forEach(function(prescription)  { %>
+                                <tr>
+                                    <td><%= prescription.hash %></td>
+                                    <td><%= prescription.status %></td>
+                                    <td><%= prescription.patient %></td>
+                                    <td><%= prescription.doctor %></td>
+                                    <td><%= prescription.provider %></td>
+                                </tr>
+                            <% }); %> 
                         </tbody>
                     </table>
                 <% } %>
