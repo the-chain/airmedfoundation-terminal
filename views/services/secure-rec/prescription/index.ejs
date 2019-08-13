@@ -14,10 +14,10 @@
                         <div class="card-header">
                             <ul class="nav nav-tabs card-header-tabs" id="sr-prescriptions-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="sr-news-prescriptions-tab" data-toggle="tab" href="#sr-news-prescriptions-table" role="tab" aria-controls="sr-news-prescriptions-table" aria-selected="true">News</a>
+                                    <a class="nav-link active" id="sr-news-prescriptions-tab" data-toggle="tab" href="#sr-news-prescriptions-table" role="tab" aria-controls="sr-news-prescriptions-table" aria-selected="true">Unspent</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="sr-history-prescriptions-tab" data-toggle="tab" href="#sr-history-prescriptions-table" role="tab" aria-controls="sr-history-prescriptions-table" aria-selected="true">History</a>
+                                    <a class="nav-link" id="sr-history-prescriptions-tab" data-toggle="tab" href="#sr-history-prescriptions-table" role="tab" aria-controls="sr-history-prescriptions-table" aria-selected="true">Spent</a>
                                 </li>
                             </ul>
                         </div>
@@ -30,6 +30,8 @@
                                                 <th>Hash</th>
                                                 <th>Status</th>
                                                 <th>Patient</th>
+                                                <th>Description</th>
+                                                <th>View</th>
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
@@ -39,6 +41,8 @@
                                                     <td><%= prescription.hash %></td>
                                                     <td><%= prescription.status %></td>
                                                     <td><%= prescription.patient %></td>
+                                                    <td><%= prescription.description %></td>
+                                                    <td></td>
                                                     <td></td>
                                                 </tr>
                                             <% }); %> 
@@ -51,8 +55,10 @@
                                                 <th>Hash</th>
                                                 <th>Status</th>
                                                 <th>Doctor</th>
+                                                <th>Description</th>
                                                 <th>Provider</th>
                                                 <th>Insurance</th>
+                                                <th>View</th>
                                                 <th>Spend</th>
                                             </tr>
                                         </thead>
@@ -62,15 +68,23 @@
                                                     <td><%= prescription.hash %></td>
                                                     <td><%= prescription.status %></td>
                                                     <td><%= prescription.doctor %></td>
+                                                    <td><%= prescription.description %></td>
                                                     <td><%= prescription.provider %></td>
                                                     <td><%= prescription.insurance %></td>
+                                                    <td></td>
                                                     <td></td>
                                                 </tr>
                                             <% }); %> 
                                         </tbody>
                                     </table>
                                 <% } else if(session.auth.type === 'provider'){ %>
-                                    
+                                    <form id="form-spend-prescription">
+                                        <h5 class="detail-title mb-3 mt-5">
+                                            Hash
+                                        </h5>
+                                        <input id="sr-prescription-confirm-hash" type="text" name="prescriptionHash" class="form-control" placeholder="Paste the hash of prescription" />
+                                        <button id="sr-confirm-prescription-btn" class="box-button btn btn-primary margin-custom-radio float-right" type="button"> Spend</button>
+                                    </form>	
                                 <% } %>
                             </div>
                             <div class="tab-pane fade authorizations-table-div" id="sr-history-prescriptions-table" role="tabpanel" aria-labelledby="sr-history-prescriptions-tab">
@@ -81,6 +95,8 @@
                                                 <th>Hash</th>
                                                 <th>Status</th>
                                                 <th>Patient</th>
+                                                <th>Description</th>
+                                                <th>View</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -89,6 +105,8 @@
                                                     <td><%= prescription.hash %></td>
                                                     <td><%= prescription.status %></td>
                                                     <td><%= prescription.patient %></td>
+                                                    <td><%= prescription.description %></td>
+                                                    <td></td>
                                                 </tr>
                                             <% }); %> 
                                         </tbody>
@@ -100,8 +118,10 @@
                                                 <th>Hash</th>
                                                 <th>Status</th>
                                                 <th>Doctor</th>
+                                                <th>Description</th>
                                                 <th>Provider</th>
                                                 <th>Insurance</th>
+                                                <th>View</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -110,8 +130,10 @@
                                                     <td><%= prescription.hash %></td>
                                                     <td><%= prescription.status %></td>
                                                     <td><%= prescription.doctor %></td>
+                                                    <td><%= prescription.description %></td>
                                                     <td><%= prescription.provider %></td>
                                                     <td><%= prescription.insurance %></td>
+                                                    <td></td>
                                                 </tr>
                                             <% }); %> 
                                         </tbody>
@@ -123,8 +145,10 @@
                                                 <th>Hash</th>
                                                 <th>Status</th>
                                                 <th>Patient</th>
+                                                <th>Description</th>
                                                 <th>Doctor</th>
                                                 <th>Insurance</th>
+                                                <th>View</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -133,8 +157,10 @@
                                                     <td><%= prescription.hash %></td>
                                                     <td><%= prescription.status %></td>
                                                     <td><%= prescription.patient %></td>
+                                                    <td><%= prescription.description %></td>
                                                     <td><%= prescription.doctor %></td>
                                                     <td><%= prescription.insurance %></td>
+                                                    <td></td>
                                                 </tr>
                                             <% }); %> 
                                         </tbody>
@@ -150,8 +176,10 @@
                                 <th>Hash</th>
                                 <th>Status</th>
                                 <th>Patient</th>
+                                <th>Description</th>
                                 <th>Doctor</th>
                                 <th>Provider</th>
+                                <th>View</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -160,8 +188,10 @@
                                     <td><%= prescription.hash %></td>
                                     <td><%= prescription.status %></td>
                                     <td><%= prescription.patient %></td>
+                                    <td><%= prescription.description %></td>
                                     <td><%= prescription.doctor %></td>
                                     <td><%= prescription.provider %></td>
+                                    <td></td>
                                 </tr>
                             <% }); %> 
                         </tbody>
@@ -170,6 +200,8 @@
             </div>
         </div>
     </div>
+
+    <% include ./show %>
 
     <% include ./delete %>
 

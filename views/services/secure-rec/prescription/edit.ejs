@@ -53,31 +53,3 @@
         </div>
     </div>
 <% } %>
-
-<% if(session.auth.type === 'provider') { %>
-    <div class="modal fade modal-keys" id="sr-confirm-prescription-modal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirm prescription</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <p>Are you sure to confirm this prescription?</p>
-                            <input id="sr-prescription-confirm-hash" type="hidden" name="hash">
-                            <div class="row mt-4 mb-5">
-                                <div class="col-6 offset-6 col-sm-4 offset-sm-8">
-                                    <button id="sr-confirm-prescription-btn" type="button" class="btn btn-primary btn-block">Confirm</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<% } %>

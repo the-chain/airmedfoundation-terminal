@@ -661,6 +661,15 @@ var srNewPrescriptionsDoctors = $('#sr-new-prescriptions-doctors').DataTable({
 		},
 		{
 			'targets': 3,
+			'visible': false
+		},
+		{
+			'targets': 4,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-view'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		},
+		{
+			'targets': 5,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-danger btn-block sr-prescriptions-delete sr-auto-pro-del'><i class='fas fa-trash-alt' aria-hidden='true'></i></button>"
 		}
@@ -682,7 +691,16 @@ var srHistoryPrescriptionsDoctors = $('#sr-history-prescriptions-doctors').DataT
 				data.substr(0, 40) +'…' :
 				data;
 			}
-		}
+		},
+		{
+			'targets': 3,
+			'visible': false
+		},
+		{
+			'targets': 4,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-view'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		},
 	]
 });
 
@@ -695,7 +713,7 @@ var srNewPrescriptionsPatients = $('#sr-new-prescriptions-patients').DataTable({
 	'bSort': false,
 	'columnDefs': [
 		{
-			'targets': [0, 1, 2, 3, 4],
+			'targets': [0, 1, 2, 4, 5],
 			render: function (data, type, row) {
 				return data.length > 40 ?
 				data.substr(0, 40) +'…' :
@@ -703,7 +721,16 @@ var srNewPrescriptionsPatients = $('#sr-new-prescriptions-patients').DataTable({
 			}
 		},
 		{
-			'targets': 5,
+			'targets': 3,
+			'visible': false
+		},
+		{
+			'targets': 6,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-view'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		},
+		{
+			'targets': 7,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-use-prescription'><i class='fas fa-check' aria-hidden='true'></i></button>"
 		}
@@ -719,26 +746,7 @@ var srHistoryPrescriptionsPatients = $('#sr-history-prescriptions-patients').Dat
 	'bSort': false,
 	'columnDefs': [
 		{
-			'targets': [0, 1, 2, 3, 4],
-			render: function (data, type, row) {
-				return data.length > 40 ?
-				data.substr(0, 40) +'…' :
-				data;
-			}
-		}
-	]
-});
-
-var srNewPrescriptionsProviders = $('#sr-new-prescriptions-providers').DataTable({
-	'dom':  '<"row"<"col-sm-12 info-margin"i>>' +
-         	'<"row"<"col-sm-12"tr>>' +
-			 '<"row"<"col-sm-12 pagination-margin"p>>',
-	'pagingType': 'full_numbers',
-	'bLengthChange': false,
-	'bSort': false,
-	'columnDefs': [
-		{
-			'targets': [0, 1, 2, 3, 4],
+			'targets': [0, 1, 2, 4, 5],
 			render: function (data, type, row) {
 				return data.length > 40 ?
 				data.substr(0, 40) +'…' :
@@ -746,9 +754,13 @@ var srNewPrescriptionsProviders = $('#sr-new-prescriptions-providers').DataTable
 			}
 		},
 		{
-			'targets': 5,
+			'targets': 3,
+			'visible': false
+		},
+		{
+			'targets': 6,
 			'data': null,
-			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-spend-prescription'><i class='fas fa-check' aria-hidden='true'></i></button>"
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-view'><i class='fa fa-eye' aria-hidden='true'></i></button>"
 		}
 	]
 });
@@ -762,12 +774,21 @@ var srHistoryPrescriptionsProviders = $('#sr-history-prescriptions-providers').D
 	'bSort': false,
 	'columnDefs': [
 		{
-			'targets': [0, 1, 2, 3, 4],
+			'targets': [0, 1, 2, 4, 5],
 			render: function (data, type, row) {
 				return data.length > 40 ?
 				data.substr(0, 40) +'…' :
 				data;
 			}
+		},
+		{
+			'targets': 3,
+			'visible': false
+		},
+		{
+			'targets': 6,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-view'><i class='fa fa-eye' aria-hidden='true'></i></button>"
 		}
 	]
 });
@@ -781,12 +802,21 @@ var srPrescriptionsInsurance = $('#sr-prescriptions-insurance').DataTable({
 	'bSort': false,
 	'columnDefs': [
 		{
-			'targets': [0, 1, 2, 3, 4],
+			'targets': [0, 1, 2, 4, 5],
 			render: function (data, type, row) {
 				return data.length > 40 ?
 				data.substr(0, 40) +'…' :
 				data;
 			}
+		},
+		{
+			'targets': 3,
+			'visible': false
+		},
+		{
+			'targets': 6,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-view'><i class='fa fa-eye' aria-hidden='true'></i></button>"
 		}
 	]
 });
@@ -798,6 +828,32 @@ $(document.body).on('click', '.sr-prescriptions-delete', function () {
 	let hash = srNewPrescriptionsDoctors.row('.selected').data()[0];
 	$('#sr-prescription-delete-hash').val(hash);
 	$('#sr-delete-prescription-modal').modal('show');
+});
+
+var selectTable = undefined;
+
+$(document.body).on('click', '.sr-prescriptions-view', function () {
+	if(selectTable)
+		selectTable.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	if(srNewPrescriptionsDoctors.row('.selected').data())
+		selectTable = srNewPrescriptionsDoctors;
+	else if(srHistoryPrescriptionsDoctors.row('.selected').data())
+		selectTable = srHistoryPrescriptionsDoctors;
+	else if(srNewPrescriptionsPatients.row('.selected').data())
+		selectTable = srNewPrescriptionsPatients;
+	else if(srHistoryPrescriptionsPatients.row('.selected').data())
+		selectTable = srHistoryPrescriptionsPatients;
+	else if(srHistoryPrescriptionsProviders.row('.selected').data())
+		selectTable = srHistoryPrescriptionsProviders;
+	else if(srPrescriptionsInsurance.row('.selected').data())
+		selectTable = srPrescriptionsInsurance;
+	let hash = selectTable.row('.selected').data()[0];
+	let description = selectTable.row('.selected').data()[3];
+	$('#sr-prescription-view-hash').val(hash);
+	$('#sr-prescription-view-descrip').val(description);
+	$('#sr-view-prescription-modal').modal('show');
 });
 
 $('#sr-delete-prescription-btn').click(function() {
@@ -832,8 +888,8 @@ $(document.body).on('click', '.sr-use-prescription', function () {
 	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
 	else $(this).closest('tr').prev().addClass('selected');
 	let hash = srNewPrescriptionsPatients.row('.selected').data()[0];
-	let provider = srNewPrescriptionsPatients.row('.selected').data()[3];
-	let insurance = srNewPrescriptionsPatients.row('.selected').data()[4];
+	let provider = srNewPrescriptionsPatients.row('.selected').data()[4];
+	let insurance = srNewPrescriptionsPatients.row('.selected').data()[5];
 	
 	if(insurance === ''){
 		if(provider !== ''){
@@ -920,10 +976,12 @@ $('#sr-confirm-prescription-btn').click(function() {
 		},
 		success: function(result) {
 			if(result.success) {
-				let test = srNewPrescriptionsProviders.row('.selected').data();
-				srHistoryPrescriptionsProviders.row.add(test).draw().node();
-				srNewPrescriptionsProviders.row('.selected').remove().draw(false);
-				$('#sr-confirm-prescription-modal').modal('hide');
+				// let test = srNewPrescriptionsProviders.row('.selected').data();
+				// srHistoryPrescriptionsProviders.row.add(test).draw().node();
+				// srNewPrescriptionsProviders.row('.selected').remove().draw(false);
+
+				//Espero el recipe
+				$('#sr-prescription-confirm-hash').val('');
 				$('#message-success-text').text(result.message);
 				$('#message-success').removeClass('d-none');
 				$('#message-success').show();
