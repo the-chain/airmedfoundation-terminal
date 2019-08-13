@@ -1,4 +1,4 @@
-//const fabric = require('../../../../../fabric-api/chaincodeTransactions');
+const fabric = require('../../../../../fabric-api/chaincodeTransactions');
 const ursa = require('../../../../../crypto/keys');
 
 module.exports = {
