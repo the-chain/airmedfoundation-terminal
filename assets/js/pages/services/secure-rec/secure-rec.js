@@ -660,16 +660,21 @@ var srNewPrescriptionsDoctors = $('#sr-new-prescriptions-doctors').DataTable({
 			}
 		},
 		{
-			'targets': 3,
+			'targets': [3, 4],
 			'visible': false
 		},
 		{
-			'targets': 4,
+			'targets': 5,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-view'><i class='fa fa-eye' aria-hidden='true'></i></button>"
 		},
 		{
-			'targets': 5,
+			'targets': 6,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-download'><i class='fas fa-download' aria-hidden='true'></i></button>"
+		},
+		{
+			'targets': 7,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-danger btn-block sr-prescriptions-delete sr-auto-pro-del'><i class='fas fa-trash-alt' aria-hidden='true'></i></button>"
 		}
@@ -693,14 +698,19 @@ var srHistoryPrescriptionsDoctors = $('#sr-history-prescriptions-doctors').DataT
 			}
 		},
 		{
-			'targets': 3,
+			'targets': [3, 4],
 			'visible': false
 		},
 		{
-			'targets': 4,
+			'targets': 5,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-view'><i class='fa fa-eye' aria-hidden='true'></i></button>"
 		},
+		{
+			'targets': 6,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-download'><i class='fas fa-download' aria-hidden='true'></i></button>"
+		}
 	]
 });
 
@@ -713,7 +723,7 @@ var srNewPrescriptionsPatients = $('#sr-new-prescriptions-patients').DataTable({
 	'bSort': false,
 	'columnDefs': [
 		{
-			'targets': [0, 1, 2, 4, 5],
+			'targets': [0, 1, 2, 5, 6],
 			render: function (data, type, row) {
 				return data.length > 40 ?
 				data.substr(0, 40) +'…' :
@@ -721,16 +731,21 @@ var srNewPrescriptionsPatients = $('#sr-new-prescriptions-patients').DataTable({
 			}
 		},
 		{
-			'targets': 3,
+			'targets': [3, 4],
 			'visible': false
 		},
 		{
-			'targets': 6,
+			'targets': 7,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-view'><i class='fa fa-eye' aria-hidden='true'></i></button>"
 		},
 		{
-			'targets': 7,
+			'targets': 8,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-download'><i class='fas fa-download' aria-hidden='true'></i></button>"
+		},
+		{
+			'targets': 9,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-use-prescription'><i class='fas fa-check' aria-hidden='true'></i></button>"
 		}
@@ -746,7 +761,7 @@ var srHistoryPrescriptionsPatients = $('#sr-history-prescriptions-patients').Dat
 	'bSort': false,
 	'columnDefs': [
 		{
-			'targets': [0, 1, 2, 4, 5],
+			'targets': [0, 1, 2, 5, 6],
 			render: function (data, type, row) {
 				return data.length > 40 ?
 				data.substr(0, 40) +'…' :
@@ -754,13 +769,18 @@ var srHistoryPrescriptionsPatients = $('#sr-history-prescriptions-patients').Dat
 			}
 		},
 		{
-			'targets': 3,
+			'targets': [3, 4],
 			'visible': false
 		},
 		{
-			'targets': 6,
+			'targets': 7,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-view'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		},
+		{
+			'targets': 8,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-download'><i class='fas fa-download' aria-hidden='true'></i></button>"
 		}
 	]
 });
@@ -774,7 +794,7 @@ var srHistoryPrescriptionsProviders = $('#sr-history-prescriptions-providers').D
 	'bSort': false,
 	'columnDefs': [
 		{
-			'targets': [0, 1, 2, 4, 5],
+			'targets': [0, 1, 2, 5, 6],
 			render: function (data, type, row) {
 				return data.length > 40 ?
 				data.substr(0, 40) +'…' :
@@ -782,13 +802,18 @@ var srHistoryPrescriptionsProviders = $('#sr-history-prescriptions-providers').D
 			}
 		},
 		{
-			'targets': 3,
+			'targets': [3, 4],
 			'visible': false
 		},
 		{
-			'targets': 6,
+			'targets': 7,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-view'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		},
+		{
+			'targets': 8,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-download'><i class='fas fa-download' aria-hidden='true'></i></button>"
 		}
 	]
 });
@@ -802,7 +827,7 @@ var srPrescriptionsInsurance = $('#sr-prescriptions-insurance').DataTable({
 	'bSort': false,
 	'columnDefs': [
 		{
-			'targets': [0, 1, 2, 4, 5],
+			'targets': [0, 1, 2, 5, 6],
 			render: function (data, type, row) {
 				return data.length > 40 ?
 				data.substr(0, 40) +'…' :
@@ -810,24 +835,20 @@ var srPrescriptionsInsurance = $('#sr-prescriptions-insurance').DataTable({
 			}
 		},
 		{
-			'targets': 3,
+			'targets': [3, 4],
 			'visible': false
 		},
 		{
-			'targets': 6,
+			'targets': 7,
 			'data': null,
 			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-view'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+		},
+		{
+			'targets': 8,
+			'data': null,
+			'defaultContent': "<button type='button' class='btn btn-primary btn-block sr-prescriptions-download'><i class='fas fa-download' aria-hidden='true'></i></button>"
 		}
 	]
-});
-
-$(document.body).on('click', '.sr-prescriptions-delete', function () {
-	srNewPrescriptionsDoctors.$('tr.selected').removeClass('selected');
-	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
-	else $(this).closest('tr').prev().addClass('selected');
-	let hash = srNewPrescriptionsDoctors.row('.selected').data()[0];
-	$('#sr-prescription-delete-hash').val(hash);
-	$('#sr-delete-prescription-modal').modal('show');
 });
 
 var selectTable = undefined;
@@ -851,9 +872,19 @@ $(document.body).on('click', '.sr-prescriptions-view', function () {
 		selectTable = srPrescriptionsInsurance;
 	let hash = selectTable.row('.selected').data()[0];
 	let description = selectTable.row('.selected').data()[3];
+	selectTable.$('tr.selected').removeClass('selected');
 	$('#sr-prescription-view-hash').val(hash);
 	$('#sr-prescription-view-descrip').val(description);
 	$('#sr-view-prescription-modal').modal('show');
+});
+
+$(document.body).on('click', '.sr-prescriptions-delete', function () {
+	srNewPrescriptionsDoctors.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	let hash = srNewPrescriptionsDoctors.row('.selected').data()[0];
+	$('#sr-prescription-delete-hash').val(hash);
+	$('#sr-delete-prescription-modal').modal('show');
 });
 
 $('#sr-delete-prescription-btn').click(function() {
@@ -888,8 +919,8 @@ $(document.body).on('click', '.sr-use-prescription', function () {
 	if (!$(this).closest('tr').hasClass('child')) $(this).closest('tr').addClass('selected');
 	else $(this).closest('tr').prev().addClass('selected');
 	let hash = srNewPrescriptionsPatients.row('.selected').data()[0];
-	let provider = srNewPrescriptionsPatients.row('.selected').data()[4];
-	let insurance = srNewPrescriptionsPatients.row('.selected').data()[5];
+	let provider = srNewPrescriptionsPatients.row('.selected').data()[5];
+	let insurance = srNewPrescriptionsPatients.row('.selected').data()[6];
 	
 	if(insurance === ''){
 		if(provider !== ''){
@@ -934,9 +965,8 @@ $('#sr-use-prescription-btn').click(function() {
 			success: function(result) {
 				if(result.success) {
 					let test = srNewPrescriptionsPatients.row('.selected').data();
-					// AQUI FALTARIA EL NUEVO ESTADO
-					test[3] = $('#use-pharmacy').val();
-					test[4] = $('#use-companies').val();
+					test[5] = $('#use-pharmacy').val();
+					test[6] = $('#use-companies').val();
 					srNewPrescriptionsPatients.row('.selected').data(test);
 					srNewPrescriptionsPatients.draw();
 					$('#sr-use-prescription-modal').modal('hide');
@@ -989,3 +1019,53 @@ $('#sr-confirm-prescription-btn').click(function() {
 		}
 	});
 });
+
+var selectTableD = undefined;
+
+$(document.body).on('click', '.sr-prescriptions-download', function () {
+	if(selectTableD)
+		selectTableD.$('tr.selected').removeClass('selected');
+	if (!$(this).closest('tr').hasClass("child")) $(this).closest('tr').addClass('selected');
+	else $(this).closest('tr').prev().addClass('selected');
+	if(srNewPrescriptionsDoctors.row('.selected').data())
+		selectTableD = srNewPrescriptionsDoctors;
+	else if(srHistoryPrescriptionsDoctors.row('.selected').data())
+		selectTableD = srHistoryPrescriptionsDoctors;
+	else if(srNewPrescriptionsPatients.row('.selected').data())
+		selectTableD = srNewPrescriptionsPatients;
+	else if(srHistoryPrescriptionsPatients.row('.selected').data())
+		selectTableD = srHistoryPrescriptionsPatients;
+	else if(srHistoryPrescriptionsProviders.row('.selected').data())
+		selectTableD = srHistoryPrescriptionsProviders;
+	else if(srPrescriptionsInsurance.row('.selected').data())
+		selectTableD = srPrescriptionsInsurance;
+	let ipfsHash = selectTableD.row('.selected').data()[4];
+	selectTableD.$('tr.selected').removeClass('selected');
+	downloadPrescriptionFile(ipfsHash);
+});
+
+function downloadPrescriptionFile(hash) {
+	let sendInfo = {
+		'ipfsHash': hash
+	};
+	$.ajax({
+		type: 'POST',
+		url: '/services/secure-rec/prescription/download',
+		data: sendInfo,
+		dataType: 'json',
+		error: function (xhr, ajaxOptions, thrownError) {
+			$('#message-error-text').html(xhr.responseJSON.message);
+			$('#message-error').removeClass('d-none');
+			$('#message-error').show();
+		},
+		success: function(result) {
+			if(result.success){
+				let link = document.createElement('a');
+				document.body.appendChild(link);
+				link.download = result.fileName;
+				link.href = result.file;
+				link.click();
+			}
+		}
+	});
+}
