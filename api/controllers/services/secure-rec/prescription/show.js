@@ -79,7 +79,8 @@ module.exports = {
               doctor: doctor.emailAddress,
               insurance: insurance,
               provider: provider,
-              hash: data.hashFile
+              ipfsHash: data.hashFile,
+              hash: result.prescriptions[i].hash
             }
             // Save the prescription
             if ( prescription.status === 'SPENT' ) {
@@ -89,6 +90,7 @@ module.exports = {
             } else if ( prescription.status === 'DELETED' ){
               prescriptions.push(prescription);
             }
+            console.log(prescription);
           }
         }
         if (user.type == 'patient'){
