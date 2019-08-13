@@ -92,7 +92,7 @@ module.exports = {
                     try{
                         let user = await User.findOne({emailAddress: inputs.user.toLowerCase()});
                         let encryptedHash = await ursa.encryptIpfsHash(user.publicKey, hash);
-                        let Args = [publicKey, user.publicKey, encryptedHash];
+                        let Args = [user.publicKey, publicKey, encryptedHash];
                         let result = await fabric.invokeTransaction('mychannel','Org1MSP','secureRec', 'createPrescription', Args);
                         if (result['status'] == 'SUCCESS') 
                             return exits.success({'success': true, 'message': 'Your prescription has been created successfully. Hyperledger transaction hash: ' + result['hash'] });

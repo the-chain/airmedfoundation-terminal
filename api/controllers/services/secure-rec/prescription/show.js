@@ -1,5 +1,6 @@
 const fabric = require('../../../../../fabric-api/chaincodeTransactions');
 const ursa = require('../../../../../crypto/keys');
+const ipfs = require('../../../../../ipfs-api/ipfs_api');
 module.exports = {
 
     friendlyName: 'Secure Rec prescriptions',
@@ -40,21 +41,53 @@ module.exports = {
     fn: async function (inputs, exits) {
         let user = this.req.session.auth;
         let result, pubKey = await ursa.getPublicKey(this.req.session.auth.privateKey);
+        // Get prescriptions
         try{
-          result = await fabric.queryChaincode('mychannel','Org1MSP','secureRec', 'queryPrescriptions', ['Papasito']);
+          result = await fabric.queryChaincode('mychannel','Org1MSP','secureRec', 'queryPrescriptions', [pubKey]);
         }catch(err){
           return exits.fabric();
         }
         result = JSON.parse(result[0].toString());
         let prescriptions = new Array(), unusedPrescriptions = new Array();
+        let patient, hash, data;
         if ( result.prescriptions !== undefined ) {
           for (let i = 0; i < result.prescriptions.length; i++ ) {
-            if ( result.prescriptions[i].status === 'SPENT' ) {
-              prescriptions.push(result.prescriptions[i])
-            } else if ( result.prescriptions[i].status === 'UNSPENT' ){
-              unusedPrescriptions.push(result.prescriptions[i]);
-            } else if ( result.prescriptions[i].status === 'DELETED' ){
-              // Veremos
+            // Get patient
+            try {
+              patient = await User.findOne({ publicKey: result.prescriptions[i].patient });
+            }catch(err){ return exits.internalError(); }
+            // Get description and ipfs hash
+            try{
+              console.log(result.prescriptions[i].hash)
+              hash = await ursa.decryptIpfsHash(patient.privateKey, result.prescriptions[i].hash);
+              data = await ipfs.asyncDownload(hash);
+              data = JSON.parse(data.toString());
+            }catch(err) { console.log(err); }
+            // Prepare the prescription
+            let provider = "", insurance = "", doctor = await User.findOne({ publicKey: result.prescriptions[i].doctor });
+            if ( result.prescriptions[i].provider.length > 0 ){
+              provider = await User.findOne({ publicKey: result.prescriptions[i].provider });
+              provider = provider.emailAddress;
+            }
+            if ( result.prescriptions[i].insurance.length > 0 ){
+              insurance = await User.findOne({ publicKey: result.prescriptions[i].insurance });
+              insurance = insurance.emailAddress;
+            }
+            let prescription = {
+              status: result.prescriptions[i].status,
+              description: data.description,
+              doctor: doctor.emailAddress,
+              insurance: insurance,
+              provider: provider,
+              hash: data.hashFile
+            }
+            // Save the prescription
+            if ( prescription.status === 'SPENT' ) {
+              prescriptions.push(prescription);
+            } else if ( prescription.status === 'UNSPENT' ){
+              unusedPrescriptions.push(prescription);
+            } else if ( prescription.status === 'DELETED' ){
+              prescriptions.push(prescription);
             }
           }
         }
