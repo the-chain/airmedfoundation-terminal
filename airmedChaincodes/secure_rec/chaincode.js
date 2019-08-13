@@ -186,8 +186,8 @@ var Chaincode = class {
     if ( prescription.patient != args[0] )
       throw new Error('Incorrect patient');
     prescription.provider = args[1];
-    if ( args[2].length > 0)
-      prescription.insurance = args[2];
+    prescription.insurance = args[2];
+
     await stub.putState(args[3], Buffer.from(JSON.stringify(prescription)));
   }
 
