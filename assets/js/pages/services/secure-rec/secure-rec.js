@@ -874,6 +874,7 @@ $(document.body).on('click', '.sr-prescriptions-view', function () {
 	let description = selectTable.row('.selected').data()[3];
 	selectTable.$('tr.selected').removeClass('selected');
 	$('#sr-prescription-view-hash').val(hash);
+	$('#sr-prescription-view-hash-copy').attr('data-copy', hash);
 	$('#sr-prescription-view-descrip').val(description);
 	$('#sr-view-prescription-modal').modal('show');
 });
