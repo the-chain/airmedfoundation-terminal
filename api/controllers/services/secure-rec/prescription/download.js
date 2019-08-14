@@ -1,3 +1,9 @@
+const ipfs = require('../../../../../ipfs-api/ipfs_api');
+const fileType = require('file-type');
+const fs = require('fs');
+const sleep = require('sleep');
+
+
 module.exports = {
 
     friendlyName: 'Secure Rec download prescription',
@@ -14,6 +20,14 @@ module.exports = {
         invalid: {
             responseType: 'bad-combo',
             description: 'Los parámetros proporcionados son inválidos.'
+        },
+        write: {
+            responseType: 'internal-error',
+            description: 'Error escribiendo el archivo'
+        },
+        ipfs: {
+            responseType: 'ipfs-error2',
+            description: 'Error uploading the image'
         }
     },
   
@@ -22,12 +36,33 @@ module.exports = {
         if ( inputs.ipfsHash === undefined )
             return exits.invalid();
         
-        return exits.success({
-            success: true,
-            fileName: 'Name',
-            file: 'url'
-        });
-  
+        // Download file from IPFS
+        let file;
+        try {
+            file = await ipfs.asyncDownload(inputs.ipfsHash);
+            let type = fileType(file);
+            if (!type) {
+                type = {
+                    ext: 'unknownType',
+                    mime: 'file/unknownType'
+                }
+            }
+            const path = 'assets/images/prescriptions/' + inputs.ipfsHash + '.' + type.ext;
+            const image = 'images/prescriptions/' + inputs.ipfsHash + '.' + type.ext;
+            fs.writeFile(path, file, 'binary', (err)=>{
+                if (err) 
+                    return exits.write();
+                sleep.sleep(2);
+                const datetime = new Date();
+                return exits.success({
+                    success: true,
+                    fileName: datetime + '.' + type.ext,
+                    file: '../../../' + image
+                });
+            });
+        }catch(err){
+            return exits.ipfs();
+        }
     }
   
 };  

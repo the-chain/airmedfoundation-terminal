@@ -58,11 +58,10 @@ module.exports = {
             }catch(err){ return exits.internalError(); }
             // Get description and ipfs hash
             try{
-              console.log(result.prescriptions[i].hash)
               hash = await ursa.decryptIpfsHash(patient.privateKey, result.prescriptions[i].hash);
               data = await ipfs.asyncDownload(hash);
               data = JSON.parse(data.toString());
-            }catch(err) { console.log(err); }
+            }catch(err) { return exits.ipfs(); }
             // Prepare the prescription
             let provider = "", insurance = "", doctor = await User.findOne({ publicKey: result.prescriptions[i].doctor });
             if ( result.prescriptions[i].provider.length > 0 ){
