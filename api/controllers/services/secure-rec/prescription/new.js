@@ -95,7 +95,7 @@ module.exports = {
                         let Args = [user.publicKey, publicKey, encryptedHash];
                         let result = await fabric.invokeTransaction('mychannel','Org1MSP','secureRec', 'createPrescription', Args);
                         if (result['status'] == 'SUCCESS') 
-                            return exits.success({'success': true, 'message': 'Your prescription has been created successfully. Hyperledger transaction hash: ' + result['hash'] });
+                            return exits.success({'success': true, 'message': 'Your prescription has been created successfully. Hyperledger transaction hash: ' + result['hash'], 'hash': encryptedHash });
                         else
                             return exits.success({'success': false, 'message': result});
                     }catch(err){

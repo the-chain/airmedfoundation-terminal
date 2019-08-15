@@ -45,7 +45,7 @@ module.exports = {
         let owner = this.req.session.auth, pubKey = await ursa.getPublicKey(owner.privateKey), result, Args, prescription;
         try{
             Args = [pubKey, inputs.hash];
-            // result = await fabric.invokeTransaction('mychannel','Org1MSP','secureRec', 'consumePrescription', Args);
+            result = await fabric.invokeTransaction('mychannel','Org1MSP','secureRec', 'consumePrescription', Args);
             // Get prescription
             prescription = await fabric.queryChaincode('mychannel','Org1MSP','secureRec', 'queryPrescription', [inputs.hash]);
             prescription = JSON.parse(prescription[0].toString());
