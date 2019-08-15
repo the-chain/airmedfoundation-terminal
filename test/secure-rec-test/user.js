@@ -2,7 +2,7 @@ var request = require('supertest');
 var chai = require('chai');
 var expect = require('chai').expect;
 var chaiHttp = require('chai-http');
-var fs = require('fs');
+var sleep = require('sleep');
 chai.use(chaiHttp)
 
 function makeid(length, type) {
@@ -30,6 +30,7 @@ var clinicEmail = 'clinic_' + makeid(5, 'email') + '@gmail.com';
 var pharmacyEmail = 'pharmacy_' + makeid(5, 'email') + '@gmail.com';
 var laboratoryEmail = 'laboratory_' + makeid(5, 'email') + '@gmail.com';
 var password = 'testPassword';
+var prescriptionHash, prescriptionHash2;
 
 module.exports = {
     newUserPatient(){
@@ -398,13 +399,13 @@ module.exports = {
             });
         });
     },
-    newAuth() {
+    newAuthPatientDoctor() {
         describe('New authorization test', function(){
             before(function(done){
                 authenticated = request.agent(url);
                 authenticated.post('/services/secure-rec/session/new')
                 .send({
-                    emailAddress: doctorEmail, 
+                    emailAddress: patientEmail, 
                     password: password 
                 })
                 .then(function(res){
@@ -419,11 +420,101 @@ module.exports = {
             it('Should authorize the user', function(done){
                 authenticated.post('/services/secure-rec/authorizations/new')
                 .send({
-                    authorizationEmail: patientEmail
+                    authorizationEmail: doctorEmail
                 })
                 .then(function(res){
                     expect(res.body.success).to.be.equal(true);
-                    expect(res.body.message).to.be.equal('Successfully authorized the patient');
+                    //expect(res.body.message).to.be.equal('Successfully authorized the patient');
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            after(function(done) {
+                authenticated.get('/services/secure-rec/session/destroy')
+                .then(function(res){
+                    expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
+    newAuthPatientProvider() {
+        describe('New authorization test', function(){
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: patientEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should authorize the user', function(done){
+                authenticated.post('/services/secure-rec/authorizations/new')
+                .send({
+                    authorizationEmail: pharmacyEmail
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    //expect(res.body.message).to.be.equal('Successfully authorized the patient');
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            after(function(done) {
+                authenticated.get('/services/secure-rec/session/destroy')
+                .then(function(res){
+                    expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
+    newAuthPatientInsurance() {
+        describe('New authorization test', function(){
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: patientEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should authorize the user', function(done){
+                authenticated.post('/services/secure-rec/authorizations/new')
+                .send({
+                    authorizationEmail: insuranceEmail
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    //expect(res.body.message).to.be.equal('Successfully authorized the patient');
                     expect(res.status).to.be.equal(200);
                     done();
                 })
@@ -632,6 +723,232 @@ module.exports = {
                 authenticated.get('/services/secure-rec/session/destroy')
                 .then(function(res){
                     expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
+    createPrescription(){
+        describe('Create a new prescription', function(){
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: doctorEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should create a new prescription', function(done){
+                authenticated.post('/services/secure-rec/prescription/new')
+                .field('fileName', 'test1.jpg')
+                .field('user', patientEmail)
+                .field('description', 'Descripción de prueba, no reutilizar muchas gracias. Test, Test')
+                .attach('file','./test/secure-rec-test/files/test1.jpg')
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    prescriptionHash =  res.body.hash;
+                    sleep.sleep(2);
+                    authenticated.post('/services/secure-rec/prescription/new')
+                    .field('fileName', 'test1.jpg')
+                    .field('user', patientEmail)
+                    .field('description', 'Descripción de prueba, no reutilizar muchas gracias. Test, Test2')
+                    .attach('file','./test/secure-rec-test/files/test1.jpg')
+                    .then(function(res){
+                        sleep.sleep(2);
+                        prescriptionHash2 =  res.body.hash;
+                        expect(res.body.success).to.be.equal(true);
+                        expect(res.status).to.be.equal(200);
+                        done();
+                    })
+                    .catch(function(err){
+                        done(err);
+                    })
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            after(function(done) {
+                authenticated.get('/services/secure-rec/session/destroy')
+                .then(function(res){
+                    expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
+    updatePrescription(){
+        describe('Update prescription', function(){
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: patientEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should update prescription', function(done){
+                sleep.sleep(2);
+                authenticated.post('/services/secure-rec/prescription/edit-patient')
+                .field('hash', prescriptionHash)
+                .field('pharmacy', pharmacyEmail)
+                .field('selfPayment', false)
+                .field('insurance', insuranceEmail)
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    sleep.sleep(2);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+
+            });
+            after(function(done) {
+                authenticated.get('/services/secure-rec/session/destroy')
+                .then(function(res){
+                    expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
+    consumePrescription(){
+        describe('Use the prescription', function(){
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: pharmacyEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should consume the prescription', function(done){
+                sleep.sleep(2);
+                authenticated.post('/services/secure-rec/prescription/edit-provider')
+                .field('hash', prescriptionHash)
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            after(function(done) {
+                authenticated.get('/services/secure-rec/session/destroy')
+                .then(function(res){
+                    expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
+    deletePrescription(){
+        describe('Delete prescription', function(){
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: doctorEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should delete a prescription', function(done){
+                authenticated.delete('/services/secure-rec/prescription/delete')
+                .field('hash', prescriptionHash2)
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                })
+            });
+            after(function(done) {
+                authenticated.get('/services/secure-rec/session/destroy')
+                .then(function(res){
+                    expect(res).to.redirectTo('/services/secure-rec');
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+        });
+    },
+    downloadPrescription(){
+        describe('Download a prescription file', function(){
+            before(function(done){
+                authenticated = request.agent(url);
+                authenticated.post('/services/secure-rec/session/new')
+                .send({
+                    emailAddress: patientEmail, 
+                    password: password 
+                })
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
+                    done();
+                })
+                .catch(function(err){
+                    done(err);
+                });
+            });
+            it('Should download a prescription file', function(done){
+                authenticated.post('/services/secure-rec/prescription/download')
+                .field('ipfsHash', 'QmejZcwERLuZJ5uUu4AUaPQVnPHHFhsoVeBGnTsBrXreMS' )
+                .then(function(res){
+                    expect(res.body.success).to.be.equal(true);
+                    expect(res.status).to.be.equal(200);
                     done();
                 })
                 .catch(function(err){

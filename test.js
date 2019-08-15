@@ -54,6 +54,7 @@ describe("Airmed Foundation Blockchain Explorer Test", function(){
 });
 // SECURE REC USER TEST
 describe('SECURE REC USER TEST', function() {
+    this.timeout(200000);
     secureRecUser.newUserPatient();
     secureRecUser.newUserDoctor();
     secureRecUser.newUserInsurance();
@@ -65,8 +66,17 @@ describe('SECURE REC USER TEST', function() {
     secureRecUser.profile();
     secureRecUser.changePassword();
     secureRecUser.passwordRecovery();
-    secureRecUser.newAuth();
+    secureRecUser.newAuthPatientDoctor();
+    secureRecUser.newAuthPatientInsurance();
+    secureRecUser.newAuthPatientProvider();
     secureRecUser.uploadFile();
     secureRecUser.downloadFile();
+    // Prescription test
+    secureRecUser.createPrescription();
+    secureRecUser.updatePrescription();
+    secureRecUser.consumePrescription();
+    secureRecUser.deletePrescription();
+    secureRecUser.downloadPrescription();
+    // Delete Authorization (Secure-rec)
     secureRecUser.deleteAuth();
 });
