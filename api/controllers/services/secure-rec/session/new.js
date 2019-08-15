@@ -46,13 +46,13 @@ module.exports = {
       emailAddress: inputs.emailAddress.toLowerCase()
     });
 
+    if ( user === undefined )
+      return exits.invalidPassword();
+
     let providerType = { type: 'N/A' };
 
     if(user.type === 'provider')
         providerType = await Provider.findOne({ user: user.id });
-
-    if ( user === undefined )
-      return exits.invalidPassword();
 
     // Check status
     if ( user.status == 'unconfirmed' )

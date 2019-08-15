@@ -1007,11 +1007,15 @@ $('#sr-confirm-prescription-btn').click(function() {
 		},
 		success: function(result) {
 			if(result.success) {
-				// let test = srNewPrescriptionsProviders.row('.selected').data();
-				// srHistoryPrescriptionsProviders.row.add(test).draw().node();
-				// srNewPrescriptionsProviders.row('.selected').remove().draw(false);
-
-				//Espero el recipe
+				srHistoryPrescriptionsProviders.row.add({ 
+					'0': result.prescription['hash'],
+					'1': result.prescription['status'],
+					'2': result.prescription['patient'],
+					'3': result.prescription['description'],
+					'4': result.prescription['ipfsHash'],
+					'5': result.prescription['doctor'],
+					'6': result.prescription['insurance'],
+				}).draw().node();
 				$('#sr-prescription-confirm-hash').val('');
 				$('#message-success-text').text(result.message);
 				$('#message-success').removeClass('d-none');
