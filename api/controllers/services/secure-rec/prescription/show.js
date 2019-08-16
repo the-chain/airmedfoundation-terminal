@@ -35,6 +35,10 @@ module.exports = {
       internalError: {
           responseType: 'internal-error',
           description: 'Error changing password'
+      },
+      serverError: {
+        responseType: 'view',
+        viewTemplatePath: '500'
       }
     },
     
@@ -44,10 +48,10 @@ module.exports = {
         // Get prescriptions
         try{
           result = await fabric.queryChaincode('mychannel','Org1MSP','secureRec', 'queryPrescriptions', [pubKey]);
+          result = JSON.parse(result[0].toString());
         }catch(err){
-          return exits.fabric();
+          return exits.serverError();
         }
-        result = JSON.parse(result[0].toString());
         let prescriptions = new Array(), unusedPrescriptions = new Array();
         let patient, hash, data;
         if ( result.prescriptions !== undefined ) {
@@ -55,13 +59,15 @@ module.exports = {
             // Get patient
             try {
               patient = await User.findOne({ publicKey: result.prescriptions[i].patient });
-            }catch(err){ return exits.internalError(); }
+            }catch(err){ return exits.serverError(); }
             // Get description and ipfs hash
             try{
               hash = await ursa.decryptIpfsHash(patient.privateKey, result.prescriptions[i].hash);
               data = await ipfs.asyncDownload(hash);
               data = JSON.parse(data.toString());
-            }catch(err) { return exits.ipfs(); }
+            }catch(err) { 
+              return exits.serverError();
+            }
             // Prepare the prescription
             let provider = "", insurance = "", doctor = await User.findOne({ publicKey: result.prescriptions[i].doctor });
             if ( result.prescriptions[i].provider.length > 0 ){
