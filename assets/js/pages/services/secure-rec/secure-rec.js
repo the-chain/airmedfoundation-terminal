@@ -147,6 +147,9 @@ var secureRecEditNote = $('#form-secure-rec-edit-note').validate({
 var secureRecNewPrescription = $('#form-secure-rec-new-prescription').validate({
 	ignore: ':hidden:not(input[type="file"])',
 	rules: {
+		medicalFile: {
+			required: true
+		},
 		patients: {
 			required: true
 		},
@@ -160,13 +163,21 @@ var secureRecNewPrescription = $('#form-secure-rec-new-prescription').validate({
 		return true;
 	},
 	highlight: function(element) {
-		if ($(element).hasClass('selectpicker'))
+		let inputType = $(element).attr('type');
+		if (inputType !== undefined && inputType === 'file'){
+			$(element).parent().parent().prev('label').addClass('tag-error');
+			$(element).parent().parent().addClass('box-error');
+		} else if ($(element).hasClass('selectpicker'))
 			$(element).parent().prev('label').addClass('tag-error');
 		else
 			$(element).prev('label').addClass('tag-error');
 	},
 	unhighlight: function(element) {
-		if ($(element).hasClass('selectpicker'))
+		let inputType = $(element).attr('type');
+		if (inputType !== undefined && inputType === 'file'){
+			$(element).parent().parent().prev('label').removeClass('tag-error');
+			$(element).parent().parent().removeClass('box-error');
+		} else if ($(element).hasClass('selectpicker'))
 			$(element).parent().prev('label').removeClass('tag-error');
 		else
 			$(element).prev('label').removeClass('tag-error');
