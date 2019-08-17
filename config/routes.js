@@ -65,6 +65,14 @@ module.exports.routes = {
   'POST    /services/secure-rec/authorizations/new':{ action: 'services/secure-rec/authorizations/new' },
   'DELETE  /services/secure-rec/authorizations/delete':{action: 'services/secure-rec/authorizations/delete'},
 
+  'GET    /services/secure-rec/prescription/new':   { action: 'services/secure-rec/prescription/new-index' },
+  'GET    /services/secure-rec/prescription':       { action: 'services/secure-rec/prescription/show' },
+  'POST    /services/secure-rec/prescription/new':  { action: 'services/secure-rec/prescription/new' },
+  'POST    /services/secure-rec/prescription/edit-patient': { action: 'services/secure-rec/prescription/edit-patient'},
+  'POST    /services/secure-rec/prescription/edit-provider': { action: 'services/secure-rec/prescription/edit-provider'},
+  'POST    /services/secure-rec/prescription/download': { action: 'services/secure-rec/prescription/download'},
+  'DELETE  /services/secure-rec/prescription/delete': {action: 'services/secure-rec/prescription/delete'},
+
   // Block model
   'GET    /block/:hash':                            { action: 'block/get' },
   'GET    /block/id/:id':                           { action: 'block/getbyid' },

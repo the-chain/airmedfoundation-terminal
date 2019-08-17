@@ -1,0 +1,53 @@
+<% include ../layouts/navigation-bar-dashboard %>
+
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <% include ../../../layouts/flash-message %>
+            <% include ../../../layouts/wait %>
+            <div id="div-secure-rec-upload">
+                <h5 class="detail-title mb-5">
+                    New prescription
+                </h5>
+                <form id="form-secure-rec-new-prescription">
+                    <div class="form-row mb-2">
+                        <div class="form-group col-md-12 col-lg-6 mb-4">
+                            <label id= "ipfsFile" class="service-form-label mb-2">File <small>(max size 15 MB)</small></label>
+                            <div class="box-input upload-drop-zone text-center">
+                                <div class="box-form">
+                                    <img src="../../../images/general/upload.png" class="image-src img-thumbnail" id="image-preview">
+                                    <span id="file-name" class="d-none sr-pres"></span>
+                                    <input class="box-file invisible" type="file" name="medicalFile" id="file-hidden" />
+                                    <div class="mt-1 sr-trans">
+                                        <button id="file-preview" class="box-button btn btn-primary" type="button"><i class="far fa-image" aria-hidden="true"></i>  Choose a file</button><strong class="box-dragndrop"> or drag it here</strong>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="form-group mb-4">
+                                <label class="service-form-label mb-2">Patients</label>
+                                <select id="patients" class="selectpicker form-control" name="patients" title="No patient selected" data-live-search="true">
+                                    <% patients.forEach(function(patient)  { %>
+                                        <option value="<%= patient.emailAddress %>"><%= patient.name %> <%= patient.lastName %> - <%= patient.emailAddress %></option>
+                                    <% }); %> 
+                                </select>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="service-form-label mb-2">Description</label>
+                                <textarea id="description" name="description" cols="40" rows="11" class="form-control service-form-textarea" autocomplete="none" placeholder="Add your description ..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mb-2">
+                        <div class="form-group offset-8 offset-lg-9 col-lg-3 col-4 mt-4 mb-5">
+                            <button id="sr-new-prescription-btn" class="box-button btn btn-primary btn-block float-right" type="button"><i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Upload</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<% include ../../../layouts/footer %>

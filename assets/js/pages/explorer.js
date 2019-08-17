@@ -59,8 +59,11 @@ var detailBlockTxTable = $('#block-txs-table').DataTable({
 		{
 			'targets': [3, 5],
 			render: function (data, type, row) {
-				let address = data.substr(0, 20) + '…';
-				return '<a href="../../address/'+ data +'">'+ address +'</a>';
+				if(data !== 'N/A'){
+					let address = data.substr(0, 20) + '…';
+					return '<a href="../../address/'+ data +'">'+ address +'</a>';
+				}
+				return data;
 			}
 		}
 	]
