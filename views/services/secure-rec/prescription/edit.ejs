@@ -1,0 +1,55 @@
+<% if(session.auth.type === 'patient') { %>
+    <div class="modal fade modal-keys" id="sr-use-prescription-modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Spend prescription</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form id="sr-edit-prescription-form">
+                                <input id="sr-prescription-use-hash" type="hidden" name="hash">
+                                <div class="form-group margin-custom-radio">
+                                    <label class="service-form-label mb-2">Pharmacies</label>
+                                    <select id="use-pharmacy" class="selectpicker form-control" name="pharmacy" title="No pharmacy selected" data-live-search="true">
+                                        <% pharmacies.forEach(function(pharmacy)  { %>   
+                                            <option value="<%= pharmacy.emailAddress %>"><%= pharmacy.name %> - <%= pharmacy.emailAddress %></option>
+                                        <% }); %> 
+                                    </select>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label class="service-form-label mb-2"> Insurance self payment</label>
+                                    <div class="custom-control custom-radio">
+                                        <input id="customRadio1" type="radio" name="selfPayment" class="custom-control-input" value="true">
+                                        <label class="custom-control-label service-form-label mb-2 pt-1 font-weight-normal" for="customRadio1">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="customRadio2" type="radio" name="selfPayment" class="custom-control-input" value="false">
+                                        <label class="custom-control-label service-form-label mb-2 pt-1 font-weight-normal" for="customRadio2">No</label>
+                                    </div>
+                                </div>
+                                <div id="insurance-companies-container" class="form-group mb-4 d-none">
+                                    <label class="service-form-label mb-2">Insurance Companies</label>
+                                    <select id="use-companies" class="selectpicker form-control" name="company" title="No insurance company selected" data-live-search="true">
+                                        <% insuranceCompanies.forEach(function(insuranceCompany)  { %>   
+                                            <option value="<%= insuranceCompany.emailAddress %>"><%= insuranceCompany.name %> - <%= insuranceCompany.emailAddress %></option>
+                                        <% }); %> 
+                                    </select>
+                                </div>
+                            </form>
+                            <div class="row mt-4 mb-5">
+                                <div class="col-6 offset-6 col-sm-4 offset-sm-8">
+                                    <button id="sr-use-prescription-btn" type="button" class="btn btn-primary btn-block">Spend</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<% } %>

@@ -42,11 +42,17 @@ module.exports = {
       return exits.invalid();
 
     // Find user
-    var user = await User.findOne({
+    let user = await User.findOne({
       emailAddress: inputs.emailAddress.toLowerCase()
     });
+
     if ( user === undefined )
       return exits.invalidPassword();
+
+    let providerType = { type: 'N/A' };
+
+    if(user.type === 'provider')
+        providerType = await Provider.findOne({ user: user.id });
 
     // Check status
     if ( user.status == 'unconfirmed' )
@@ -65,7 +71,8 @@ module.exports = {
     this.req.session.auth = {
       emailAddress: user.emailAddress,
       privateKey: user.privateKey,
-      type: user.type
+      type: user.type,
+      providerType: providerType.type
     }
     this.req.session.save();
     // Login successfully

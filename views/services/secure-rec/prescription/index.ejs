@@ -1,0 +1,236 @@
+<% include ../layouts/navigation-bar-dashboard %>
+
+<main class="container general-container">
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <% include ../../../layouts/flash-message %>
+            <% include ../../../layouts/wait %>
+            <div id="div-secure-rec-upload">
+                <h5 class="detail-title mb-5">
+                    Prescriptions
+                </h5>
+                <% if(session.auth.type !== 'insurance') { %>
+                    <div id="sr-prescriptions-card" class="card explorer-detail tabs-card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="sr-prescriptions-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="sr-news-prescriptions-tab" data-toggle="tab" href="#sr-news-prescriptions-table" role="tab" aria-controls="sr-news-prescriptions-table" aria-selected="true">Unspent</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="sr-history-prescriptions-tab" data-toggle="tab" href="#sr-history-prescriptions-table" role="tab" aria-controls="sr-history-prescriptions-table" aria-selected="true">Spent</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content" id="sr-prescriptions-tables">
+                            <div class="tab-pane fade show active authorizations-table-div" id="sr-news-prescriptions-table" role="tabpanel" aria-labelledby="sr-news-prescriptions-tab">
+                                <% if(session.auth.type === 'doctor') { %>
+                                    <table id="sr-new-prescriptions-doctors" class="table hash-table dt-responsive" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Hash</th>
+                                                <th>Status</th>
+                                                <th>Patient</th>
+                                                <th>Description</th>
+                                                <th>Ipfs Hash</th>
+                                                <th>Description</th>
+                                                <th>Download</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% unusedPrescriptions.forEach(function(prescription)  { %>
+                                                <tr>
+                                                    <td><%= prescription.hash %></td>
+                                                    <td><%= prescription.status %></td>
+                                                    <td><%= prescription.patient %></td>
+                                                    <td><%= prescription.description %></td>
+                                                    <td><%= prescription.ipfsHash %></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            <% }); %> 
+                                        </tbody>
+                                    </table>
+                                <% } else if(session.auth.type === 'patient'){ %>
+                                    <table id="sr-new-prescriptions-patients" class="table hash-table dt-responsive" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Hash</th>
+                                                <th>Status</th>
+                                                <th>Doctor</th>
+                                                <th>Description</th>
+                                                <th>Ipfs Hash</th>
+                                                <th>Provider</th>
+                                                <th>Insurance</th>
+                                                <th>Description</th>
+                                                <th>Download</th>
+                                                <th>Spend</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% unusedPrescriptions.forEach(function(prescription)  { %>
+                                                <tr>
+                                                    <td><%= prescription.hash %></td>
+                                                    <td><%= prescription.status %></td>
+                                                    <td><%= prescription.doctor %></td>
+                                                    <td><%= prescription.description %></td>
+                                                    <td><%= prescription.ipfsHash %></td>
+                                                    <td><%= prescription.provider %></td>
+                                                    <td><%= prescription.insurance %></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            <% }); %> 
+                                        </tbody>
+                                    </table>
+                                <% } else if(session.auth.type === 'provider'){ %>
+                                    <form id="form-spend-prescription">
+                                        <h5 class="detail-title mb-3 mt-5">
+                                            Hash
+                                        </h5>
+                                        <input id="sr-prescription-confirm-hash" type="text" name="prescriptionHash" class="form-control" placeholder="Paste the hash of prescription" />
+                                        <button id="sr-confirm-prescription-btn" class="box-button btn btn-primary margin-custom-radio float-right" type="button"> Spend</button>
+                                    </form>	
+                                <% } %>
+                            </div>
+                            <div class="tab-pane fade authorizations-table-div" id="sr-history-prescriptions-table" role="tabpanel" aria-labelledby="sr-history-prescriptions-tab">
+                                <% if(session.auth.type === 'doctor') { %>
+                                    <table id="sr-history-prescriptions-doctors" class="table hash-table dt-responsive" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Hash</th>
+                                                <th>Status</th>
+                                                <th>Patient</th>
+                                                <th>Description</th>
+                                                <th>Ipfs Hash</th>
+                                                <th>Description</th>
+                                                <th>Download</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% prescriptions.forEach(function(prescription)  { %>
+                                                <tr>
+                                                    <td><%= prescription.hash %></td>
+                                                    <td><%= prescription.status %></td>
+                                                    <td><%= prescription.patient %></td>
+                                                    <td><%= prescription.description %></td>
+                                                    <td><%= prescription.ipfsHash %></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            <% }); %> 
+                                        </tbody>
+                                    </table>
+                                <% } else if(session.auth.type === 'patient'){ %>
+                                    <table id="sr-history-prescriptions-patients" class="table hash-table dt-responsive" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Hash</th>
+                                                <th>Status</th>
+                                                <th>Doctor</th>
+                                                <th>Description</th>
+                                                <th>Ipfs Hash</th>
+                                                <th>Provider</th>
+                                                <th>Insurance</th>
+                                                <th>Description</th>
+                                                <th>Download</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% prescriptions.forEach(function(prescription)  { %>
+                                                <tr>
+                                                    <td><%= prescription.hash %></td>
+                                                    <td><%= prescription.status %></td>
+                                                    <td><%= prescription.doctor %></td>
+                                                    <td><%= prescription.description %></td>
+                                                    <td><%= prescription.ipfsHash %></td>
+                                                    <td><%= prescription.provider %></td>
+                                                    <td><%= prescription.insurance %></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            <% }); %> 
+                                        </tbody>
+                                    </table>
+                                <% } else if(session.auth.type === 'provider'){ %>
+                                    <table id="sr-history-prescriptions-providers" class="table hash-table dt-responsive" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>Hash</th>
+                                                <th>Status</th>
+                                                <th>Patient</th>
+                                                <th>Description</th>
+                                                <th>Ipfs Hash</th>
+                                                <th>Doctor</th>
+                                                <th>Insurance</th>
+                                                <th>Description</th>
+                                                <th>Download</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% prescriptions.forEach(function(prescription)  { %>
+                                                <tr>
+                                                    <td><%= prescription.hash %></td>
+                                                    <td><%= prescription.status %></td>
+                                                    <td><%= prescription.patient %></td>
+                                                    <td><%= prescription.description %></td>
+                                                    <td><%= prescription.ipfsHash %></td>
+                                                    <td><%= prescription.doctor %></td>
+                                                    <td><%= prescription.insurance %></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            <% }); %> 
+                                        </tbody>
+                                    </table>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <table id="sr-prescriptions-insurance" class="table hash-table dt-responsive" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Hash</th>
+                                <th>Status</th>
+                                <th>Patient</th>
+                                <th>Description</th>
+                                <th>Ipfs Hash</th>
+                                <th>Doctor</th>
+                                <th>Provider</th>
+                                <th>Description</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% prescriptions.forEach(function(prescription)  { %>
+                                <tr>
+                                    <td><%= prescription.hash %></td>
+                                    <td><%= prescription.status %></td>
+                                    <td><%= prescription.patient %></td>
+                                    <td><%= prescription.description %></td>
+                                    <td><%= prescription.ipfsHash %></td>
+                                    <td><%= prescription.doctor %></td>
+                                    <td><%= prescription.provider %></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            <% }); %> 
+                        </tbody>
+                    </table>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <% include ./show %>
+
+    <% include ./delete %>
+
+    <% include ./edit %>
+
+</main>
+
+<% include ../../../layouts/footer %>

@@ -10,7 +10,7 @@ module.exports = function ipfsError() {
 
     result = {
         status: 405,
-        message: 'Error downloading the file to IPFS, the file does not exist or the server is not connected to ipfs daemon'
+        message: 'Error downloading the file from IPFS, the file does not exist or the server is not connected to ipfs daemon'
     };
   
     return res.status(405).json(result);

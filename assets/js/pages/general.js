@@ -300,6 +300,8 @@ showFiles = function(file) {
 	else {
 		if($('#file-name').hasClass('sr-trans'))
 			$image.attr('src', '../../images/general/file.png');
+		else if($('#file-name').hasClass('sr-pres'))
+			$image.attr('src', '../../../images/general/file.png');
 		else
 			$image.attr('src', './images/general/file.png');
 	}
