@@ -26,8 +26,8 @@ module.exports = {
             description: 'Error escribiendo el archivo'
         },
         ipfs: {
-            responseType: 'ipfs-error2',
-            description: 'Error uploading the image'
+            responseType: 'ipfs-error',
+            description: 'Error downloading the image'
         }
     },
   

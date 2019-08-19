@@ -22,6 +22,10 @@ module.exports = {
             responseType: 'fabric-error',
             description: 'Error Hyperledger Fabric' 
         },
+        invalidFabric: {
+            responseType: 'fabric-invalid',
+            description: 'Error Hyperledger Fabric inputs' 
+        },
         internalError: {
             responseType: 'internal-error',
             description: 'Error changing password'
@@ -38,7 +42,7 @@ module.exports = {
             Args = [pubKey, inputs.hash];
             result = await fabric.invokeTransaction('mychannel','Org1MSP','secureRec', 'deletePrescription', Args);
         }catch(err){
-            return exits.fabric();
+            return exits.invalidFabric();
         }
         
         return exits.success({

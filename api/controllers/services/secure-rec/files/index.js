@@ -29,6 +29,10 @@ module.exports = {
     fabric: {
       responseType: 'fabric-error',
       description: 'Error consultando la blockchain'
+    },
+    serverError: {
+      responseType: 'view',
+      viewTemplatePath: '500'
     }
   },
 
@@ -40,7 +44,7 @@ module.exports = {
     try {
         publicKey = await ursa.getPublicKey(this.req.session.auth.privateKey);
     }catch (err){
-        return exits.ursa();
+        return exits.serverError();
     }
 
     // Send transaction
@@ -55,7 +59,7 @@ module.exports = {
     try{
       response = JSON.parse(resp);
     }catch(err){
-      return exits.fabric();
+      return exits.serverError();
     }
     let files = {
       hashSent: [],
@@ -77,7 +81,7 @@ module.exports = {
             data.notes = '';
           }
         }catch(err){
-          return exits.ipfs();
+          return exits.serverError();
         }
         files.hashSent.push(data);
       }
@@ -93,7 +97,7 @@ module.exports = {
           user = await User.findOne({publicKey: response.hashReceived[i].from});
           data.from = {emailAddress: user.emailAddress, type: user.type};
         }catch(err){
-          return exits.ipfs();
+          return exits.serverError();
         }
         files.hashReceived.push(data);
       }
