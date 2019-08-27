@@ -21,7 +21,7 @@ The following dependencies must be downloaded and installed in order to use Airm
 * NVM
 * Hyperledger Fabric
 
-Here we will guide you in this process.
+Here we will guide you through this process.
 
 **Interplanetary File System (IPFS)**
 
