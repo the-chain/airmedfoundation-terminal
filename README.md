@@ -116,7 +116,7 @@ In the file fabric-api/config/configfile.yaml, you should replace the default ad
 
 As a further advice, please make sure that fabric-samble and airmedfoundation-terminal are in the same directory. 
 
-For example:\
+The paths should look as follows:\
 /home/root/Desktop/fabric-sample\
 /home/root/Desktop/airmedfoundation-terminal
 
