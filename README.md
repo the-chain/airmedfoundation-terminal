@@ -138,11 +138,11 @@ ipfs daemon &
 node ./node_modules/sails/bin/sails.js l --redis --safe
 ```
 
-Now you're ready to go!
+And now you're ready to go!
 
 ---
 
-**Contact:** This project is brought to you by [The Chain](http://thechain.tech/), a software shop specialized in the development of applications and services based on Blockchain Technology and Artificial Intelligence. Any questions that might arise should be sent to the project's maintainers. We will be happy to help you.
+**Contact:** This project is brought to you by [The Chain](http://thechain.tech/), a software shop specialized in the development of applications and services based on Blockchain Technology and Artificial Intelligence. Any questions that might arise should be sent to the project's maintainers. We will be happy to assist you.
 
 **License:** This project works under the GNU Affero General Public License v3.0. 
 
