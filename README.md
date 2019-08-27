@@ -8,7 +8,7 @@ In order to achieve a reliable file management:
 * We achieve secure access to records using asymmetric cryptography. 
 * We protect and store access keys in the Hyperledger Fabric blockchain.
 
-Sharing files with the Airmed Foundation platform is pretty straightforward. Depending on their desired privacy level, one may follow two different approaches: file load with or without asymmetric encryption. We have created [this tutorial](https://airmedfoundation.thechain.tech/tutorial) to explain both of them.
+Sharing files with the Airmed Foundation platform is pretty straightforward. Depending on their desired privacy level, one can upload files with or without asymmetric encryption. We have created [this tutorial](https://airmedfoundation.thechain.tech/tutorial) to explain both of them.
 
 ## Installation and Usage
 
