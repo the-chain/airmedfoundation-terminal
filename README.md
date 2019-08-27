@@ -142,9 +142,11 @@ And now you're ready to go!
 
 ---
 
-**Contact:** This project is brought to you by [The Chain](http://thechain.tech/), a software shop specialized in the development of applications and services based on Blockchain Technology and Artificial Intelligence. Any questions that might arise should be sent to the project's maintainers. We will be happy to assist you.
+**Contact:** This open source project is brought to you by [The Chain](http://thechain.tech/), a software shop specialized in the development of applications and services based on blockchain technology and artificial intelligence. Any questions that might arise should be sent to the project's maintainers. We will be happy to assist you.
 
-**License:** This project works under the GNU Affero General Public License v3.0. 
+#### E-mail: admin@thechain.tech
+
+**License:** This project is under the GNU Affero General Public License v3.0. 
 
 <a href="https://airmedfoundation.thechain.tech/"><img src="https://media.licdn.com/dms/image/C4E0BAQGs_7h67j1y0w/company-logo_400_400/0?e=1574899200&v=beta&t=KLfoiPbZSGZvBHmqhxCTYC211phfpr46j4pedsZMJ8I" width="200" height="200" /></a>
 
