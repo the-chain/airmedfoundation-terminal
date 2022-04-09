@@ -29,7 +29,7 @@
     "lodash": "^4.17.13",
     "lodash.merge": "^4.6.2",
     "mocha": "^6.1.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "nodemailer": "^5.1.1",
     "nodemailer-html-to-text": "^3.0.0",
     "nodemailer-smtp-pool": "^2.8.3",
