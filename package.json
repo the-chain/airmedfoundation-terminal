@@ -9,7 +9,7 @@
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
     "asn1.js": "^5.0.1",
-    "async": "2.0.1",
+    "async": "3.2.2",
     "braces": "^2.3.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
