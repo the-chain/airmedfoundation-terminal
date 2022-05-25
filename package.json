@@ -20,7 +20,7 @@
     "ejs": "^2.6.1",
     "fabric-client": "^1.4.0",
     "file-type": "^10.7.0",
-    "grunt": "^1.0.3",
+    "grunt": "^1.5.3",
     "http-proxy-agent": "^2.1.0",
     "https-proxy-agent": "^2.2.1",
     "ipfs-http-client": "^28.1.0",
