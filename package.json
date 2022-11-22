@@ -41,7 +41,7 @@
     "sails-hook-grunt": "^3.0.2",
     "sails-hook-organics": "^0.16.0",
     "sails-hook-orm": "^2.0.0-16",
-    "sails-hook-sockets": "^1.4.0",
+    "sails-hook-sockets": "^2.0.3",
     "sails-postgresql": "^1.0.2",
     "sleep": "^5.2.4",
     "supertest": "^4.0.2",
