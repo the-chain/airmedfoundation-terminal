@@ -97,6 +97,10 @@ Change values to connect to postgreSQL. In order to install postgreSQL, you can 
 docker-compose up -d
 ```
 
+**Setup appconfig.json**
+```
+{ "email": { "admin":"admin_email@gmail.com", "auth": { "user": "admin_email@gmail.com", "pass": "password" }, "service": "Gmail", "emailVerification": 1 }, "database": { "adapter": "sails-postgresql", "user": "admin", "password": "adminpassword", "port": "5432", "host": "localhost", "database": "airmed" }, "session": { "name": "sails.sid", "secret": "secretKey", "redis": { "url": "redis://: redisPassword@127.0.0.1.com:6379/15", "host": "127.0.0.1", "port": 6379, "pass": "redisPassword", "db": 15 } }, "ipfs": { "host":"127.0.0.1", "port":"5001" } }
+```
 
 **Edit config/policies.js**
 
@@ -128,14 +132,14 @@ Running the application is very simple. You just need to:
 ipfs daemon &
 ```
 
-- Run the sync process
-```
-./init.sh &
-```
-
 - Run the server
 ```
 node ./node_modules/sails/bin/sails.js l --redis --safe
+```
+
+- Run the sync process
+```
+./init.sh &
 ```
 
 And now you're ready to go!
